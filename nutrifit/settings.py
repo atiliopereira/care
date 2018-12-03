@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'daterange_filter',
     'clientes',
     'servicios',
+    'turnos',
 ]
 
 MIDDLEWARE = [
