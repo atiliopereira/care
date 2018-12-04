@@ -30,7 +30,7 @@ class OrdenDeTrabajo(models.Model):
     creado_por = models.ForeignKey(User, on_delete=models.PROTECT, editable=False)
 
     def __str__(self):
-        return str(self.id) + str(self.fecha.strftime('%d/%m/%Y') + str(self.cliente.nombre))
+        return str(self.id) + ' - ' + str(self.fecha.strftime('%d/%m/%Y') + ' | ' + str(self.cliente.nombre))
 
 
 class DetalleOrdenDeTrabajo(models.Model):
@@ -41,4 +41,4 @@ class DetalleOrdenDeTrabajo(models.Model):
     servicio = models.ForeignKey(Servicio, on_delete=models.PROTECT)
 
     def __str__(self):
-        return str(self.orden_de_trabajo.id) + str(self.servicio.descripcion)
+        return str(self.servicio.descripcion) + ' - ' + str(self.orden_de_trabajo.id)
