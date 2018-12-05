@@ -62,7 +62,6 @@ function calcular_total(){
        total += parseInt(subtotal.value.toString().split('.').join(''));
     }
 
-   console.log(total)
    $('#id_total').val(separarMiles(total));
 }
 

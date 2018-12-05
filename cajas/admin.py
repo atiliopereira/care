@@ -183,7 +183,7 @@ class DetalleVentaInline(admin.TabularInline):
         if obj:
             return 0
         else:
-            return 1
+            return 20
 
 
 class DetalleVentaPagoInline(admin.TabularInline):
@@ -195,6 +195,8 @@ class DetalleVentaPagoInline(admin.TabularInline):
 
 @admin.register(Venta)
 class VentaAdmin(admin.ModelAdmin):
+    class Media:
+        js = ('venta.js',)
     form = VentaForm
     list_display = ('id', 'fecha', 'cliente', 'factura', 'condicion', 'total')
     search_fields = ('cliente__nombre', )
