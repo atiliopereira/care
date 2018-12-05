@@ -2,6 +2,7 @@ from datetime import datetime
 
 from django import forms
 from django.contrib.admin.widgets import AdminDateWidget
+
 from cajas.models import CierreCaja, Venta, DetalleVenta, Caja, Pago
 from clientes.models import Cliente
 
@@ -49,6 +50,29 @@ class VentaForm(forms.ModelForm):
                        'data-a-dec': ','}),
         }
 
+    total_medios_de_pago = forms.CharField(widget=forms.TextInput(
+        attrs={'style': 'text-align:right', 'size': '12', 'class': 'auto', 'data-a-sep': '.', 'data-a-dec': ','}),
+        required=False)
+
+    def __init__(self, *args, **kwargs):
+        super(VentaForm, self).__init__(*args, **kwargs)
+        instance = getattr(self, 'instance', None)
+        if instance and instance.pk:
+            self.initial['total_medios_de_pago'] = instance.get_total_medios_de_pago()
+
+        self.fields['total'].widget.attrs['readonly'] = True
+
+    def clean(self):
+        cleaned_data = super(VentaForm, self).clean()
+        total = cleaned_data.get("total")
+        total_medios_de_pago = cleaned_data.get("total_medios_de_pago")
+        condicion = cleaned_data.get('condicion')
+
+        if condicion == 'CO':
+            if total != total_medios_de_pago:
+                msg = "Suma de servicios a pagar no coinciden con suma de montos en medios de pago"
+                self.add_error('total', msg)
+
 
 class DetalleVentaForm(forms.ModelForm):
     class Meta:
@@ -60,6 +84,18 @@ class DetalleVentaForm(forms.ModelForm):
                 attrs={'style': 'text-align:right', 'size': '12', 'class': 'auto', 'data-a-sep': '.',
                        'data-a-dec': ','}),
         }
+
+    subtotal = forms.CharField(
+        widget=forms.TextInput(
+            attrs={'style': 'text-align:right', 'size': '12', 'class': 'auto', 'data-a-sep': '.'}), label="Subtotal"
+    )
+
+    def __init__(self, *args, **kwargs):
+        super(DetalleVentaForm, self).__init__(*args, **kwargs)
+        instance = getattr(self, 'instance', None)
+        if instance and instance.pk:
+            self.initial['subtotal'] = instance.servicio.servicio.precio
+        self.fields['subtotal'].widget.attrs['readonly'] = True
 
 
 class PagoForm(forms.ModelForm):

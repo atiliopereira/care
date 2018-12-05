@@ -32,8 +32,8 @@ class OrdenDeTrabajoAdmin(admin.ModelAdmin):
         js = ('orden_de_trabajo.js',)
     form = OrdenDeTrabajoForm
     search_fields = ('id', 'cliente')
-    list_display = ('id', 'fecha', 'hora', 'cliente', 'total', 'facturado', 'creado_por')
-    list_filter = (('fecha', DateRangeFilter), 'facturado')
+    list_display = ('id', 'fecha', 'hora', 'cliente', 'total', 'estado_facturacion', 'creado_por')
+    list_filter = (('fecha', DateRangeFilter), 'estado_facturacion')
     autocomplete_fields = ('cliente', )
     inlines = (DetalleOrdenDeTrabajoInline, )
     actions = None

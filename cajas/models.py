@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 
 from cajas.constants import TipoFlujoCaja, CondicionVenta
+from servicios.models import OrdenDeTrabajo, DetalleOrdenDeTrabajo
 
 
 def get_siguiente_numero():
@@ -209,15 +210,41 @@ class Venta(models.Model):
             cadena = "VENTA " + self.get_condicion_display() + " Nro.: " + str(self.id)
         return str(cadena)
 
+    def get_total_medios_de_pago(self):
+        detalles = Pago.objects.filter(venta_id=self.id)
+        total = 0
+        for detalle in detalles:
+            total = total + detalle.monto
+        return total
+
+    def delete(self, *args, **kwargs):
+        detalles = DetalleVenta.objects.filter(venta=self)
+        for detalle in detalles:
+            detalle.delete()
+        super(Venta, self).delete(*args, **kwargs)
+
 
 class DetalleVenta(models.Model):
     venta = models.ForeignKey(Venta, on_delete=models.CASCADE)
     servicio = models.ForeignKey('servicios.DetalleOrdenDeTrabajo', on_delete=models.CASCADE)
 
+    def save(self, *args, **kwargs):
+        super(DetalleVenta, self).save(*args, **kwargs)
+        detalle_ot = DetalleOrdenDeTrabajo.objects.get(id=self.servicio.id)
+        detalle_ot.facturado = True
+        detalle_ot.save(force_update=True)
+
+    def delete(self, *args, **kwargs):
+        detalle_ot = DetalleOrdenDeTrabajo.objects.get(id=self.servicio.id)
+        detalle_ot.facturado = False
+        detalle_ot.save(force_update=True)
+        super(DetalleVenta, self).delete(*args, **kwargs)
+
 
 class Pago(models.Model):
     venta = models.ForeignKey(Venta, on_delete=models.PROTECT)
     medio_de_pago = models.ForeignKey(FormaPago, on_delete=models.PROTECT)
+    comprobante_numero = models.CharField(max_length=20, blank=True, null=True)
     monto = models.DecimalField(max_digits=15, decimal_places=0, default=0)
 
 
