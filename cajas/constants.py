@@ -19,6 +19,16 @@ class CondicionVenta:
     )
 
 
+class EstadoPago:
+    PENDIENTE = 'PE'
+    PAGADO = 'PG'
+
+    ESTADOS = (
+        (PENDIENTE, 'Pendiente'),
+        (PAGADO, 'Pagado'),
+    )
+
+
 def get_categoria_flujo_venta():
     from cajas.models import CategoriaFlujoCaja
     queryset = CategoriaFlujoCaja.objects.filter(nombre='VENTAS')

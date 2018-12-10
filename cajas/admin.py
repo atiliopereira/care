@@ -199,9 +199,9 @@ class VentaAdmin(admin.ModelAdmin):
     class Media:
         js = ('venta.js',)
     form = VentaForm
-    list_display = ('id', 'fecha', 'cliente', 'factura', 'condicion', 'total', 'get_pagado')
+    list_display = ('id', 'fecha', 'cliente', 'factura', 'condicion', 'total', 'get_pagado', 'estado')
     search_fields = ('cliente__nombre', )
-    list_filter = (('fecha', DateRangeFilter), 'condicion',)
+    list_filter = (('fecha', DateRangeFilter), 'condicion', 'estado')
     inlines = (DetalleVentaInline, DetalleVentaPagoInline)
     autocomplete_fields = ('cliente', )
     actions = None
@@ -224,6 +224,13 @@ class VentaAdmin(admin.ModelAdmin):
         venta.sesion.caja.disponible += venta.total
         venta.sesion.caja.save()
         return super(VentaAdmin, self).save_model(request, obj, form, change)
+
+    def get_search_results(self, request, queryset, search_term):
+        queryset, use_distinct = super().get_search_results(request, queryset, search_term)
+        if search_term:
+            queryset = self.model.objects.exclude(condicion='CO').exclude(estado='PG')
+
+        return queryset, use_distinct
 
 
 class MovimientoAdmin(admin.ModelAdmin):
@@ -369,8 +376,9 @@ class CierreCajaAdmin(MovimientoAdmin):
 
 @admin.register(Pago)
 class ReciboAdmin(admin.ModelAdmin):
+    form = PagoForm
     autocomplete_fields = ('venta', )
     list_display = ('id', 'comprobante_numero', 'venta', 'monto')
-    search_fields = ('id', 'comprobante_numero', 'venta')
+    search_fields = ('venta__cliente__nombre', 'id', 'comprobante_numero', 'venta__factura', 'venta__id')
     list_filter = ('medio_de_pago', )
     actions = None
