@@ -69,7 +69,7 @@ class VentaForm(forms.ModelForm):
         condicion = cleaned_data.get('condicion')
 
         if condicion == 'CO':
-            if total != total_medios_de_pago:
+            if int(total) != int(total_medios_de_pago):
                 msg = "Suma de servicios a pagar no coinciden con suma de montos en medios de pago"
                 self.add_error('total', msg)
 
@@ -87,8 +87,7 @@ class DetalleVentaForm(forms.ModelForm):
 
     subtotal = forms.CharField(
         widget=forms.TextInput(
-            attrs={'style': 'text-align:right', 'size': '12', 'class': 'auto', 'data-a-sep': '.'}), label="Subtotal"
-    )
+            attrs={'style': 'text-align:right', 'size': '12', 'class': 'auto', 'data-a-sep': '.'}), label="Subtotal")
 
     def __init__(self, *args, **kwargs):
         super(DetalleVentaForm, self).__init__(*args, **kwargs)

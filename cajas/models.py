@@ -3,7 +3,7 @@ from datetime import date, datetime
 from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 
-from cajas.constants import TipoFlujoCaja, CondicionVenta
+from cajas.constants import TipoFlujoCaja, CondicionVenta, get_categoria_flujo_venta
 from servicios.models import OrdenDeTrabajo, DetalleOrdenDeTrabajo
 
 
@@ -201,6 +201,7 @@ class Venta(models.Model):
                                  verbose_name='Condicion de Venta')
     anulado = models.BooleanField(default=False, editable=False)
     total = models.DecimalField(max_digits=15, decimal_places=0, default=0)
+    pagado = models.DecimalField(max_digits=15, decimal_places=0, default=0, editable=False)
     sesion = models.ForeignKey(Sesion, null=True, blank=True, editable=False, on_delete=models.PROTECT)
 
     def __str__(self):
@@ -208,7 +209,7 @@ class Venta(models.Model):
             cadena = "FACTURA " + self.get_condicion_display() + " Nro.: " + self.factura
         else:
             cadena = "VENTA " + self.get_condicion_display() + " Nro.: " + str(self.id)
-        return str(cadena)
+        return str(cadena) + ' | ' + str(self.cliente.nombre)
 
     def get_total_medios_de_pago(self):
         detalles = Pago.objects.filter(venta_id=self.id)
@@ -217,10 +218,22 @@ class Venta(models.Model):
             total = total + detalle.monto
         return total
 
+    def get_pagado(self):
+        pagos = Pago.objects.filter(venta=self)
+        suma = 0
+        for pago in pagos:
+            suma += pago.monto
+        return suma
+
+    get_pagado.short_description = 'Pagado'
+
+    def get_saldo(self):
+        return self.total - self.pagado
+
     def delete(self, *args, **kwargs):
-        detalles = DetalleVenta.objects.filter(venta=self)
-        for detalle in detalles:
-            detalle.delete()
+        DetalleVenta.objects.filter(venta=self).delete()
+        IngresoDinero.objects.filter(venta=self).delete()
+
         super(Venta, self).delete(*args, **kwargs)
 
 
@@ -246,6 +259,32 @@ class Pago(models.Model):
     medio_de_pago = models.ForeignKey(FormaPago, on_delete=models.PROTECT)
     comprobante_numero = models.CharField(max_length=20, blank=True, null=True)
     monto = models.DecimalField(max_digits=15, decimal_places=0, default=0)
+
+    def save(self, *args, **kwargs):
+        super(Pago, self).save(*args, **kwargs)
+        if self.venta.factura:
+            motivo = 'Venta: ' + str(self.venta.factura)
+        else:
+            motivo = 'Venta: ' + str(self.venta.id)
+
+        # FLUJO DE CAJA
+        IngresoDinero.objects.create(
+            categoria=get_categoria_flujo_venta(),
+            sesion=self.venta.sesion,
+            tipo=TipoFlujoCaja.INGRESO,
+            motivo=motivo,
+            monto=self.monto,
+            fecha=self.venta.fecha,
+            forma_pago=self.medio_de_pago,
+            venta=self.venta
+        )
+
+    def __str__(self):
+        if self.comprobante_numero:
+            numero = str(self.comprobante_numero)
+        else:
+            numero = str(self.id)
+        return 'Recibo nro. ' + numero
 
 
 class CategoriaFlujoCaja(models.Model):
