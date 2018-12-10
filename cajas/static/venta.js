@@ -38,6 +38,14 @@ var $ = django.jQuery;
             calcular_total();
          });
 
+         $('#detalleventa_set-group').change(function() {
+            calcular_total();
+         });
+
+         $('#pago_set-group').click(function() {
+            calcular_total();
+         });
+
          $('#pago_set-group').change(function() {
             calcular_total();
          });

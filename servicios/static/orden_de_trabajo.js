@@ -8,6 +8,10 @@ var $ = django.jQuery;
             calcular_total();
         });
 
+         $('#detalleordendetrabajo_set-group').change(function() {
+            calcular_total();
+        });
+
         // quitar coma decimal y separadores de miles antes del submit
         $('form input[type=submit]').click(function(e) {
             $('.auto').each(function (){

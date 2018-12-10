@@ -8,7 +8,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.admin.utils import quote
 
 
-from cajas.constants import TipoFlujoCaja, get_categoria_flujo_venta
+from cajas.constants import TipoFlujoCaja
 from cajas.forms import CierreCajaForm, DetalleVentaForm, VentaForm, PagoForm
 from cajas.models import CategoriaFlujoCaja, RetiroDinero, IngresoDinero, FormaPago, Caja, MovimientoCaja, \
     AperturaCaja, CierreCaja, DetalleVenta, Venta, Pago, get_siguiente_numero
@@ -31,6 +31,7 @@ class CategoriaFlujoCajaAdmin(admin.ModelAdmin):
 class FormaPagoAdmin(admin.ModelAdmin):
     list_display = ['codigo', 'nombre', 'nombre_comprobante']
     search_fields = ['nombre', ]
+
     def has_delete_permission(self, request, obj=None):
         return False
 
@@ -198,7 +199,7 @@ class VentaAdmin(admin.ModelAdmin):
     class Media:
         js = ('venta.js',)
     form = VentaForm
-    list_display = ('id', 'fecha', 'cliente', 'factura', 'condicion', 'total')
+    list_display = ('id', 'fecha', 'cliente', 'factura', 'condicion', 'total', 'get_pagado')
     search_fields = ('cliente__nombre', )
     list_filter = (('fecha', DateRangeFilter), 'condicion',)
     inlines = (DetalleVentaInline, DetalleVentaPagoInline)
@@ -206,7 +207,7 @@ class VentaAdmin(admin.ModelAdmin):
     actions = None
 
     def get_default_venta(self, object_id=False):
-           return object_id and Venta.objects.get(pk=object_id) or Venta(id=get_siguiente_numero())
+        return object_id and Venta.objects.get(pk=object_id) or Venta(id=get_siguiente_numero())
 
     def add_view(self, request, object_id=None, form_url='', extra_context={}, **kwargs):
         if not get_sesion_abierta(request.user):
@@ -222,27 +223,6 @@ class VentaAdmin(admin.ModelAdmin):
         venta.sesion = get_sesion_abierta(request.user)
         venta.sesion.caja.disponible += venta.total
         venta.sesion.caja.save()
-        pagos = Pago.objects.filter(venta=venta)
-        # FLUJO DE CAJA
-        try:
-            registro_anterior = IngresoDinero.objects.get(venta=venta)
-            if registro_anterior:
-                registro_anterior.delete()
-        except Exception as e:
-            print("type error: " + str(e))
-
-        for pago in pagos:
-            print(pago)
-            IngresoDinero.objects.create(
-                categoria=get_categoria_flujo_venta(),
-                sesion=venta.sesion,
-                tipo=TipoFlujoCaja.INGRESO,
-                motivo='Venta: ' + str(obj.factura),
-                monto=pago.monto,
-                fecha=venta.fecha,
-                forma_pago=pago.medio_de_pago if venta.sesion else '',
-                venta=obj
-            )
         return super(VentaAdmin, self).save_model(request, obj, form, change)
 
 
@@ -250,7 +230,6 @@ class MovimientoAdmin(admin.ModelAdmin):
     search_fields = ['caja__nombre', 'vendedor__username']
     actions = None
     list_display_links = None
-
 
     def monto_efectivo(self, obj):
         return mark_safe('<div >'+separar(int(obj.saldo_apertura or 0))+' Gs.</div>')
@@ -386,3 +365,12 @@ class CierreCajaAdmin(MovimientoAdmin):
             self.readonly_fields = ['caja']
 
         return super(CierreCajaAdmin, self).change_view(request, object_id, form_url=form_url, extra_context=extra_context)
+
+
+@admin.register(Pago)
+class ReciboAdmin(admin.ModelAdmin):
+    autocomplete_fields = ('venta', )
+    list_display = ('id', 'comprobante_numero', 'venta', 'monto')
+    search_fields = ('id', 'comprobante_numero', 'venta')
+    list_filter = ('medio_de_pago', )
+    actions = None
