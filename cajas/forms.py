@@ -108,6 +108,15 @@ class PagoForm(forms.ModelForm):
                        'data-a-dec': ','}),
         }
 
+    def clean(self):
+        cleaned_data = super(PagoForm, self).clean()
+        monto = cleaned_data.get("monto")
+        venta = cleaned_data.get("venta")
+
+        if int(monto) > int(venta.get_saldo()):
+            msg = "Suma de servicios a pagar no coinciden con suma de montos en medios de pago"
+            self.add_error('monto', msg)
+
 
 class MovimientoFlujoCajaForm(forms.Form):
     caja = forms.ModelChoiceField(

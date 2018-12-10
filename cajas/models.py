@@ -3,7 +3,7 @@ from datetime import date, datetime
 from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 
-from cajas.constants import TipoFlujoCaja, CondicionVenta, get_categoria_flujo_venta
+from cajas.constants import TipoFlujoCaja, CondicionVenta, get_categoria_flujo_venta, EstadoPago
 from servicios.models import OrdenDeTrabajo, DetalleOrdenDeTrabajo
 
 
@@ -203,6 +203,8 @@ class Venta(models.Model):
     total = models.DecimalField(max_digits=15, decimal_places=0, default=0)
     pagado = models.DecimalField(max_digits=15, decimal_places=0, default=0, editable=False)
     sesion = models.ForeignKey(Sesion, null=True, blank=True, editable=False, on_delete=models.PROTECT)
+    estado = models.CharField(choices=EstadoPago.ESTADOS, default=EstadoPago.PENDIENTE, max_length=2,
+                              verbose_name='Estado de Pago', editable=False)
 
     def __str__(self):
         if self.factura:
@@ -229,6 +231,16 @@ class Venta(models.Model):
 
     def get_saldo(self):
         return self.total - self.pagado
+
+    def save(self, *args, **kwargs):
+        if self.pk:
+            self.pagado = self.get_pagado()
+            if self.pagado >= self.total:
+                self.estado = EstadoPago.PAGADO
+            elif self.pagado < self.total:
+                self.estado = EstadoPago.PENDIENTE
+
+        super(Venta, self).save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
         DetalleVenta.objects.filter(venta=self).delete()
@@ -267,6 +279,8 @@ class Pago(models.Model):
         else:
             motivo = 'Venta: ' + str(self.venta.id)
 
+        self.venta.save()
+
         # FLUJO DE CAJA
         IngresoDinero.objects.create(
             categoria=get_categoria_flujo_venta(),
@@ -275,6 +289,23 @@ class Pago(models.Model):
             motivo=motivo,
             monto=self.monto,
             fecha=self.venta.fecha,
+            forma_pago=self.medio_de_pago,
+            venta=self.venta
+        )
+
+    def delete(self, *args, **kwargs):
+        venta = self.venta
+        super(Pago, self).delete(*args, **kwargs)
+        venta.save()
+
+        # FLUJO DE CAJA
+        RetiroDinero.objects.create(
+            categoria=get_categoria_flujo_venta(),
+            sesion=self.venta.sesion,
+            tipo=TipoFlujoCaja.EGRESO,
+            motivo='Por pago eliminado',
+            monto=self.monto*(-1),
+            fecha=date.today(),
             forma_pago=self.medio_de_pago,
             venta=self.venta
         )
