@@ -119,5 +119,3 @@ def reporte_consolidado_pdf(request, id):
     buffer.close()
     response.write(pdf)
     return response
-
-
