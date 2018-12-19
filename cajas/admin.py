@@ -9,9 +9,10 @@ from django.contrib.admin.utils import quote
 
 
 from cajas.constants import TipoFlujoCaja
-from cajas.forms import CierreCajaForm, DetalleVentaForm, VentaForm, PagoForm
+from cajas.forms import CierreCajaForm, DetalleVentaForm, VentaForm, PagoForm, VentaSearchForm
 from cajas.models import CategoriaFlujoCaja, RetiroDinero, IngresoDinero, FormaPago, Caja, MovimientoCaja, \
     AperturaCaja, CierreCaja, DetalleVenta, Venta, Pago, get_siguiente_numero
+from cajas.views import get_ventas_queryset
 from nutrifit.globales import separar
 from cajas.servicios import get_sesion_abierta
 
@@ -201,13 +202,10 @@ class VentaAdmin(admin.ModelAdmin):
     form = VentaForm
     list_display = ('id', 'fecha', 'cliente', 'factura', 'condicion', 'total', 'get_pagado', 'estado')
     search_fields = ('cliente__nombre', )
-    list_filter = (('fecha', DateRangeFilter), 'condicion', 'estado')
+    list_filter = ('condicion', 'estado')
     inlines = (DetalleVentaInline, DetalleVentaPagoInline)
     autocomplete_fields = ('cliente', )
     actions = None
-
-    def get_default_venta(self, object_id=False):
-        return object_id and Venta.objects.get(pk=object_id) or Venta(id=get_siguiente_numero())
 
     def add_view(self, request, object_id=None, form_url='', extra_context={}, **kwargs):
         if not get_sesion_abierta(request.user):
@@ -231,6 +229,51 @@ class VentaAdmin(admin.ModelAdmin):
             queryset = self.model.objects.exclude(condicion='CO').exclude(estado='PG')
 
         return queryset, use_distinct
+
+    def lookup_allowed(self, lookup, *args, **kwargs):
+        if lookup in self.advanced_search_form.fields.keys():
+            return True
+        return super(VentaAdmin, self).lookup_allowed(lookup, *args, **kwargs)
+
+    def get_queryset(self, request):
+        form = self.advanced_search_form
+        qs = super(VentaAdmin, self).get_queryset(request)
+        qs = get_ventas_queryset(request, form)
+        return qs
+
+    def changelist_view(self, request, extra_context=None, **kwargs):
+
+        self.my_request_get = request.GET.copy()
+        self.advanced_search_form = VentaSearchForm(request.GET)
+        self.advanced_search_form.is_valid()
+        self.other_search_fields = {}
+        params = request.get_full_path().split('?')
+
+        ventas_queryset = self.get_queryset(self)
+        total_ventas = 0
+        for venta in ventas_queryset:
+            total_ventas += venta.total
+
+        extra_context = extra_context or {}
+        extra_context.update({'asf': VentaSearchForm,
+                              'total': separar(int(round(total_ventas))),
+                              'my_request_get': self.my_request_get,
+                              'params': '?%s' % params[1].replace('%2F', '/') if len(params) > 1 else ''
+                              })
+        request.GET._mutable = True
+
+        for key in self.advanced_search_form.fields.keys():
+            try:
+                temp = request.GET.pop(key)
+            except KeyError:
+                pass
+            else:
+                if temp != ['']:
+                    self.other_search_fields[key] = temp
+        request.GET_mutable = False
+
+        return super(VentaAdmin, self) \
+            .changelist_view(request, extra_context=extra_context, **kwargs)
 
 
 class MovimientoAdmin(admin.ModelAdmin):

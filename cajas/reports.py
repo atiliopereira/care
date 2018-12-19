@@ -8,7 +8,10 @@ from django.utils.encoding import force_text
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 
+from cajas.forms import VentaSearchForm
 from cajas.models import Sesion
+from cajas.views import get_ventas_queryset
+from extra.globals import listview_to_excel
 from nutrifit.globales import separar
 
 
@@ -118,4 +121,50 @@ def reporte_consolidado_pdf(request, id):
     pdf = buffer.getvalue()
     buffer.close()
     response.write(pdf)
+    return response
+
+
+def lista_ventas(request):
+    form = VentaSearchForm(request.GET)
+    form.is_valid()
+
+    desde = form.cleaned_data.get('desde', '')
+    hasta = form.cleaned_data.get('hasta', '')
+
+    fecha_actual = time.strftime("%Y/%m/%d")
+
+    queryset = get_ventas_queryset(request, form)
+    total = 0
+    pagado = 0
+
+    nombre_archivo = 'lista_ventas'
+
+    lista_datos = []
+    for venta in queryset.order_by('fecha'):
+        total += venta.total
+        pagado += venta.pagado
+        if venta.condicion == 'CO':
+            condicion = 'Contado'
+        elif venta.condicion == 'CR':
+            condicion = 'Crédito'
+
+        if venta.estado == 'PE':
+            estado = 'Pendiente'
+        elif venta.estado == 'PG':
+            estado = 'Pagado'
+
+        lista_datos.append([
+            venta.fecha.strftime("%d/%m/%Y"),
+            venta.cliente.nombre,
+            condicion,
+            estado,
+            separar(int(venta.total)),
+            separar(int(venta.pagado))
+        ])
+    lista_datos.append([])
+    lista_datos.append(['', '', '', 'Total', separar(int(total)), separar(int(pagado))])
+    lista_datos.append([])
+    lista_datos.append(['Desde: ', desde.strftime("%d/%m/%Y"), 'Hasta: ', hasta.strftime("%d/%m/%Y")])
+    titulos = ['Fecha', 'Cliente', 'Condicion', 'Estado', 'Monto', 'Pagado']
+    response = listview_to_excel(lista_datos, nombre_archivo, titulos)
     return response

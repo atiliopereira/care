@@ -118,6 +118,13 @@ class PagoForm(forms.ModelForm):
             self.add_error('monto', msg)
 
 
+class VentaSearchForm(forms.Form):
+    numero = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Numero', 'style': 'width:120px;'}))
+    cliente = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Cliente', 'style': 'width:220px;'}))
+    desde = forms.DateField(widget=AdminDateWidget(attrs={'placeholder': 'Desde'}), required=False)
+    hasta = forms.DateField(widget=AdminDateWidget(attrs={'placeholder': 'Hasta'}), required=False)
+
+
 class MovimientoFlujoCajaForm(forms.Form):
     caja = forms.ModelChoiceField(
         queryset=Caja.objects.all(),
