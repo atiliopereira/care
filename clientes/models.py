@@ -7,6 +7,7 @@ class Cliente(models.Model):
     telefono = models.CharField(max_length=50, null=True, blank=True, verbose_name="teléfono")
     direccion = models.CharField(max_length=200, null=True, blank=True, verbose_name="dirección")
     email = models.CharField(max_length=100, null=True, blank=True, verbose_name="e-mail")
+    nacimiento = models.DateField(blank=True, null=True)
     puntos_acumulados = models.IntegerField(default=0, verbose_name="Puntos acumulados")
 
     def __str__(self):
