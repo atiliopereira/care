@@ -25,7 +25,7 @@ SECRET_KEY = 'xr29b#^!33_*ia68-5zwj6wy71b&uhj1)7)a!nj)@)u(nd97uz'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', '181.126.50.122']
 
 
 # Application definition
@@ -37,7 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'daterange_filter',
     'clientes',
+    'servicios',
+    'turnos',
+    'cajas',
 ]
 
 MIDDLEWARE = [
@@ -55,8 +59,7 @@ ROOT_URLCONF = 'nutrifit.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
-        ,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -77,8 +80,12 @@ WSGI_APPLICATION = 'nutrifit.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'nutrifit',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
@@ -105,9 +112,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Asuncion'
 
 USE_I18N = True
 
@@ -115,8 +122,16 @@ USE_L10N = True
 
 USE_TZ = True
 
+USE_THOUSAND_SEPARATOR = True
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+STATICFILES_DIRS = [os.path.join(os.path.join(BASE_DIR, 'static'))]
+STATIC_ROOT = os.path.join(os.path.join(BASE_DIR, 'staticfiles'))
+MEDIA_ROOT = BASE_DIR+"/media/"
+MEDIA_URL = "/media/"

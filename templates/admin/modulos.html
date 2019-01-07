@@ -1,0 +1,89 @@
+            <!-- /.row -->
+            <div id="id_modulos" class="row" style="padding: 30px">
+				
+				{% if perms.auth %}
+                <div class="col-lg-3 col-md-6">
+                    <a href="/admin/auth">
+						<div class="card card-hover">
+							<div class="box bg-cyan text-center">
+								<div class="box bg-cyan text-center">
+                                    <h1 class="font-light text-white"><i class="fa fa-desktop fa-4x"></i></h1>
+                                    <h4 class="text-white">SISTEMA</h4>
+                                </div>
+                            </div>
+						</div>
+                    </a>
+                </div>
+                {% endif %}
+
+
+				{% if perms.clientes %}
+                    <div class="col-lg-3 col-md-6">
+                        <a href="/admin/clientes/cliente">
+                            <div class="card card-hover">
+                                <div class="box text-center" style="background-color: #9C27B0">
+                                    <div class="box text-center" style="background-color: #9C27B0">
+                                        <h1 class="font-light text-white"><i class="fa fa-group fa-4x"></i></h1>
+                                        <h4 class="text-white">CLIENTES</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endif %}
+                
+
+				{% if perms.servicios %}
+                    <div class="col-lg-3 col-md-6">
+                        <a href="/admin/servicios">
+                            <div class="card card-hover">
+                                <div class="box bg-warning text-center">
+                                    <div class="box bg-warning text-center">
+                                        <h1 class="font-light text-white"><i class="fa fa-cut fa-4x"></i></h1>
+                                        <h4 class="text-white">SERVICIOS</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endif %}
+             </div>
+
+             <div id="id_modulos" class="row" style="padding: 30px">
+
+				{% if perms.cajas %}
+                     <div class="col-lg-3 col-md-6">
+                        <a href="/admin/cajas">
+                            <div class="card card-hover">
+                                <div class="box bg-success text-center">
+                                    <div class="box bg-success text-center" >
+                                        <h1 class="font-light text-white"><i class="fa fa-dollar fa-4x"></i></h1>
+                                        <h4 class="text-white">CAJA</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                {% endif %}
+
+                {% if perms.turnos %}
+                     <div class="col-lg-3 col-md-6">
+                        <a href="/admin/turnos">
+                            <div class="card card-hover">
+                                <div class="box text-center" style="background-color: #AFB42B">
+                                    <div class="box text-center" style="background-color: #AFB42B">
+                                        <h1 class="font-light text-white"><i class="fa fa-calendar-check fa-4x"></i></h1>
+                                        <h4 class="text-white">TURNOS</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                {% endif %}
+
+
+
+            </div>
+            <!-- /.row -->

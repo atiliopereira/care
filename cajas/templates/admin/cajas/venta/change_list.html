@@ -1,0 +1,29 @@
+{% extends "admin/change_list.html" %}
+{% load i18n admin_urls static admin_list %}
+{% load caja_tags %}
+
+{% block search %}
+    {% venta_search_form cl %}
+    <div style="margin-right: 280px;text-align: right; margin-bottom: 10px;"><h1>Monto Total: {{ total }}</h1></div>
+{% endblock %}
+
+
+{% block object-tools %}
+    <ul class="object-tools">
+        <li>
+          <a style="background-color: forestgreen" href="/admin/cajas/lista_ventas/{{ params }}">
+                Imprimir lista <i class="fa fa-file-excel-o"></i>
+          </a>
+        </li>
+
+        {% block object-tools-items %}
+            {% if has_add_permission %}
+             <li>
+                <a href="/admin/cajas/venta/add/" class="addlink">
+                    Añadir Venta
+                </a>
+            </li>
+            {% endif %}
+        {% endblock %}
+    </ul>
+{% endblock %}
