@@ -4,18 +4,21 @@
 
 {% block search %}
     {% venta_search_form cl %}
-    <div style="margin-right: 280px;text-align: right; margin-bottom: 10px;"><h1>Monto Total: {{ total }}</h1></div>
+    {% if request.user.is_superuser %}
+        <div style="margin-right: 280px;text-align: right; margin-bottom: 10px;"><h1>Monto Total: {{ total }}</h1></div>
+    {% endif %}
 {% endblock %}
 
 
 {% block object-tools %}
     <ul class="object-tools">
+        {% if request.user.is_superuser %}
         <li>
           <a style="background-color: forestgreen" href="/admin/cajas/lista_ventas/{{ params }}">
                 Imprimir lista <i class="fa fa-file-excel-o"></i>
           </a>
         </li>
-
+        {% endif %}
         {% block object-tools-items %}
             {% if has_add_permission %}
              <li>
