@@ -14,7 +14,7 @@ class DetalleTurnoInline(admin.TabularInline):
 
 @register(Turno)
 class TurnoAdmin(admin.ModelAdmin):
-    search_fields = ('id', 'cliente')
+    search_fields = ('cliente__nombre', 'id')
     list_display = ('id', 'fecha', 'hora_inicio', 'hora_finalizacion', 'categoria', 'cliente', 'responsable')
     list_filter = (('fecha', DateRangeFilter), 'categoria')
     autocomplete_fields = ('cliente', 'responsable')
