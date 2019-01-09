@@ -129,9 +129,11 @@ def lista_ventas(request):
     form.is_valid()
 
     desde = form.cleaned_data.get('desde', '')
+    if desde:
+        desde = desde.strftime("%d/%m/%Y")
     hasta = form.cleaned_data.get('hasta', '')
-
-    fecha_actual = time.strftime("%Y/%m/%d")
+    if hasta:
+        hasta = hasta.strftime("%d/%m/%Y")
 
     queryset = get_ventas_queryset(request, form)
     total = 0
@@ -164,7 +166,7 @@ def lista_ventas(request):
     lista_datos.append([])
     lista_datos.append(['', '', '', 'Total', separar(int(total)), separar(int(pagado))])
     lista_datos.append([])
-    lista_datos.append(['Desde: ', desde.strftime("%d/%m/%Y"), 'Hasta: ', hasta.strftime("%d/%m/%Y")])
+    lista_datos.append(['Desde: ', desde, 'Hasta: ', hasta])
     titulos = ['Fecha', 'Cliente', 'Condicion', 'Estado', 'Monto', 'Pagado']
     response = listview_to_excel(lista_datos, nombre_archivo, titulos)
     return response
