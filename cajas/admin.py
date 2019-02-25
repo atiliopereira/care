@@ -180,6 +180,7 @@ class CajaAdmin(admin.ModelAdmin):
 class DetalleVentaInline(admin.TabularInline):
     model = DetalleVenta
     form = DetalleVentaForm
+    raw_id_fields = ("servicio",)
 
     def get_extra(self, request, obj=None, **kwargs):
         if obj:
