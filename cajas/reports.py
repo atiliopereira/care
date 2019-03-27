@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import math
 import time
 from io import BytesIO
 
@@ -8,12 +8,13 @@ from django.utils.encoding import force_text
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 
+from cajas.constants import CondicionVenta
 from cajas.forms import VentaSearchForm
-from cajas.models import Sesion
+from cajas.models import Sesion, DetalleVenta, Venta
 from cajas.views import get_ventas_queryset
 from extra.globals import listview_to_excel
-from nutrifit.globales import separar
-
+from nutrifit.globales import separar, numero_to_letras
+from nutrifit.settings import BASE_DIR
 
 width, height = A4
 
@@ -169,4 +170,97 @@ def lista_ventas(request):
     lista_datos.append(['Desde: ', desde, 'Hasta: ', hasta])
     titulos = ['Fecha', 'Cliente', 'Condicion', 'Estado', 'Monto', 'Pagado']
     response = listview_to_excel(lista_datos, nombre_archivo, titulos)
+    return response
+
+
+def factura_pdf(request, id):
+    def contenido(canvas, venta):
+        from reportlab.lib.colors import darkblue, black
+        canvas.setFillColor(darkblue)
+        canvas.setFillColor(black)
+        canvas.setStrokeColor(black)
+        canvas.setFont("Helvetica", 10)
+
+        # COPIA SUPERIOR
+        canvas.drawString(100, 703, force_text(venta.fecha.strftime('%d/%m/%Y') or ''))
+        if venta.condicion == 'CO':
+            canvas.drawString(430, 702, 'X')
+        elif venta.condicion == 'CR':
+            canvas.drawString(495, 702, 'X')
+        canvas.drawString(120, 688, force_text(venta.cliente.nombre or '').upper())
+        canvas.drawString(422, 688, force_text(venta.cliente.ruc or ''))
+
+        row = 650
+        canvas.setFont("Helvetica", 10)
+        detalles = DetalleVenta.objects.filter(venta=venta)
+        total_venta = 0
+        for detalle in detalles:
+            row -= 15
+            canvas.drawString(43, row, force_text('1'))
+            canvas.drawString(73, row, force_text(detalle.servicio.servicio))
+            canvas.drawString(470, row, force_text(separar(int(detalle.servicio.servicio.precio))).rjust(15, ' '))
+            total_venta += int(detalle.servicio.servicio.precio)
+
+        canvas.setFont("Helvetica", 11)
+
+        row = 510
+        canvas.drawString(460, row, force_text(separar(total_venta)).rjust(15, ' '))
+        row = 492
+        canvas.drawString(152, row, numero_to_letras(total_venta))
+        row = 459
+        canvas.drawString(233, row, force_text(separar(math.ceil(total_venta/11))).rjust(12, ' '))
+        canvas.drawString(390, row, force_text(separar(math.ceil(total_venta / 11))).rjust(12, ' '))
+
+        #COPIA INFERIOR
+        canvas.drawString(100, 285, force_text(venta.fecha.strftime('%d/%m/%Y') or ''))
+        if venta.condicion == 'CO':
+            canvas.drawString(430, 285, 'X')
+        elif venta.condicion == 'CR':
+            canvas.drawString(495, 285, 'X')
+        canvas.drawString(120, 270, force_text(venta.cliente.nombre or '').upper())
+        canvas.drawString(422, 270, force_text(venta.cliente.ruc or ''))
+
+        row = 232
+        canvas.setFont("Helvetica", 10)
+        detalles = DetalleVenta.objects.filter(venta=venta)
+        total_venta = 0
+        for detalle in detalles:
+            row -= 15
+            canvas.drawString(43, row, force_text('1'))
+            canvas.drawString(73, row, force_text(detalle.servicio.servicio))
+            canvas.drawString(470, row, force_text(separar(int(detalle.servicio.servicio.precio))).rjust(15, ' '))
+            total_venta += int(detalle.servicio.servicio.precio)
+
+        canvas.setFont("Helvetica", 11)
+
+        row = 92
+        canvas.drawString(460, row, force_text(separar(total_venta)).rjust(15, ' '))
+        row = 74
+        canvas.drawString(152, row, numero_to_letras(total_venta))
+        row = 41
+        canvas.drawString(233, row, force_text(separar(math.ceil(total_venta / 11))).rjust(12, ' '))
+        canvas.drawString(390, row, force_text(separar(math.ceil(total_venta / 11))).rjust(12, ' '))
+
+    venta = Venta.objects.get(pk=id)
+    # Create the HttpResponse object with the appropriate PDF headers.
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="%s.pdf"' % str(venta)
+
+    buffer = BytesIO()
+
+    # Create the PDF object, using the BytesIO object as its "file."
+    p = canvas.Canvas(buffer)
+    contenido(p, venta)
+
+    # Draw things on the PDF. Here's where the PDF generation happens.
+    # See the ReportLab documentation for the full list of functionality.
+
+    # Close the PDF object cleanly.
+    p.showPage()
+    p.save()
+
+    # Get the value of the BytesIO buffer and write it to the response.
+    pdf = buffer.getvalue()
+    buffer.close()
+    response.write(pdf)
     return response
