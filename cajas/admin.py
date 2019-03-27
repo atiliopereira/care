@@ -201,12 +201,16 @@ class VentaAdmin(admin.ModelAdmin):
     class Media:
         js = ('venta.js',)
     form = VentaForm
-    list_display = ('id', 'fecha', 'cliente', 'factura', 'condicion', 'total', 'get_pagado', 'estado')
+    list_display = ('id', 'fecha', 'cliente', 'factura', 'condicion', 'total', 'get_pagado', 'estado','acciones')
     search_fields = ('cliente__nombre', )
     list_filter = ('condicion', 'estado')
     inlines = (DetalleVentaInline, DetalleVentaPagoInline)
     autocomplete_fields = ('cliente', )
     actions = None
+
+    def acciones(self,obj):
+        html = '<a href="/admin/cajas/generar_factura/%s">Generar Factura</a>'%obj.pk
+        return mark_safe(html)
 
     def add_view(self, request, object_id=None, form_url='', extra_context={}, **kwargs):
         if not get_sesion_abierta(request.user):
