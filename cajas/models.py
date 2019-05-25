@@ -195,6 +195,7 @@ class CierreCaja(Sesion):
 
 class Venta(models.Model):
     cliente = models.ForeignKey('clientes.Cliente', on_delete=models.PROTECT)
+    dato_facturacion = models.ForeignKey('clientes.DatoFacturacion', on_delete=models.PROTECT, null=True, blank=True)
     factura = models.CharField(max_length=50, null=True, blank=True)
     fecha = models.DateField(default=date.today)
     condicion = models.CharField(choices=CondicionVenta.CONDICIONES, default=CondicionVenta.CONTADO, max_length=2,

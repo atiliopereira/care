@@ -187,8 +187,8 @@ def factura_pdf(request, id):
             canvas.drawString(430, 702, 'X')
         elif venta.condicion == 'CR':
             canvas.drawString(495, 702, 'X')
-        canvas.drawString(120, 688, force_text(venta.cliente.nombre or '').upper())
-        canvas.drawString(422, 688, force_text(venta.cliente.ruc or ''))
+        canvas.drawString(120, 688, force_text(venta.dato_facturacion.razon_social or '').upper())
+        canvas.drawString(422, 688, force_text(venta.dato_facturacion.ruc or ''))
 
         row = 650
         canvas.setFont("Helvetica", 10)
