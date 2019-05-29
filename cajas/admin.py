@@ -205,7 +205,6 @@ class VentaAdmin(admin.ModelAdmin):
     search_fields = ('cliente__nombre', )
     list_filter = ('condicion', 'estado')
     inlines = (DetalleVentaInline, DetalleVentaPagoInline)
-    autocomplete_fields = ('cliente', )
     actions = None
 
     def acciones(self,obj):

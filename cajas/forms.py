@@ -1,4 +1,5 @@
 from datetime import datetime
+from dal import autocomplete
 
 from django import forms
 from django.contrib.admin.widgets import AdminDateWidget
@@ -45,6 +46,9 @@ class VentaForm(forms.ModelForm):
         fields = '__all__'
 
         widgets = {
+            "cliente": autocomplete.ModelSelect2(url='cliente-autocomplete'),
+            "dato_facturacion": autocomplete.ModelSelect2(url='dato_facturacion__cliente-autocomplete',
+                                                              forward=['cliente']),
             "total": forms.TextInput(
                 attrs={'style': 'text-align:right', 'size': '12', 'class': 'auto', 'data-a-sep': '.',
                        'data-a-dec': ','}),
