@@ -252,7 +252,10 @@ class Venta(models.Model):
     def delete(self, *args, **kwargs):
         DetalleVenta.objects.filter(venta=self).delete()
         IngresoDinero.objects.filter(venta=self).delete()
-
+        credito_por_venta = self.total / 20
+        puntos_actuales = self.cliente.puntos_acumulados
+        puntos_acumulados = int(puntos_actuales) - int(credito_por_venta)
+        Cliente.objects.filter(pk=self.cliente.pk).update(puntos_acumulados=puntos_acumulados)
         super(Venta, self).delete(*args, **kwargs)
 
 
