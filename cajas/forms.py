@@ -54,6 +54,9 @@ class VentaForm(forms.ModelForm):
                        'data-a-dec': ','}),
         }
 
+    puntos_acumulados = forms.CharField(widget=forms.TextInput(
+        attrs={'style': 'text-align:right', 'size': '12', 'class': 'auto', 'data-a-sep': '.', 'data-a-dec': ','}),
+        required=False)
     total_medios_de_pago = forms.CharField(widget=forms.TextInput(
         attrs={'style': 'text-align:right', 'size': '12', 'class': 'auto', 'data-a-sep': '.', 'data-a-dec': ','}),
         required=False)
@@ -64,6 +67,7 @@ class VentaForm(forms.ModelForm):
         if instance and instance.pk:
             self.initial['total_medios_de_pago'] = instance.get_total_medios_de_pago()
 
+        self.fields['puntos_acumulados'].widget.attrs['readonly'] = True
         self.fields['total'].widget.attrs['readonly'] = True
 
     def clean(self):
@@ -116,10 +120,16 @@ class PagoForm(forms.ModelForm):
         cleaned_data = super(PagoForm, self).clean()
         monto = cleaned_data.get("monto")
         venta = cleaned_data.get("venta")
+        medio_de_pago = cleaned_data.get("medio_de_pago")
 
         if int(monto) > int(venta.get_saldo()):
             msg = "Suma de servicios a pagar no coinciden con suma de montos en medios de pago"
             self.add_error('monto', msg)
+
+        if medio_de_pago.nombre == 'PUNTOS':
+            if int(monto) > int(venta.cliente.puntos_acumulados):
+                msg = "Cantidad de puntos insuficiente"
+                self.add_error('monto', msg)
 
 
 class VentaSearchForm(forms.Form):
