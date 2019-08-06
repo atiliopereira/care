@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 
 from cajas.constants import TipoFlujoCaja, CondicionVenta, get_categoria_flujo_venta, EstadoPago
+from clientes.models import Cliente
 from servicios.models import OrdenDeTrabajo, DetalleOrdenDeTrabajo
 
 
@@ -240,6 +241,11 @@ class Venta(models.Model):
                 self.estado = EstadoPago.PAGADO
             elif self.pagado < self.total:
                 self.estado = EstadoPago.PENDIENTE
+        else:
+            credito_por_venta = self.total / 20
+            puntos_actuales = self.cliente.puntos_acumulados
+            puntos_acumulados = int(credito_por_venta) + int(puntos_actuales)
+            Cliente.objects.filter(pk=self.cliente.pk).update(puntos_acumulados=puntos_acumulados)
 
         super(Venta, self).save(*args, **kwargs)
 
