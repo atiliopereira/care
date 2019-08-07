@@ -12,6 +12,7 @@ class DatoFacturacionInline(admin.TabularInline):
 @register(Cliente)
 class ClienteAdmin(admin.ModelAdmin):
     search_fields = ('nombre', )
+    readonly_fields = ('puntos_acumulados', )
     list_display = ('nombre', 'telefono', 'nacimiento', 'puntos_acumulados')
     inlines = (DatoFacturacionInline, )
     actions = None

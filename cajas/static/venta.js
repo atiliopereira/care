@@ -21,6 +21,7 @@ var $ = django.jQuery;
                 url : "/admin/servicios/getdetallespendientes/",
                 type : "get",
                 success : function(data){
+                    $('#id_puntos_acumulados').val(data[0].puntos_acumulados);
                     var rows_length = data.length;
                     for(var i=0 ; i<rows_length ; i++){
                         $("#id_detalleventa_set-" + i + "-servicio").val(data[i].id);

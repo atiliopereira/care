@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 
 from cajas.constants import TipoFlujoCaja, CondicionVenta, get_categoria_flujo_venta, EstadoPago
+from clientes.models import Cliente
 from servicios.models import OrdenDeTrabajo, DetalleOrdenDeTrabajo
 
 
@@ -240,13 +241,21 @@ class Venta(models.Model):
                 self.estado = EstadoPago.PAGADO
             elif self.pagado < self.total:
                 self.estado = EstadoPago.PENDIENTE
+        else:
+            credito_por_venta = self.total / 20
+            puntos_actuales = self.cliente.puntos_acumulados
+            puntos_acumulados = int(credito_por_venta) + int(puntos_actuales)
+            Cliente.objects.filter(pk=self.cliente.pk).update(puntos_acumulados=puntos_acumulados)
 
         super(Venta, self).save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
         DetalleVenta.objects.filter(venta=self).delete()
         IngresoDinero.objects.filter(venta=self).delete()
-
+        credito_por_venta = self.total / 20
+        puntos_actuales = self.cliente.puntos_acumulados
+        puntos_acumulados = int(puntos_actuales) - int(credito_por_venta)
+        Cliente.objects.filter(pk=self.cliente.pk).update(puntos_acumulados=puntos_acumulados)
         super(Venta, self).delete(*args, **kwargs)
 
 
@@ -294,6 +303,13 @@ class Pago(models.Model):
             venta=self.venta
         )
 
+        #DESCUENTO DE PUNTOS
+        if self.medio_de_pago.nombre == 'PUNTOS':
+            puntos_utilizados = int(self.monto)
+            puntos_actuales = self.venta.cliente.puntos_acumulados
+            puntos_actualizados = int(puntos_actuales) - int(puntos_utilizados)
+            Cliente.objects.filter(pk=self.venta.cliente.pk).update(puntos_acumulados=puntos_actualizados)
+
     def delete(self, *args, **kwargs):
         venta = self.venta
         super(Pago, self).delete(*args, **kwargs)
@@ -310,6 +326,13 @@ class Pago(models.Model):
             forma_pago=self.medio_de_pago,
             venta=self.venta
         )
+
+        # DEVOLUCION DE PUNTOS
+        if self.medio_de_pago.nombre == 'PUNTOS':
+            puntos_utilizados = int(self.monto)
+            puntos_actuales = self.venta.cliente.puntos_acumulados
+            puntos_actualizados = int(puntos_actuales) + int(puntos_utilizados)
+            Cliente.objects.filter(pk=self.venta.cliente.pk).update(puntos_acumulados=puntos_actualizados)
 
     def __str__(self):
         if self.comprobante_numero:
