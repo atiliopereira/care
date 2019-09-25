@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.admin.decorators import register
 from daterange_filter.filter import DateRangeFilter
+from django.shortcuts import redirect
 
 from turnos.forms import TurnoForm
 from turnos.models import DetalleTurno, Turno
@@ -22,3 +23,6 @@ class TurnoAdmin(admin.ModelAdmin):
     form = TurnoForm
     actions = None
 
+    def response_add(self, request, obj, post_url_continue=None):
+        fecha = request.POST['fecha']
+        return redirect('/admin/turnos/agenda/?fecha=' + fecha[0:2] + '%2F' + fecha[3:5] + '%2F' + fecha[6:10] )

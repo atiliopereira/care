@@ -3,8 +3,9 @@ import datetime
 from django.db.models import Count, Sum
 from django.views.generic import ListView
 
-from turnos.forms import AgendaForm, TurnoSearchForm
-from turnos.models import Turno
+from clientes.models import Cliente
+from turnos.forms import AgendaForm
+from turnos.models import Turno, DetalleTurno
 
 
 class TurnosAgendaListView(ListView):
@@ -30,6 +31,8 @@ class TurnosAgendaListView(ListView):
         context['fecha_de_entrega_hasta'] = self.request.GET.get('fecha_de_entrega_hasta', '')
         context['ahora'] = datetime.datetime.now().time()
         context['hoy'] = datetime.date.today().strftime("%d/%m/%Y")
+        context['detalles'] = DetalleTurno.objects.all()
+        context['clientes'] = Cliente.objects.all()
         context['total_turnos'] = self.get_queryset().aggregate(total_cantidad=Sum('cantidad')).get('total_cantidad')
         return context
 
