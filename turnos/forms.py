@@ -37,7 +37,7 @@ class TurnoForm(forms.ModelForm):
 
         if repeticiones > 0:
             for i in range(repeticiones):
-                multiplo_fecha = (i+1)*7
+                multiplo_fecha = (i + 1) * 7
                 fecha_i = fecha + datetime.timedelta(days=multiplo_fecha)
                 Turno.objects.create(fecha=fecha_i, hora_inicio=hora_inicio, hora_finalizacion=hora_finalizacion,
                                      categoria=categoria, cliente=cliente, responsable=responsable)
