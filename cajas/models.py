@@ -103,7 +103,7 @@ class Sesion(models.Model):
     def ingresos_egresos_apertura(self):
         obj = Sesion.objects.filter(pk__lt=self.pk)
         if obj:
-            return obj.order_by('-id').first().ingresos_egresos_cierre()
+            return obj.order_by('-id').first().ingresos_egresos_apertura()
         return []
 
     def ingresos_egresos_cierre(self):
