@@ -86,4 +86,4 @@ def convierte_cifra(numero, sw):
     return "%s %s %s" % (texto_centena, texto_decena, texto_unidad)
 
 
-NOMBRE_EMPRESA = 'NUTRIFIT'
+NOMBRE_EMPRESA = 'Care'
