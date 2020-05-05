@@ -25,4 +25,4 @@ class TurnoAdmin(admin.ModelAdmin):
 
     def response_add(self, request, obj, post_url_continue=None):
         fecha = request.POST['fecha']
-        return redirect('/admin/turnos/agenda/?fecha=' + fecha[0:2] + '%2F' + fecha[3:5] + '%2F' + fecha[6:10] )
+        return redirect('/admin/turnos/agenda/?fecha=' + fecha[6:10] + '-' + fecha[3:5] + '-' + fecha[0:2] )

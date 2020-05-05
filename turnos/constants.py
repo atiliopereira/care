@@ -19,12 +19,12 @@ class BoxTurno:
     MANICURA = 'manic'
 
     BOXES = (
-        (HELEN_1, 'Helen 1'),
-        (HELEN_2, 'Helen 2'),
-        (RAQUEL_1, 'Raquel 1'),
-        (RAQUEL_2, 'Raquel 2'),
-        (MIRTHA_1, 'Mirtha 1'),
-        (MIRTHA_2, 'Mirtha 2'),
+        (HELEN_1, 'BOX 1'),
+        (HELEN_2, 'BOX 2'),
+        (RAQUEL_1, 'BOX 3'),
+        (RAQUEL_2, 'BOX 4'),
+        (MIRTHA_1, 'BOX 5'),
+        (MIRTHA_2, 'BOX 6'),
         (SANIE_1, 'Sanie 1'),
         (SANIE_2, 'Sanie 2'),
         (AUDA_1, 'Auda 1'),
