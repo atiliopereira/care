@@ -7,30 +7,6 @@
 	<link rel="stylesheet" href="{% static 'chosen/docsupport/prism.css' %}">
 {% endblock %}
 
-{% block extrajs %}
-<script src="{% static 'chosen/chosen.jquery.js' %}"></script>
-<script src="{% static 'chosen/docsupport/prism.js' %}"></script>
-
-<script type="text/javascript" src="{% static 'js/jquery.maskedinput.min.js' %}"></script>
-
-
-<script type="text/javascript">
-	$(".chosen-select").chosen({
-		disable_search_threshold: 0,
-		no_results_text: "Sin resultados..",
-		width: "300px",
-		allow_single_deselect: true
-	});
-	$('.chosen-select').trigger('chosen:updated');
-
-    jQuery(function($) {
-        $(".date").mask("99/99/9999",{placeholder:"dd/mm/aaaa"});
-    });
-
-
-</script>
-{% endblock %}
-
 {% block breadcrumbs %}
 
     <div class="breadcrumbs">
@@ -47,7 +23,10 @@
           border-right: solid 1px lightgrey;
           border-left: solid 1px lightgrey;
         }
-</style>
+
+    </style>
+
+
 	<form class="form" method="get">
 		<center>
 			<dl>
@@ -55,38 +34,36 @@
 					<tbody>
 
 						<tr>
-							<th style="vertical-align:middle">
-								<strong> Fecha:</strong>
-							</th>
 							<td style="vertical-align:middle">
-								<input type="text" class="date" placeholder="dd/mm/aaaa" name="fecha" value="{{ fecha }}">
+								<strong> Fecha:</strong>
+							</td>
+							<td style="vertical-align:middle">
+								<input type="date" class="date" placeholder="dd/mm/aaaa" name="fecha" value="{{ fecha }}">
 							</td>
 
-							<th style="border-top :3px solid white; border-right :3px solid white; border-bottom :3px solid white;">
+							<td style="border-top :3px solid white; border-right :3px solid white; border-bottom :3px solid white;">
 								<a class="btn btn-info" href="/admin/turnos/agenda/" title="Limpiar Filtros">
 									<i class="fa fa-undo"></i>
 								</a>
 								<input type="submit" value="Buscar" class="btn btn-success" hidden="hidden" style="display: none">
-							</th>
+							</td>
 						</tr>
 
                         <tr>
-							<th>
+							<td>
 								<strong> Crear turno:</strong>
-							</th>
+							</td>
 
-							<th>
+							<td>
 								<a class="btn btn-info" href="/admin/turnos/turno/add" title="Crear turno">
 									<i class="fa fa-plus"></i>
 								</a>
-							</th>
+							</td>
 						</tr>
 					</tbody>
 				</table>
 			</dl>
 		</center>
-
-
 	</form>
     <div align="center" style="padding-right: 5%">
 		<p>Cumpleaños:
@@ -99,10 +76,10 @@
     </div>
 
 	<div align="center">
-		<table id="result_list" class="table table-striped table-filter" style="width: 90%">
+		<table id="result_list" class="table table-striped table-filter" style="table-layout: fixed">
 			<thead>
 				<tr>
-                    <th>Hora</th>
+                    <th width="100px">Hora</th>
                     <th>Box 1</th>
                     <th>Box 2</th>
                     <th>Box 3</th>
@@ -166,71 +143,78 @@
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_1" and turno.hora_inicio.hour == 9 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
+                                 {{ "<!--" }}
                                 {% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=9:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=9:00&hora_finalizacion=9:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_2" and turno.hora_inicio.hour == 9 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=9:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=9:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_1" and turno.hora_inicio.hour == 9 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=9:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=9:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_2" and turno.hora_inicio.hour == 9 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
                                         {{ "<!--" }}
+
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=9:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=9:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "mir_1" and turno.hora_inicio.hour == 9 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=9:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=9:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                 </tr>
@@ -289,71 +273,76 @@
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_1" and turno.hora_inicio.hour == 9 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=9:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=9:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_2" and turno.hora_inicio.hour == 9 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=9:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=9:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_1" and turno.hora_inicio.hour == 9 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=9:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=9:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_2" and turno.hora_inicio.hour == 9 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=9:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=9:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "mir_1" and turno.hora_inicio.hour == 9 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=9:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=9:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
 
@@ -413,71 +402,78 @@
 
                         {% for turno in object_list %}
                             {% if turno.box == "hel_1" and turno.hora_inicio.hour == 10 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=10:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=10:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_2" and turno.hora_inicio.hour == 10 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
                                         {{ "<!--" }}
+
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=10:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=10:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_1" and turno.hora_inicio.hour == 10 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=10:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=10:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_2" and turno.hora_inicio.hour == 10 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=10:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=10:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "mir_1" and turno.hora_inicio.hour == 10 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=10:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=10:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                 </tr>
@@ -536,71 +532,77 @@
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_1" and turno.hora_inicio.hour == 10 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=10:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=10:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_2" and turno.hora_inicio.hour == 10 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=10:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=10:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_1" and turno.hora_inicio.hour == 10 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=10:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=10:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_2" and turno.hora_inicio.hour == 10 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=10:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=10:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "mir_1" and turno.hora_inicio.hour == 10 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
+                                    {{ "<!--" }}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=10:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=10:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                 </tr>
@@ -659,71 +661,76 @@
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_1" and turno.hora_inicio.hour == 11 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=11:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=11:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_2" and turno.hora_inicio.hour == 11 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=11:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=11:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_1" and turno.hora_inicio.hour == 11 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=11:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=11:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_2" and turno.hora_inicio.hour == 11 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=11:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=11:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "mir_1" and turno.hora_inicio.hour == 11 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=11:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=11:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
 
@@ -784,71 +791,76 @@
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_1" and turno.hora_inicio.hour == 11 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=11:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=11:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_2" and turno.hora_inicio.hour == 11 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=11:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=11:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_1" and turno.hora_inicio.hour == 11 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=11:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=11:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_2" and turno.hora_inicio.hour == 11 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=11:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=11:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "mir_1" and turno.hora_inicio.hour == 11 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=11:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=11:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
 
@@ -908,72 +920,80 @@
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_1" and turno.hora_inicio.hour == 12 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=12:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=12:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
 
                         {% for turno in object_list %}
                             {% if turno.box == "hel_2" and turno.hora_inicio.hour == 12 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=12:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=12:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_1" and turno.hora_inicio.hour == 12 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=12:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=12:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_2" and turno.hora_inicio.hour == 12 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=12:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=12:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "mir_1" and turno.hora_inicio.hour == 12 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=12:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=12:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
 
@@ -1034,71 +1054,81 @@
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_1" and turno.hora_inicio.hour == 12 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=12:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=12:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_2" and turno.hora_inicio.hour == 12 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=12:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=12:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_1" and turno.hora_inicio.hour == 12 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=12:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=12:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_2" and turno.hora_inicio.hour == 12 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=12:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=12:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "mir_1" and turno.hora_inicio.hour == 12 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=12:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=12:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
 
@@ -1158,71 +1188,81 @@
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_1" and turno.hora_inicio.hour == 13 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=13:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=13:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_2" and turno.hora_inicio.hour == 13 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=13:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=13:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_1" and turno.hora_inicio.hour == 13 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=13:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=13:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_2" and turno.hora_inicio.hour == 13 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=13:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=13:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "mir_1" and turno.hora_inicio.hour == 13 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=13:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=13:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
 
@@ -1283,71 +1323,81 @@
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_1" and turno.hora_inicio.hour == 13 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=13:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=13:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_2" and turno.hora_inicio.hour == 13 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=13:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=13:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_1" and turno.hora_inicio.hour == 13 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=13:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=13:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_2" and turno.hora_inicio.hour == 13 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=13:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=13:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "mir_1" and turno.hora_inicio.hour == 13 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=13:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=13:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
 
@@ -1407,71 +1457,81 @@
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_1" and turno.hora_inicio.hour == 14 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=14:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=14:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_2" and turno.hora_inicio.hour == 14 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=14:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=14:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_1" and turno.hora_inicio.hour == 14 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=14:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=14:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_2" and turno.hora_inicio.hour == 14 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=14:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=14:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "mir_1" and turno.hora_inicio.hour == 14 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=14:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=14:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
 
@@ -1532,71 +1592,81 @@
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_1" and turno.hora_inicio.hour == 14 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=14:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=14:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_2" and turno.hora_inicio.hour == 14 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=14:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=14:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_1" and turno.hora_inicio.hour == 14 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=14:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=14:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_2" and turno.hora_inicio.hour == 14 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=14:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=14:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "mir_1" and turno.hora_inicio.hour == 14 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=14:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=14:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
 
@@ -1656,71 +1726,81 @@
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_1" and turno.hora_inicio.hour == 15 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=15:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=15:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_2" and turno.hora_inicio.hour == 15 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=15:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=15:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_1" and turno.hora_inicio.hour == 15 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=15:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=15:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_2" and turno.hora_inicio.hour == 15 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=15:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=15:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "mir_1" and turno.hora_inicio.hour == 15 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=15:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=15:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
 
@@ -1781,71 +1861,81 @@
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_1" and turno.hora_inicio.hour == 15 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=15:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=15:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_2" and turno.hora_inicio.hour == 15 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=15:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=15:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_1" and turno.hora_inicio.hour == 15 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=15:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=15:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_2" and turno.hora_inicio.hour == 15 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=15:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=15:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "mir_1" and turno.hora_inicio.hour == 15 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=15:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=15:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
 
@@ -1905,71 +1995,81 @@
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_1" and turno.hora_inicio.hour == 16 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=16:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=16:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_2" and turno.hora_inicio.hour == 16 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=16:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=16:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_1" and turno.hora_inicio.hour == 16 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=16:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=16:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_2" and turno.hora_inicio.hour == 16 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=16:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=16:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "mir_1" and turno.hora_inicio.hour == 16 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=16:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=16:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
 
@@ -2030,71 +2130,81 @@
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_1" and turno.hora_inicio.hour == 16 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=16:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=16:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_2" and turno.hora_inicio.hour == 16 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=16:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=16:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_1" and turno.hora_inicio.hour == 16 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=16:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=16:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_2" and turno.hora_inicio.hour == 16 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=16:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=16:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "mir_1" and turno.hora_inicio.hour == 16 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=16:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=16:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
 
@@ -2154,71 +2264,81 @@
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_1" and turno.hora_inicio.hour == 17 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=17:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=17:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_2" and turno.hora_inicio.hour == 17 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=17:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=17:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_1" and turno.hora_inicio.hour == 17 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=17:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=17:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_2" and turno.hora_inicio.hour == 17 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=17:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=17:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "mir_1" and turno.hora_inicio.hour == 17 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=17:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=17:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
 
@@ -2279,71 +2399,81 @@
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_1" and turno.hora_inicio.hour == 17 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=17:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=17:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_2" and turno.hora_inicio.hour == 17 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=17:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=17:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_1" and turno.hora_inicio.hour == 17 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=17:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=17:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_2" and turno.hora_inicio.hour == 17 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=17:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=17:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "mir_1" and turno.hora_inicio.hour == 17 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=17:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=17:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
 
@@ -2403,71 +2533,81 @@
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_1" and turno.hora_inicio.hour == 18 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=18:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=18:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_2" and turno.hora_inicio.hour == 18 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=18:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=18:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_1" and turno.hora_inicio.hour == 18 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=18:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=18:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_2" and turno.hora_inicio.hour == 18 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=18:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=18:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "mir_1" and turno.hora_inicio.hour == 18 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=18:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=18:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
 
@@ -2528,71 +2668,81 @@
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_1" and turno.hora_inicio.hour == 18 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=18:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=18:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_2" and turno.hora_inicio.hour == 18 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=18:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=18:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_1" and turno.hora_inicio.hour == 18 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=18:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=18:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_2" and turno.hora_inicio.hour == 18 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=18:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=18:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "mir_1" and turno.hora_inicio.hour == 18 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=18:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=18:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
 
@@ -2652,71 +2802,81 @@
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_1" and turno.hora_inicio.hour == 19 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=19:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=19:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_2" and turno.hora_inicio.hour == 19 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=19:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=19:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_1" and turno.hora_inicio.hour == 19 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=19:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=19:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_2" and turno.hora_inicio.hour == 19 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=19:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=19:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "mir_1" and turno.hora_inicio.hour == 19 and turno.hora_inicio.minute >= 00  and turno.hora_inicio.minute < 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=19:00&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=19:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
 
@@ -2777,71 +2937,81 @@
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_1" and turno.hora_inicio.hour == 19 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=19:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_1&repeticiones=0&hora_inicio=19:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "hel_2" and turno.hora_inicio.hour == 19 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=19:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=hel_2&repeticiones=0&hora_inicio=19:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_1" and turno.hora_inicio.hour == 19 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=19:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_1&repeticiones=0&hora_inicio=19:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "raq_2" and turno.hora_inicio.hour == 19 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=19:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=raq_2&repeticiones=0&hora_inicio=19:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     <td>
                         {% for turno in object_list %}
                             {% if turno.box == "mir_1" and turno.hora_inicio.hour == 19 and turno.hora_inicio.minute >= 30 %}
-                                {% for detalle in detalles %}
+                                 {{ "<!--" }}{% for detalle in detalles %}
                                     {% if detalle.turno == turno %}
+                                        {{ "-->" }}
                                         - {{ detalle.servicio.descripcion }} <br>
+                                        {{ "<!--" }}
                                         {{ "<!--" }}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
-                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=19:30&fecha={{ fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                        <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=mir_1&repeticiones=0&hora_inicio=19:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                         <font style="opacity: 0">{{ "-->" }}</font>
                     </td>
                     
