@@ -33,6 +33,6 @@ def get_detallespendientes(request):
 
     for detalle in detalles:
         datos.append({'puntos_acumulados': separador_de_miles(puntos_acumulados), 'id': detalle.id,
-                      'precio': separador_de_miles(detalle.servicio.precio)})
+                      'descripcion': detalle.servicio.descripcion, 'precio': separador_de_miles(detalle.servicio.precio)})
     return HttpResponse(json.dumps(datos),
                         content_type='application/json')
