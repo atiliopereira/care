@@ -83,6 +83,8 @@ class VentaForm(forms.ModelForm):
 
 
 class DetalleVentaForm(forms.ModelForm):
+
+
     class Meta:
         model = DetalleVenta
         fields = '__all__'
@@ -93,6 +95,10 @@ class DetalleVentaForm(forms.ModelForm):
                        'data-a-dec': ','}),
         }
 
+    servicio_descripcion = forms.CharField(
+        widget=forms.TextInput(
+            attrs={'style': 'text-align:right', 'size': '42', 'class': 'auto', 'data-a-sep': '.'}), label="Descripción"
+    )
     subtotal = forms.CharField(
         widget=forms.TextInput(
             attrs={'style': 'text-align:right', 'size': '12', 'class': 'auto', 'data-a-sep': '.'}), label="Subtotal")
@@ -103,7 +109,7 @@ class DetalleVentaForm(forms.ModelForm):
         if instance and instance.pk:
             self.initial['subtotal'] = instance.servicio.servicio.precio
         self.fields['subtotal'].widget.attrs['readonly'] = True
-
+        self.fields['servicio_descripcion'].widget.attrs['readonly'] = True
 
 class PagoForm(forms.ModelForm):
     class Meta:

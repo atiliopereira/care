@@ -32,3 +32,11 @@ def paginator_delimiter(last, current):
 @register.filter
 def separador_miles(numero):
     return separador_de_miles(numero)
+
+
+@register.filter
+def parseador_fecha(fecha):
+    vector_fecha = fecha.split("-")
+    nueva_fecha = vector_fecha[2] + "/" + vector_fecha[1] + "/" + vector_fecha[0]
+    return nueva_fecha
+
