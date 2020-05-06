@@ -25,6 +25,7 @@ var $ = django.jQuery;
                     var rows_length = data.length;
                     for(var i=0 ; i<rows_length ; i++){
                         $("#id_detalleventa_set-" + i + "-servicio").val(data[i].id);
+                        $("#id_detalleventa_set-" + i + "-servicio_descripcion").val(data[i].descripcion);
                         $("#id_detalleventa_set-" + i + "-subtotal").val(data[i].precio);
                     }
                     for(var j=rows_length; j<20 ; j++){
