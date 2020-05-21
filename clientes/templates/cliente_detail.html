@@ -1,0 +1,111 @@
+{% extends "admin/base_site.html" %}
+
+{% block breadcrumbs %}
+
+    <div class="breadcrumbs">
+        <a href="{% url 'admin:index' %}">Inicio</a>
+        &rsaquo; <a href="{% url 'admin:app_list' 'clientes' %}">Clientes</a>
+        &rsaquo; Detalle
+    </div>
+
+{% endblock %}
+
+{% block content %}
+<h1>{{ object.nombre }}</h1>
+<table class="table table-striped table-filter" summary="Datos del Cliente.">
+	<tbody>
+		<tr>
+			<th scope="row"> Teléfono </th>
+			<td>
+                {% if object.telefono %}
+                    {{ object.telefono }}
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+		</tr>
+
+		<tr>
+			<th scope="row"> Dirección </th>
+			<td>
+                {% if object.direccion %}
+                    {{ object.direccion }}
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+		</tr>
+
+		<tr>
+			<th scope="row"> e-mail </th>
+			<td>
+                {% if object.email %}
+                    {{ object.email }}
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+		</tr>
+
+		<tr>
+			<th scope="row"> Nacimiento </th>
+			<td>
+                {% if object.nacimiento %}
+                    {{ object.nacimiento }}
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+		</tr>
+
+		<tr>
+			<th scope="row"> Puntos acumulados </th>
+			<td> {{ object.puntos_acumulados }} </td>
+		</tr>
+	</tbody>
+</table>
+
+<table id="result_list" class="table table-striped table-bordered table-hover table-condensed">
+	<caption><h2>Historial de sesiones</h2></caption>
+
+	<thead>
+		<tr>
+			<th>Fecha</th>
+			<th>Comentarios</th>
+            <th>Archivo adjunto</th>
+            <th>Servicios realizados</th>
+        </tr>
+	</thead>
+
+	<tbody>
+		{% for sesion in sesiones %}
+		<tr>
+			<td>{{ sesion.fecha }}</td>
+            <td>
+                {% if sesion.comentarios %}
+                    {{ sesion.comentarios }}
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+            <td>
+                {% if sesion.adjunto %}
+                    Si
+                {% else %}
+                    No
+                {% endif %}
+            </td>
+            <td>
+                {% for detalle in detalles_sesiones %}
+                    {% if detalle.orden_de_trabajo.id == sesion.id %}
+                        {{ detalle.servicio.descripcion }}
+                        <br>
+                    {% endif %}
+                {% endfor %}
+            </td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+{% endblock %}
