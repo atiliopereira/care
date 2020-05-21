@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.contrib.admin.decorators import register
 from daterange_filter.filter import DateRangeFilter
+from django.db import models
+from django.forms import Textarea, TextInput
 
 from servicios.forms import DetalleOrdenDeTrabajoForm, OrdenDeTrabajoForm
 from servicios.models import Servicio, DetalleOrdenDeTrabajo, OrdenDeTrabajo
@@ -37,6 +39,14 @@ class OrdenDeTrabajoAdmin(admin.ModelAdmin):
     autocomplete_fields = ('cliente', )
     inlines = (DetalleOrdenDeTrabajoInline, )
     actions = None
+
+    formfield_overrides = {
+        models.TextField: {'widget': Textarea(
+            attrs={'rows': 15,
+                   'cols': 70,
+                   'style': 'height: 4em;'})},
+        models.CharField: {'widget': TextInput(attrs={'size': '200'})},
+    }
 
     def save_model(self, request, obj, form, change):
         if not change:
