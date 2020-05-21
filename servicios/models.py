@@ -17,10 +17,15 @@ class Servicio(models.Model):
         return self.descripcion
 
 
+def get_file_path(instance, filename):
+    file_path = 'archivos/' + 'adjunto_' + str(instance.id)
+    return file_path
+
+
 class OrdenDeTrabajo(models.Model):
     class Meta:
-        verbose_name = "Orden de trabajo"
-        verbose_name_plural = "Ordenes de trabajo"
+        verbose_name = "Sesión"
+        verbose_name_plural = "Sesiones"
 
     fecha = models.DateField(default=datetime.date.today, editable=False)
     hora = models.TimeField(default=datetime.datetime.now, editable=False)
@@ -29,6 +34,8 @@ class OrdenDeTrabajo(models.Model):
     estado_facturacion = models.CharField(max_length=2, choices=EstadoFacturacion.ESTADOS,
                                           default=EstadoFacturacion.NO_FACTURADO, editable=False)
     creado_por = models.ForeignKey(User, on_delete=models.PROTECT, editable=False)
+    comentarios = models.TextField(max_length=1000, blank=True, null=True)
+    adjunto = models.FileField(upload_to=get_file_path, null=True, blank=True)
 
     def __str__(self):
         return str(self.id) + ' - ' + str(self.fecha.strftime('%d/%m/%Y') + ' | ' + str(self.cliente.nombre))
