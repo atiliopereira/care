@@ -1,4 +1,5 @@
 {% extends "admin/base_site.html" %}
+{% load cliente_tags %}
 
 {% block breadcrumbs %}
 
@@ -80,7 +81,7 @@
 	<tbody>
 		{% for sesion in sesiones %}
 		<tr>
-			<td>{{ sesion.fecha }}</td>
+			<td><a href="/admin/servicios/ordendetrabajo/{{ sesion.pk|eliminar_separador_miles }}/change/">{{ sesion.fecha }}</a></td>
             <td>
                 {% if sesion.comentarios %}
                     {{ sesion.comentarios }}
