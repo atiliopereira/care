@@ -25,8 +25,8 @@ SECRET_KEY = 'xr29b#^!33_*ia68-5zwj6wy71b&uhj1)7)a!nj)@)u(nd97uz'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '181.126.50.122', '18.191.115.165', '0.0.0.0', 'localhost',
-                 'ec2-18-191-115-165.us-east-2.compute.amazonaws.com']
+ALLOWED_HOSTS = ['127.0.0.1', '3.21.245.9', '0.0.0.0', 'localhost',
+                 'ec2-3-21-245-9.us-east-2.compute.amazonaws.com']
 
 
 # Application definition
@@ -57,7 +57,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'nutrifit.urls'
+ROOT_URLCONF = 'care.urls'
 
 TEMPLATES = [
     {
@@ -75,7 +75,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'nutrifit.wsgi.application'
+WSGI_APPLICATION = 'care.wsgi.application'
 
 
 # Database
