@@ -15,8 +15,7 @@ class Turno(models.Model):
                                  default=CategoriaServicio.PELUQUERIA, editable=False)
     cliente = models.ForeignKey('clientes.Cliente', on_delete=models.CASCADE)
     box = models.CharField(max_length=5, choices=BoxTurno.BOXES, blank=True, null=True)
-    responsable = models.ForeignKey(User, on_delete=models.PROTECT, null=True, blank=True)
-    repeticiones = models.IntegerField(default=0, null=True, blank=True)
+    repeticiones = models.IntegerField(default=0, null=True, blank=True, verbose_name="Repeticiones semanales")
 
     def __str__(self):
         return str(self.fecha.strftime('%d/%m/%Y')) + ' - ' + str(self.hora_inicio.strftime('%H:%M')) + ' | ' + self.cliente.nombre
