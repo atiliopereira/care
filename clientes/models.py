@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from datetime import date
+
 from django.db import models
 
 
@@ -12,7 +14,13 @@ class Cliente(models.Model):
     puntos_acumulados = models.IntegerField(default=0, verbose_name="Puntos acumulados")
 
     def __str__(self):
-        return self.nombre
+        return f'{self.nombre}'
+
+    @property
+    def edad(self):
+        today = date.today()
+        return today.year - self.nacimiento.year - (
+                (today.month, today.day) < (self.nacimiento.month, self.nacimiento.day))
 
 
 class DatoFacturacion(models.Model):

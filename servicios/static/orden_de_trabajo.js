@@ -30,7 +30,6 @@ var $ = django.jQuery;
 
                 if(!valueSelected){
                     $("#id_detalleordendetrabajo_set-" + vector[1] + "-precio").val("");
-
                     calcular_total();
                     return
                 }

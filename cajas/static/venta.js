@@ -11,7 +11,7 @@ var $ = django.jQuery;
             $('#detalleventa_set-group').show();
             var optionSelected = $(this).find("option:selected");
             var valueSelected  = optionSelected.val();
-            console.log(valueSelected)
+
             if(!valueSelected){
                 $('#detalleventa_set-group').hide();
                 return
@@ -78,7 +78,6 @@ function calcular_total(){
        if(subtotal.value != ''){
        total += parseInt(unformat(subtotal));
        }
-       console.log(total)
     }
     $('#id_total').val(separarMiles(total));
 
