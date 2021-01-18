@@ -11,8 +11,6 @@ class Turno(models.Model):
     fecha = models.DateField(default=datetime.date.today)
     hora_inicio = models.TimeField(default=datetime.datetime.now)
     hora_finalizacion = models.TimeField(blank=True, null=True)
-    categoria = models.CharField(max_length=3, choices=CategoriaServicio.CATEGORIAS,
-                                 default=CategoriaServicio.PELUQUERIA, editable=False)
     cliente = models.ForeignKey('clientes.Cliente', on_delete=models.CASCADE)
     box = models.CharField(max_length=5, choices=BoxTurno.BOXES, blank=True, null=True)
     repeticiones = models.IntegerField(default=0, null=True, blank=True, verbose_name="Repeticiones semanales")

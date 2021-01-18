@@ -9,7 +9,7 @@ from servicios.constants import CategoriaServicio, EstadoFacturacion
 
 class Servicio(models.Model):
     descripcion = models.CharField(max_length=150, verbose_name="descripción")
-    categoria = models.CharField(max_length=3, choices=CategoriaServicio.CATEGORIAS, default=CategoriaServicio.PELUQUERIA)
+    categoria = models.CharField(max_length=3, choices=CategoriaServicio.CATEGORIAS, default=CategoriaServicio.CATEGORIA_1)
     precio = models.DecimalField(max_digits=15, decimal_places=0, default=0)
     activo = models.BooleanField(default=True, editable=False)
 
@@ -24,8 +24,8 @@ def get_file_path(instance, filename):
 
 class OrdenDeTrabajo(models.Model):
     class Meta:
-        verbose_name = "Sesión"
-        verbose_name_plural = "Sesiones"
+        verbose_name = "Consulta"
+        verbose_name_plural = "Consultas"
 
     fecha = models.DateField(default=datetime.date.today, editable=False)
     hora = models.TimeField(default=datetime.datetime.now, editable=False)
