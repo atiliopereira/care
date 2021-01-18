@@ -13,7 +13,7 @@ from cajas.forms import CierreCajaForm, DetalleVentaForm, VentaForm, PagoForm, V
 from cajas.models import CategoriaFlujoCaja, RetiroDinero, IngresoDinero, FormaPago, Caja, MovimientoCaja, \
     AperturaCaja, CierreCaja, DetalleVenta, Venta, Pago, get_siguiente_numero
 from cajas.views import get_ventas_queryset
-from nutrifit.globales import separar
+from care.globales import separar
 from cajas.servicios import get_sesion_abierta
 
 

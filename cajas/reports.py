@@ -13,8 +13,8 @@ from cajas.forms import VentaSearchForm
 from cajas.models import Sesion, DetalleVenta, Venta
 from cajas.views import get_ventas_queryset
 from extra.globals import listview_to_excel
-from nutrifit.globales import separar, numero_to_letras
-from nutrifit.settings import BASE_DIR
+from care.globales import separar, numero_to_letras
+from care.settings import BASE_DIR
 
 width, height = A4
 
