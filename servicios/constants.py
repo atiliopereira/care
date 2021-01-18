@@ -2,12 +2,12 @@
 
 
 class CategoriaServicio:
-    PELUQUERIA = 'pel'
-    SPA = 'spa'
+    CATEGORIA_1 = 'CA1'
+    CATEGORIA_2 = 'CA2'
 
     CATEGORIAS = (
-        (PELUQUERIA, 'Peluquería'),
-        (SPA, 'Spa')
+        (CATEGORIA_1, 'Categoría 1'),
+        (CATEGORIA_2, 'Categoría 2')
     )
 
 
