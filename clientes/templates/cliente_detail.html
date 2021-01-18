@@ -6,68 +6,107 @@
     <div class="breadcrumbs">
         <a href="{% url 'admin:index' %}">Inicio</a>
         &rsaquo; <a href="{% url 'admin:app_list' 'clientes' %}">Clientes</a>
-        &rsaquo; Detalle
+        &rsaquo; <a href="/admin/clientes/cliente">Lista de pacientes</a>
+        &rsaquo; Ficha del paciente
     </div>
 
 {% endblock %}
 
+{% block extrastyle %}
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+{% endblock %}
+
 {% block content %}
-<h1>{{ object.nombre }}</h1>
-<table class="table table-striped table-filter" summary="Datos del Cliente.">
-	<tbody>
-		<tr>
-			<th scope="row"> Teléfono </th>
-			<td>
-                {% if object.telefono %}
-                    {{ object.telefono }}
-                {% else %}
-                    -
-                {% endif %}
-            </td>
-		</tr>
+    <style>
+        .w3-card-4 {
+          margin-bottom: 1%;
+        }
+        table {
+            width:100%;
+        }
+        tbody{
+            width: 100%;
+            display: table;
+        }
+        .label {
+            color: white;
+            padding: 8px;
+            font-weight: bold;
+            font-size: x-large;
+            border-radius: 5px;
+        }
+    </style>
 
-		<tr>
-			<th scope="row"> Dirección </th>
-			<td>
-                {% if object.direccion %}
-                    {{ object.direccion }}
-                {% else %}
-                    -
-                {% endif %}
-            </td>
-		</tr>
+<h1 style="text-align:center; color: black">{{ object.nombre }}</h1>
 
-		<tr>
-			<th scope="row"> e-mail </th>
-			<td>
-                {% if object.email %}
-                    {{ object.email }}
-                {% else %}
-                    -
-                {% endif %}
-            </td>
-		</tr>
+	<div class="w3-card-4" style="width:60%;margin-left:auto;margin-right:auto;">
+        <header class="w3-container w3-light-grey">
+          <h4 style="text-align:center">Datos del Paciente</h4>
+        </header>
 
-		<tr>
-			<th scope="row"> Nacimiento </th>
-			<td>
-                {% if object.nacimiento %}
-                    {{ object.nacimiento }}
-                {% else %}
-                    -
-                {% endif %}
-            </td>
-		</tr>
+        <div class="w3-container">
+            <table summary="Datos del Cliente.">
+                <tbody>
+                    <tr>
+                        <th scope="row"> Documento </th>
+                        <td>
+                            {% if object.documento %}
+                                {{ object.documento }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"> Teléfono </th>
+                        <td>
+                            {% if object.telefono %}
+                                {{ object.telefono }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                    </tr>
 
-		<tr>
-			<th scope="row"> Puntos acumulados </th>
-			<td> {{ object.puntos_acumulados }} </td>
-		</tr>
-	</tbody>
-</table>
+                    <tr>
+                        <th scope="row"> Dirección </th>
+                        <td>
+                            {% if object.direccion %}
+                                {{ object.direccion }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row"> e-mail </th>
+                        <td>
+                            {% if object.email %}
+                                {{ object.email }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row"> Edad </th>
+                        <td>
+                            {% if object.nacimiento %}
+                                {{ object.edad }} años
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 <table id="result_list" class="table table-striped table-bordered table-hover table-condensed">
-	<caption><h2>Historial de sesiones</h2></caption>
+	<caption><h2>Historial</h2></caption>
 
 	<thead>
 		<tr>
