@@ -26,7 +26,7 @@ class DetalleOrdenDeTrabajoForm(forms.ModelForm):
     precio = forms.CharField(
         widget=forms.TextInput(
             attrs={'style': 'text-align:right', 'size': '12', 'class': 'auto', 'data-a-sep': '.', 'data-a-dec': ','}),
-        label="Precio"
+        label="Precio", initial="0"
     )
 
     def __init__(self, *args, **kwargs):
