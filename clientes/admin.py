@@ -14,7 +14,7 @@ class DatoFacturacionInline(admin.TabularInline):
 class ClienteAdmin(admin.ModelAdmin):
     search_fields = ('nombre', )
     readonly_fields = ('puntos_acumulados', )
-    list_display = ('nombre', 'telefono', 'nacimiento', 'puntos_acumulados', 'acciones')
+    list_display = ('nombre', 'documento', 'telefono', 'nacimiento', 'puntos_acumulados', 'acciones')
     inlines = (DatoFacturacionInline, )
     actions = None
 
