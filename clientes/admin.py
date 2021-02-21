@@ -13,10 +13,140 @@ class DatoFacturacionInline(admin.TabularInline):
 @register(Cliente)
 class ClienteAdmin(admin.ModelAdmin):
     search_fields = ('nombre', )
-    readonly_fields = ('puntos_acumulados', )
-    list_display = ('nombre', 'documento', 'telefono', 'nacimiento', 'puntos_acumulados', 'acciones')
+    list_display = ('nombre', 'documento', 'telefono', 'nacimiento', 'acciones')
     inlines = (DatoFacturacionInline, )
     actions = None
+    fieldsets = (
+        (None, {
+            'fields': [
+                'nombre',
+                'documento',
+                'telefono',
+                'direccion',
+                'email',
+                'nacimiento',
+            ]
+        }),
+        (None, {
+            'fields': [
+                'parto',
+                'antibioticos_en_infancia'
+            ]
+        }),
+        ('COMORBILIDADES', {
+            'fields': [
+                'hipertension_arterial',
+                'diabetes_mellitus_tipo_2',
+                'dislipidemia',
+                'hipotiroidismo',
+                'hipertiroidismo',
+                'tiroiditis',
+                'rinitis_alergica',
+                'asma',
+                'gastritis',
+                'sindrome_del_intestino_irritable',
+                'celiaquia',
+                'transtorno_de_ansiedad',
+                'sindrome_de_panico',
+                'depresion',
+                'anemia',
+                'sindrome_de_ovario_poliquistico',
+                'otras_comorbolidades'
+            ]
+        }),
+        ('Cirugías', {
+            'fields': [
+                'adenoides',
+                'amigdalectomia',
+                'apendicectomia',
+                'histerectomia',
+                'hemorroides',
+                'colecistectomia',
+                'otras_cirugias'
+            ]
+        }),
+        ('Medicamentos', {
+            'fields': [
+                'antibioticos',
+                'corticoides',
+                'antidepresivos',
+                'anticonceptivos',
+                'inhibidor_de_bomba_de_protones',
+                'metformina',
+                'quimioterapia',
+                'analgesicos',
+                'otros_medicamentos'
+            ]
+        }),
+        ('Sistema Nervioso', {
+            'fields': [
+                'cefalea',
+                'cansancio_o_fatiga',
+                'insomnio',
+                'se_despierta_por_las_noches',
+                'bruxismo',
+                'perdida_de_memoria',
+                'falta_de_concentracion',
+                'mareos',
+                'irritabilidad',
+                'ansiedad',
+                'abombamiento'
+            ]
+        }),
+        ('Aparato Respiratorio', {
+            'fields': [
+                'congestion_nasal',
+                'estornudos',
+                'tos_cronica',
+                'sibilancias',
+                'frecuente_sensacion_de_limpiar_la_garganta'
+            ]
+        }),
+        ('Aparato Circulatorio', {
+            'fields': [
+                'retencion_de_liquidos',
+                'palpitaciones',
+                'varices',
+                'manos_y_pies_frias',
+            ]
+        }),
+        ('Aparato Digestivo', {
+            'fields': [
+                'aftas_en_la_boca',
+                'halitosis',
+                'acides_estomacal',
+                'nauseas',
+                'vomitos',
+                'dolor_abdominal',
+                'distencion_abdominal',
+                'reflujo',
+                'diarreas',
+                'estrenimiento'
+            ]
+        }),
+        (None, {
+            'fields': [
+                'va_de_cuerpo_cada',
+                'forma_de_materia_fecal'
+            ]
+        }),
+        ('Aparato Tegumentario', {
+            'fields': [
+                'alergias_en_el_rostro',
+                'alergias_en_la_piel'
+            ]
+        }),
+        ('Aparato Ostomuscular', {
+            'fields': [
+                'dolor_articular',
+            ]
+        }),
+        (None, {
+            'fields': [
+                'bio_resonancia_cuantica',
+            ]
+        }),
+    )
 
     def acciones(self, obj):
         html = '<a href="/admin/clientes/cliente_detail/%s">Ver</a>'%obj.pk

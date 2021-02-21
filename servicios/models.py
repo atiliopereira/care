@@ -34,8 +34,13 @@ class OrdenDeTrabajo(models.Model):
     estado_facturacion = models.CharField(max_length=2, choices=EstadoFacturacion.ESTADOS,
                                           default=EstadoFacturacion.NO_FACTURADO, editable=False)
     creado_por = models.ForeignKey(User, on_delete=models.PROTECT, editable=False)
-    comentarios = models.TextField(max_length=1000, blank=True, null=True)
+    peso = models.FloatField(null=True, blank=True, help_text="Peso en kg")
+    altura = models.PositiveIntegerField(null=True, blank=True, help_text="Altura en cm")
+    presion_arterial = models.FloatField(null=True, blank=True, help_text="Peso en kg")
+    antecedentes_de_la_enfermedad_actual = models.TextField(max_length=1000, blank=True, null=True)
+    estudios = models.TextField(max_length=1000, blank=True, null=True)
     adjunto = models.FileField(upload_to=get_file_path, null=True, blank=True)
+    comentarios = models.TextField(max_length=1000, blank=True, null=True)
 
     def __str__(self):
         return str(self.id) + ' - ' + str(self.fecha.strftime('%d/%m/%Y') + ' | ' + str(self.cliente.nombre))
@@ -59,8 +64,8 @@ class OrdenDeTrabajo(models.Model):
 
 class DetalleOrdenDeTrabajo(models.Model):
     class Meta:
-        verbose_name = "Servicio"
-        verbose_name_plural = "Servicios"
+        verbose_name = "Servicio realizado"
+        verbose_name_plural = "Servicios realizados"
     orden_de_trabajo = models.ForeignKey(OrdenDeTrabajo, on_delete=models.CASCADE)
     servicio = models.ForeignKey(Servicio, on_delete=models.PROTECT)
     facturado = models.BooleanField(default=False, editable=False)
