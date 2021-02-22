@@ -54,9 +54,6 @@ class VentaForm(forms.ModelForm):
                        'data-a-dec': ','}),
         }
 
-    puntos_acumulados = forms.CharField(widget=forms.TextInput(
-        attrs={'style': 'text-align:right', 'size': '12', 'class': 'auto', 'data-a-sep': '.', 'data-a-dec': ','}),
-        required=False)
     total_medios_de_pago = forms.CharField(widget=forms.TextInput(
         attrs={'style': 'text-align:right', 'size': '12', 'class': 'auto', 'data-a-sep': '.', 'data-a-dec': ','}),
         required=False)
@@ -67,7 +64,6 @@ class VentaForm(forms.ModelForm):
         if instance and instance.pk:
             self.initial['total_medios_de_pago'] = instance.get_total_medios_de_pago()
 
-        self.fields['puntos_acumulados'].widget.attrs['readonly'] = True
         self.fields['total'].widget.attrs['readonly'] = True
 
     def clean(self):
@@ -83,7 +79,6 @@ class VentaForm(forms.ModelForm):
 
 
 class DetalleVentaForm(forms.ModelForm):
-
 
     class Meta:
         model = DetalleVenta
@@ -110,6 +105,7 @@ class DetalleVentaForm(forms.ModelForm):
             self.initial['subtotal'] = instance.servicio.servicio.precio
         self.fields['subtotal'].widget.attrs['readonly'] = True
         self.fields['servicio_descripcion'].widget.attrs['readonly'] = True
+
 
 class PagoForm(forms.ModelForm):
     class Meta:
