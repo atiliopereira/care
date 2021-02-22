@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.db import models
 
 from servicios.constants import CategoriaServicio
-from turnos.constants import BoxTurno
+from turnos.constants import BoxTurno, Especialidad
 
 
 class Turno(models.Model):
@@ -12,7 +12,8 @@ class Turno(models.Model):
     hora_inicio = models.TimeField(default=datetime.datetime.now)
     hora_finalizacion = models.TimeField(blank=True, null=True)
     cliente = models.ForeignKey('clientes.Cliente', on_delete=models.CASCADE)
-    box = models.CharField(max_length=5, choices=BoxTurno.BOXES, blank=True, null=True)
+    box = models.CharField(max_length=6, choices=BoxTurno.BOXES, blank=True, null=True)
+    especialidad = models.CharField(max_length=3, choices=Especialidad.ESPECIALIDADES)
     repeticiones = models.IntegerField(default=0, null=True, blank=True, verbose_name="Repeticiones semanales")
 
     def __str__(self):
