@@ -40,3 +40,7 @@ def parseador_fecha(fecha):
     nueva_fecha = vector_fecha[2] + "/" + vector_fecha[1] + "/" + vector_fecha[0]
     return nueva_fecha
 
+
+@register.filter
+def hora_a_minutos(time):
+    return time.hour * 60 + time.minute

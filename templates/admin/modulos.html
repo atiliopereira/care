@@ -1,7 +1,7 @@
             <!-- /.row -->
-            <div id="id_modulos" class="row" style="padding: 30px">
+            <div id="id_modulos" class="row" style="width:80%;margin-left:auto;margin-right:auto;">
 				{% if request.user.is_superuser %}
-                    <div class="col-lg-3 col-md-6">
+                    <div class="col-lg-5 col-md-6">
                         <a href="/admin/auth">
                             <div class="card card-hover">
                                 <div class="box bg-cyan text-center">
@@ -15,59 +15,8 @@
                     </div>
                 {% endif %}
 
-
-				{% if perms.clientes %}
-                    <div class="col-lg-3 col-md-6">
-                        <a href="/admin/clientes/cliente">
-                            <div class="card card-hover">
-                                <div class="box text-center" style="background-color: #9C27B0">
-                                    <div class="box text-center" style="background-color: #9C27B0">
-                                        <h1 class="font-light text-white"><i class="fa fa-group fa-4x"></i></h1>
-                                        <h4 class="text-white">CLIENTES</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                {% endif %}
-                
-
-				{% if perms.servicios %}
-                    <div class="col-lg-3 col-md-6">
-                        <a href="/admin/servicios">
-                            <div class="card card-hover">
-                                <div class="box bg-warning text-center">
-                                    <div class="box bg-warning text-center">
-                                        <h1 class="font-light text-white"><i class="fa fa-medkit fa-4x"></i></h1>
-                                        <h4 class="text-white">SERVICIOS</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                {% endif %}
-             </div>
-
-             <div id="id_modulos" class="row" style="padding: 30px">
-
-				{% if perms.cajas %}
-                     <div class="col-lg-3 col-md-6">
-                        <a href="/admin/cajas">
-                            <div class="card card-hover">
-                                <div class="box bg-success text-center">
-                                    <div class="box bg-success text-center" >
-                                        <h1 class="font-light text-white"><i class="fa fa-dollar fa-4x"></i></h1>
-                                        <h4 class="text-white">CAJA</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                {% endif %}
-
                 {% if perms.turnos %}
-                     <div class="col-lg-3 col-md-6">
+                     <div class="col-lg-5 col-md-6">
                         <a href="/admin/turnos/agenda/">
                             <div class="card card-hover">
                                 <div class="box text-center" style="background-color: #AFB42B">
@@ -82,7 +31,39 @@
 
                 {% endif %}
 
+             </div>
 
+             <div id="id_modulos" class="row" style="width:80%;margin-left:auto;margin-right:auto;">
+
+				{% if perms.clientes %}
+                    <div class="col-lg-5 col-md-6">
+                        <a href="/admin/clientes/cliente">
+                            <div class="card card-hover">
+                                <div class="box text-center" style="background-color: #9C27B0">
+                                    <div class="box text-center" style="background-color: #9C27B0">
+                                        <h1 class="font-light text-white"><i class="fa fa-group fa-4x"></i></h1>
+                                        <h4 class="text-white">PACIENTES</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endif %}
+
+                {% if perms.servicios %}
+                    <div class="col-lg-5 col-md-6">
+                        <a href="/admin/servicios/ordendetrabajo">
+                            <div class="card card-hover">
+                                <div class="box bg-warning text-center">
+                                    <div class="box bg-warning text-center">
+                                        <h1 class="font-light text-white"><i class="fa fa-medkit fa-4x"></i></h1>
+                                        <h4 class="text-white">CONSULTAS</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endif %}
 
             </div>
             <!-- /.row -->

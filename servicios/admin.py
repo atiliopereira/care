@@ -32,12 +32,9 @@ class DetalleOrdenDeTrabajoInline(admin.TabularInline):
 class OrdenDeTrabajoAdmin(admin.ModelAdmin):
     class Media:
         js = ('orden_de_trabajo.js',)
-    form = OrdenDeTrabajoForm
     search_fields = ('id', 'cliente__nombre')
-    list_display = ('id', 'fecha', 'hora', 'cliente', 'total', 'estado_facturacion', 'creado_por')
-    list_filter = (('fecha', DateRangeFilter), 'estado_facturacion')
+    list_display = ('id', 'fecha', 'hora', 'cliente', 'creado_por')
     autocomplete_fields = ('cliente', )
-    inlines = (DetalleOrdenDeTrabajoInline, )
     actions = None
 
     formfield_overrides = {
