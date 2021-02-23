@@ -21,6 +21,7 @@ class BoxTurno:
     BOX_17 = 'box_17'
     BOX_18 = 'box_18'
     BOX_19 = 'box_19'
+    BOX_20 = 'box_20'
 
     BOXES = (
         (BOX_1, 'Dr. Pablo Peña'),
@@ -42,6 +43,7 @@ class BoxTurno:
         (BOX_16, 'Dr. Giacomo Cruzants'),
         (BOX_17, 'Dra. Fernandez'),
         (BOX_18, 'Lic. Sol Jara'),
+        (BOX_20, 'Dr. Alcaraz')
     )
 
 
@@ -51,13 +53,15 @@ class Especialidad:
     PROGRAMA_3R_SAGA = 'S3R'
     PEDIATRIA = 'PED'
     PSICOLOGIA = 'PSI'
-    INDEPENDIENTES = 'IND'
+    DR_ALCARAZ = 'ALC'
+    DRA_FERNANDEZ = 'FER'
 
     ESPECIALIDADES = (
-        (PROGRAMA_3R_MASQUELIER, 'Programa 3R - MASQUELIER'),
+        (PROGRAMA_3R_MASQUELIER, 'Médicos - MASQUELIER'),
         (NUTRICION, 'Nutrición'),
         (PROGRAMA_3R_SAGA, 'Programa 3R - SAGA'),
         (PEDIATRIA, 'Pediatría'),
         (PSICOLOGIA, 'Psicología'),
-        (INDEPENDIENTES, 'Independientes')
+        (DR_ALCARAZ, 'Dr. Alcaraz'),
+        (DRA_FERNANDEZ, 'Dra. Fernandez')
     )

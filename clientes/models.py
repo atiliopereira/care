@@ -7,6 +7,9 @@ from clientes.constants import Parto, LactanciaMaterna, Antibioticos, VaDeCuerpo
 
 
 class Cliente(models.Model):
+    class Meta:
+        verbose_name = "Paciente"
+        verbose_name_plural = 'Pacientes'
     nombre = models.CharField(max_length=100, verbose_name="Nombre")
     documento = models.CharField(max_length=20, null=True, blank=True)
     telefono = models.CharField(max_length=50, null=True, blank=True, verbose_name="teléfono")

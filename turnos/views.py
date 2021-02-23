@@ -17,12 +17,10 @@ class TurnosAgendaListView(ListView):
     def get_queryset(self):
         turnos = self.queryset
         fecha = self.request.GET.get('fecha', datetime.date.today().strftime("%Y-%m-%d"))
-        print(turnos)
         if fecha != '':
             turnos = turnos.filter(fecha=fecha)
 
         especialidad = self.request.GET.get('especialidad', 'NON')
-        print(especialidad)
         if especialidad != 'NON':
             turnos = turnos.filter(especialidad=especialidad)
 
