@@ -19,10 +19,10 @@ class TurnoAdmin(admin.ModelAdmin):
     list_display = ('id', 'fecha', 'hora_inicio', 'hora_finalizacion', 'cliente', 'box')
     list_filter = (('fecha', DateRangeFilter), )
     autocomplete_fields = ('cliente', )
-    inlines = (DetalleTurnoInline,)
     form = TurnoForm
     actions = None
 
     def response_add(self, request, obj, post_url_continue=None):
         fecha = request.POST['fecha']
-        return redirect('/admin/turnos/agenda/?fecha=' + fecha[6:10] + '-' + fecha[3:5] + '-' + fecha[0:2] )
+        especialidad = request.POST['especialidad']
+        return redirect(f'/admin/turnos/agenda/?fecha={fecha[6:10]}-{fecha[3:5]}-{fecha[0:2]}&especialidad={especialidad}')
