@@ -36,8 +36,13 @@
             border-radius: 5px;
         }
     </style>
+    <script>
+    $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();
+    });
+    </script>
 
-<h1 style="text-align:center; color: black">{{ object.nombre }}</h1>
+<h1 style="text-align:center; color: black">{{ object.nombre }} <a href="/admin/clientes/cliente/{{ object.pk|eliminar_separador_miles }}" class="icon-block" data-toggle="tooltip" title="Editar ficha de paciente"> <i class="fa fa-pencil"></i></a></h1>
 
 	<div class="w3-card-4" style="width:60%;margin-left:auto;margin-right:auto;">
         <header class="w3-container w3-light-grey">
@@ -45,7 +50,7 @@
         </header>
 
         <div class="w3-container">
-            <table summary="Datos del Cliente.">
+            <table summary="Datos del Paciente">
                 <tbody>
                     <tr>
                         <th scope="row"> Documento </th>
@@ -105,47 +110,576 @@
         </div>
     </div>
 
-<table id="result_list" class="table table-striped table-bordered table-hover table-condensed">
-	<caption><h2>Historial</h2></caption>
+    <div class="w3-card-4" style="width:60%;margin-left:auto;margin-right:auto;">
+        <header class="w3-container w3-light-grey">
+          <h4 style="text-align:center">Historial médico</h4>
+        </header>
+        <div class="w3-container">
+            <table summary="Historial médico">
+                <tbody>
+                    <tr>
+                        <th scope="row"> Parto </th>
+                        <td>
+                            {{ object.get_parto_display }}
+                        </td>
+                    </tr>
 
-	<thead>
-		<tr>
-			<th>Fecha</th>
-			<th>Comentarios</th>
-            <th>Archivo adjunto</th>
-            <th>Servicios realizados</th>
-        </tr>
-	</thead>
+                    <tr>
+                        <th scope="row"> Lactancia Materna </th>
+                        <td>
+                            {{ object.get_lactancia_materna_display }}
+                        </td>
+                    </tr>
 
-	<tbody>
-		{% for sesion in sesiones %}
-		<tr>
-			<td><a href="/admin/servicios/ordendetrabajo/{{ sesion.pk|eliminar_separador_miles }}/change/">{{ sesion.fecha }}</a></td>
-            <td>
-                {% if sesion.comentarios %}
-                    {{ sesion.comentarios }}
-                {% else %}
-                    -
-                {% endif %}
-            </td>
-            <td>
-                {% if sesion.adjunto %}
-                    Si
-                {% else %}
-                    No
-                {% endif %}
-            </td>
-            <td>
-                {% for detalle in detalles_sesiones %}
-                    {% if detalle.orden_de_trabajo.id == sesion.id %}
-                        {{ detalle.servicio.descripcion }}
-                        <br>
+                    <tr>
+                        <th scope="row"> Antibióticos   ¿Tomo en reiteradas ocasiones (más de 5) antibioticos antes de los 5 años de vida?</th>
+                        <td>
+                            {{ object.get_antibioticos_en_infancia_display }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <table summary="COMORBILIDADES">
+                <thead style="color: gray">
+                    <th style="text-align: center">Comorbilidades</th>
+                </thead>
+
+                <tbody>
+                    {% if not object.hipertension_arterial and not object.diabetes_mellitus_tipo_2 and not object.dislipidemia and not object.hipotiroidismo and not object.hipertiroidismo and not object.tiroiditis and not object.rinitis_alergica and not object.asma and not object.gastritis and not object.sindrome_del_intestino_irritable and not object.celiaquia and not object.transtorno_de_ansiedad and not object.sindrome_de_panico and not object.depresion and not object.anemia and not object.sindrome_de_ovario_poliquistico and not object.otras_comorbolidades %}
+                        <tr>
+                            <td scope="row">᛫ No presenta </td>
+                        </tr>
                     {% endif %}
-                {% endfor %}
-            </td>
-		</tr>
-		{% endfor %}
-	</tbody>
-</table>
+                    {% if object.hipertension_arterial %}
+                        <tr>
+                            <td scope="row">᛫ Hipertensión Arterial </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.diabetes_mellitus_tipo_2 %}
+                        <tr>
+                            <td scope="row">᛫ Diabetes Mellitus Tipo 2 </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.dislipidemia %}
+                        <tr>
+                            <td scope="row">᛫ Dislipidemia </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.hipotiroidismo %}
+                        <tr>
+                            <td scope="row">᛫ Hipotiroidismo </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.hipertiroidismo %}
+                        <tr>
+                            <td scope="row">᛫ Hipertiroidismo </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.tiroiditis %}
+                        <tr>
+                            <td scope="row">᛫ Tiroiditis </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.rinitis_alergica %}
+                        <tr>
+                            <td scope="row">᛫ Rinitis alérgica </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.asma %}
+                        <tr>
+                            <td scope="row">᛫ Asma </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.gastritis %}
+                        <tr>
+                            <td scope="row">᛫ Gastritis </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.sindrome_del_intestino_irritable %}
+                        <tr>
+                            <td scope="row">᛫ Síndrome del instestino irritable </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.celiaquia %}
+                        <tr>
+                            <td scope="row">᛫ Celiaquía </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.transtorno_de_ansiedad %}
+                        <tr>
+                            <td scope="row">᛫ Transtorno de ansiedad </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.sindrome_de_panico %}
+                        <tr>
+                            <td scope="row">᛫ Síndrome de pánico </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.depresion %}
+                        <tr>
+                            <td scope="row">᛫ Depresión </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.anemia %}
+                        <tr>
+                            <td scope="row">᛫ Anemia </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.sindrome_de_ovario_poliquistico %}
+                        <tr>
+                            <td scope="row">᛫ Síndrome de ovario poliquístico </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.otras_comorbolidades %}
+                        <tr>
+                            <td scope="row">᛫ {{ object.otras_comorbolidades }} </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <table summary="CIRUGIAS">
+                <thead style="color: gray">
+                    <th style="text-align: center">Cirugías</th>
+                </thead>
+
+                <tbody>
+                    {% if not object.adenoides and not object.amigdalectomia and not object.apendicectomia and not object.histerectomia and not object.hemorroides and not object.colecistectomia and not object.otras_cirugias %}
+                        <tr>
+                            <td scope="row">᛫ No presenta </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.adenoides %}
+                        <tr>
+                            <td scope="row">᛫ Adenoides </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.amigdalectomia %}
+                        <tr>
+                            <td scope="row">᛫ Amigdalectomía </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.apendicectomia %}
+                        <tr>
+                            <td scope="row">᛫ Apendicectomía </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.histerectomia %}
+                        <tr>
+                            <td scope="row">᛫ Histerectomía (útero)</td>
+                        </tr>
+                    {% endif %}
+                    {% if object.hemorroides %}
+                        <tr>
+                            <td scope="row">᛫ Hemorroides </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.colecistectomia %}
+                        <tr>
+                            <td scope="row">᛫ Colecistectomía (Vesícula Biliar)</td>
+                        </tr>
+                    {% endif %}
+                    {% if object.otras_cirugias %}
+                        <tr>
+                            <td scope="row">᛫ {{ object.otras_cirugias }} </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <table summary="MEDICAMENTOS">
+                <thead style="color: gray">
+                    <th style="text-align: center">Medicamentos</th>
+                </thead>
+
+                <tbody>
+                    {% if not object.antibioticos and not object.corticoides and not object.antidepresivos and not object.anticonceptivos and not object.inhibidor_de_bomba_de_protones and not object.metformina and not object.quimioterapia and not object.analgesicos and not object.otros_medicamentos %}
+                        <tr>
+                            <td scope="row">᛫ No presenta </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.antibioticos %}
+                        <tr>
+                            <td scope="row">᛫ Antibióticos </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.corticoides %}
+                        <tr>
+                            <td scope="row">᛫ Corticoides </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.antidepresivos %}
+                        <tr>
+                            <td scope="row">᛫ Antidepresivos </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.anticonceptivos %}
+                        <tr>
+                            <td scope="row">᛫ Anticonceptivos</td>
+                        </tr>
+                    {% endif %}
+                    {% if object.inhibidor_de_bomba_de_protones %}
+                        <tr>
+                            <td scope="row">᛫ Inhibidor de bomba de protónes (Omeprazol o similar)</td>
+                        </tr>
+                    {% endif %}
+                    {% if object.metformina %}
+                        <tr>
+                            <td scope="row">᛫ Metformina</td>
+                        </tr>
+                    {% endif %}
+                    {% if object.quimioterapia %}
+                        <tr>
+                            <td scope="row">᛫ Quimioterápia</td>
+                        </tr>
+                    {% endif %}
+                    {% if object.analgesicos %}
+                        <tr>
+                            <td scope="row">᛫ Analgésicos</td>
+                        </tr>
+                    {% endif %}
+                    {% if object.otros_medicamentos %}
+                        <tr>
+                            <td scope="row">᛫ {{ object.otros_medicamentos }} </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="w3-card-4" style="width:60%;margin-left:auto;margin-right:auto;">
+        <header class="w3-container w3-light-grey">
+          <h4 style="text-align:center">Actualmente presenta</h4>
+        </header>
+        <div>
+            <table summary="Sistema nervioso">
+                <thead style="color: gray">
+                    <th style="text-align: center">Sistema Nervioso</th>
+                </thead>
+
+                <tbody>
+                    {% if not object.cefalea and not object.cansancio_o_fatiga and not object.insomnio and not object.se_despierta_por_las_noches and not object.bruxismo and not object.perdida_de_memoria and not object.falta_de_concentracion and not object.mareos and not object.irritabilidad and not object.ansiedad and not object.abombamiento %}
+                        <tr>
+                            <td scope="row">᛫ No presenta </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.cefalea %}
+                        <tr>
+                            <td scope="row">᛫ Cefalea </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.cansancio_o_fatiga %}
+                        <tr>
+                            <td scope="row">᛫ Cansancio o fatiga </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.insomnio %}
+                        <tr>
+                            <td scope="row">᛫ Insomnio </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.se_despierta_por_las_noches %}
+                        <tr>
+                            <td scope="row">᛫ Se despierta por las noches </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.bruxismo %}
+                        <tr>
+                            <td scope="row">᛫ Bruxismo (apretar los dientes) </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.perdida_de_memoria %}
+                        <tr>
+                            <td scope="row">᛫ Pérdida de memoria </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.falta_de_concentracion %}
+                        <tr>
+                            <td scope="row">᛫ Falta de concentración </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.mareos %}
+                        <tr>
+                            <td scope="row">᛫ Mareos </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.irritabilidad %}
+                        <tr>
+                            <td scope="row">᛫ Irritabilidad </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.ansiedad %}
+                        <tr>
+                            <td scope="row">᛫ Ansiedad </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.abombamiento %}
+                        <tr>
+                            <td scope="row">᛫ Abombamiento </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+        <div>
+            <table summary="Aparato respiratorio">
+                <thead style="color: gray">
+                    <th style="text-align: center">Aparato Respiratorio</th>
+                </thead>
+
+                <tbody>
+                    {% if not object.congestion_nasal and not object.estornudos and not object.tos_cronica and not object.sibilancias and not object.frecuente_sensacion_de_limpiar_la_garganta %}
+                        <tr>
+                            <td scope="row">᛫ No presenta </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.congestion_nasal %}
+                        <tr>
+                            <td scope="row">᛫ Congestión nasal </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.estornudos %}
+                        <tr>
+                            <td scope="row">᛫ Estornudos </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.tos_cronica %}
+                        <tr>
+                            <td scope="row">᛫ Tos crónica </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.sibilancias %}
+                        <tr>
+                            <td scope="row">᛫ Sibilancias (chillidos en el pecho)</td>
+                        </tr>
+                    {% endif %}
+                    {% if object.frecuente_sensacion_de_limpiar_la_garganta %}
+                        <tr>
+                            <td scope="row">᛫ Frecuente sensación de limpiar la garganta </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <table summary="Aparato circulatorio">
+                <thead style="color: gray">
+                    <th style="text-align: center">Aparato circulatorio</th>
+                </thead>
+
+                <tbody>
+                    {% if not object.retencion_de_liquidos and not object.palpitaciones and not object.varices and not object.manos_y_pies_frias %}
+                        <tr>
+                            <td scope="row">᛫ No presenta </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.retencion_de_liquidos %}
+                        <tr>
+                            <td scope="row">᛫ Retención de líquidos </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.palpitaciones %}
+                        <tr>
+                            <td scope="row">᛫ Palpitaciones </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.varices %}
+                        <tr>
+                            <td scope="row">᛫ Várices </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.manos_y_pies_frias %}
+                        <tr>
+                            <td scope="row">᛫ Manos y pies frías</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <table summary="Aparato digestivo">
+                <thead style="color: gray">
+                    <th style="text-align: center">Aparato digestivo</th>
+                </thead>
+
+                <tbody>
+                    {% if not object.aftas_en_la_boca and not object.halitosis and not object.acides_estomacal and not object.nauseas and not object.vomitos and not object.dolor_abdominal and not object.distencion_abdominal and not object.reflujo and not object.diarreas and not object.estrenimiento %}
+                        <tr>
+                            <td scope="row">᛫ No presenta </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.aftas_en_la_boca %}
+                        <tr>
+                            <td scope="row">᛫ Aftas en la boca </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.halitosis %}
+                        <tr>
+                            <td scope="row">᛫ Halitosis </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.acides_estomacal %}
+                        <tr>
+                            <td scope="row">᛫ Acidez estomacal </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.nauseas %}
+                        <tr>
+                            <td scope="row">᛫ Nauseas</td>
+                        </tr>
+                    {% endif %}
+                    {% if object.vomitos %}
+                        <tr>
+                            <td scope="row">᛫ Vómitos</td>
+                        </tr>
+                    {% endif %}
+                    {% if object.dolor_abdominal %}
+                        <tr>
+                            <td scope="row">᛫ Dolor abdominal</td>
+                        </tr>
+                    {% endif %}
+                    {% if object.distencion_abdominal %}
+                        <tr>
+                            <td scope="row">᛫ Distención abdominal</td>
+                        </tr>
+                    {% endif %}
+                    {% if object.reflujo %}
+                        <tr>
+                            <td scope="row">᛫ Reflujo</td>
+                        </tr>
+                    {% endif %}
+                    {% if object.diarreas %}
+                        <tr>
+                            <td scope="row">᛫ Diarreas</td>
+                        </tr>
+                    {% endif %}
+                    {% if object.estrenimiento %}
+                        <tr>
+                            <td scope="row">᛫ Estreñimiento</td>
+                        </tr>
+                    {% endif %}
+                    <tr>
+                        <td scope="row"> Va de cuerpo cada </td>
+                        <td>
+                            {{ object.get_va_de_cuerpo_cada_display }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td scope="row"> Forma </td>
+                        <td>
+                            {{ object.forma_de_materia_fecal }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <table summary="Aparato tegumentario">
+                <thead style="color: gray">
+                    <th style="text-align: center">Aparato tegumentario</th>
+                </thead>
+
+                <tbody>
+                    {% if not object.alergias_en_el_rostro and not object.alergias_en_la_piel and not object.acne %}
+                        <tr>
+                            <td scope="row">᛫ No presenta </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.alergias_en_el_rostro %}
+                        <tr>
+                            <td scope="row">᛫ Alergias en el rostro </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.alergias_en_la_piel %}
+                        <tr>
+                            <td scope="row">᛫ Alergias en la piel </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.acne %}
+                        <tr>
+                            <td scope="row">᛫ Acné </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <table summary="Aparato oteomuscular">
+                <thead style="color: gray">
+                    <th style="text-align: center">Aparato osteomuscular</th>
+                </thead>
+
+                <tbody>
+                    {% if not object.dolor_articular %}
+                        <tr>
+                            <td scope="row">᛫ No presenta </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.dolor_articular %}
+                        <tr>
+                            <td scope="row">᛫ Dolor articular </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="w3-card-4" style="width:60%;margin-left:auto;margin-right:auto;">
+
+        <div class="w3-container">
+            <table summary="Bio resonancia cuántica">
+                <tbody>
+                    <tr>
+                        <th scope="row"> Bio resonancia cuántica </th>
+                        <td>
+                            {{ object.bio_resonancia_cuantica }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <caption><h2 style="text-align:center">Historial de Consultas</h2></caption>
+    <div class="w3-card-4" style="width:90%;margin-left:auto;margin-right:auto;">
+        <table style="width: 100%">
+            <tr>
+                <th>Fecha</th>
+                <th>Motivo de consulta</th>
+                <th>Comentarios</th>
+                <th>Archivo adjunto</th>
+            </tr>
+
+            {% for sesion in sesiones %}
+                <tr>
+                    <td><a href="/admin/servicios/ordendetrabajo/{{ sesion.pk|eliminar_separador_miles }}/change/">{{ sesion.fecha }}</a></td>
+                    <td>
+                        motivo de consulta
+                    </td>
+                    <td>
+                        {% if sesion.comentarios %}
+                            {{ sesion.comentarios }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if sesion.adjunto %}
+                            Si
+                        {% else %}
+                            No
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+    </table>
+    </div>
 
 {% endblock %}

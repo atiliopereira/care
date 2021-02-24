@@ -13,7 +13,7 @@ class DatoFacturacionInline(admin.TabularInline):
 @register(Cliente)
 class ClienteAdmin(admin.ModelAdmin):
     search_fields = ('nombre', )
-    list_display = ('nombre', 'documento', 'telefono', 'nacimiento', 'acciones')
+    list_display = ('editar', 'ver', 'nombre', 'documento', 'telefono')
     inlines = (DatoFacturacionInline, )
     actions = None
     fieldsets = (
@@ -148,6 +148,10 @@ class ClienteAdmin(admin.ModelAdmin):
         }),
     )
 
-    def acciones(self, obj):
-        html = '<a href="/admin/clientes/cliente_detail/%s">Ver</a>'%obj.pk
+    def editar(self, obj):
+        html = '<a href="/admin/clientes/cliente/%s" class="icon-block"> <i class="fa fa-edit"></i></a>' % obj.pk
+        return mark_safe(html)
+
+    def ver(self, obj):
+        html = '<a href="/admin/clientes/cliente_detail/%s" class="icon-block"> <i class="fa fa-eye"></i></a>' % obj.pk
         return mark_safe(html)
