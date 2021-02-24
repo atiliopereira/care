@@ -661,7 +661,7 @@
                 <tr>
                     <td><a href="/admin/servicios/ordendetrabajo/{{ sesion.pk|eliminar_separador_miles }}/change/">{{ sesion.fecha }}</a></td>
                     <td>
-                        motivo de consulta
+                        {{ sesion.motivo_de_consulta }}
                     </td>
                     <td>
                         {% if sesion.comentarios %}
