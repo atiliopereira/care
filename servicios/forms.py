@@ -1,6 +1,8 @@
 from django import forms
+from django.contrib.admin.widgets import AdminDateWidget
 
 from servicios.models import DetalleOrdenDeTrabajo, OrdenDeTrabajo
+from turnos.constants import BoxTurno
 
 
 class OrdenDeTrabajoForm(forms.ModelForm):
@@ -16,6 +18,17 @@ class OrdenDeTrabajoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(OrdenDeTrabajoForm, self).__init__(*args, **kwargs)
         self.fields['total'].widget.attrs['readonly'] = True
+
+
+
+class OrdendetrabajoSearchForm(forms.Form):
+    BOXES_EMPTY = (('', '---------'),)
+    cliente = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Cliente', 'style': 'width:220px;'}))
+    motivo = forms.CharField(required=False,
+                             widget=forms.TextInput(attrs={'placeholder': 'Motivo', 'style': 'width:120px;'}))
+    profesional = forms.ChoiceField(choices=BOXES_EMPTY + BoxTurno.BOXES, label='Profesional', required=False)
+    desde = forms.DateField(widget=AdminDateWidget(attrs={'placeholder': 'Desde'}), required=False)
+    hasta = forms.DateField(widget=AdminDateWidget(attrs={'placeholder': 'Hasta'}), required=False)
 
 
 class DetalleOrdenDeTrabajoForm(forms.ModelForm):

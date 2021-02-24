@@ -30,6 +30,7 @@ class OrdenDeTrabajo(models.Model):
     fecha = models.DateField(default=datetime.date.today, editable=False)
     hora = models.TimeField(default=datetime.datetime.now, editable=False)
     cliente = models.ForeignKey('clientes.Cliente', on_delete=models.PROTECT, verbose_name="Paciente")
+    motivo_de_consulta = models.CharField(max_length=300, blank=True, null=True)
     total = models.DecimalField(max_digits=15, decimal_places=0, default=0, editable=False)
     estado_facturacion = models.CharField(max_length=2, choices=EstadoFacturacion.ESTADOS,
                                           default=EstadoFacturacion.NO_FACTURADO, editable=False)

@@ -2,6 +2,7 @@
 from datetime import date
 
 from django.db import models
+from django.apps import apps
 
 from clientes.constants import Parto, LactanciaMaterna, Antibioticos, VaDeCuerpo
 
@@ -86,7 +87,7 @@ class Cliente(models.Model):
     ##APARATO DIGESTIVO
     aftas_en_la_boca = models.BooleanField(default=False)
     halitosis = models.BooleanField(default=False)
-    acides_estomacal = models.BooleanField(default=False)
+    acides_estomacal = models.BooleanField(default=False, verbose_name="acidez estomacal")
     nauseas = models.BooleanField(default=False)
     vomitos = models.BooleanField(default=False)
     dolor_abdominal = models.BooleanField(default=False)
@@ -117,6 +118,14 @@ class Cliente(models.Model):
         today = date.today()
         return today.year - self.nacimiento.year - (
                 (today.month, today.day) < (self.nacimiento.month, self.nacimiento.day))
+
+    def get_profesional_responsable(self):
+        ultimo_turno = apps.get_model("turnos", "Turno").objects.filter(cliente=self).last()
+        if ultimo_turno:
+            return ultimo_turno.get_box_display()
+        else:
+            return 'No asignado'
+    get_profesional_responsable.short_description = "Profesional Responsable"
 
 
 class DatoFacturacion(models.Model):
