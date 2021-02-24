@@ -8,6 +8,8 @@ class BoxTurno:
     BOX_4 = 'box_4'
     BOX_5 = 'box_5'
     BOX_6 = 'box_6'
+    BOX_19 = 'box_19'
+    BOX_18 = 'box_18'
     BOX_7 = 'box_7'
     BOX_8 = 'box_8'
     BOX_9 = 'box_9'
@@ -18,10 +20,8 @@ class BoxTurno:
     BOX_14 = 'box_14'
     BOX_15 = 'box_15'
     BOX_16 = 'box_16'
-    BOX_17 = 'box_17'
-    BOX_18 = 'box_18'
-    BOX_19 = 'box_19'
     BOX_20 = 'box_20'
+    BOX_17 = 'box_17'
 
     BOXES = (
         (BOX_1, 'Dr. Pablo Peña'),
@@ -31,6 +31,7 @@ class BoxTurno:
         (BOX_5, 'Lic. Cynthia Aquino'),
         (BOX_6, 'Lic. Adriana Peralta'),
         (BOX_19, 'Lic. Oriana Pereira'),
+        (BOX_18, 'Lic. Sol Jara'),
         (BOX_7, 'Dra. Silvana Alfieri'),
         (BOX_8, 'Dra. Tatiana Roy'),
         (BOX_9, 'Dra. Andrea Ramirez'),
@@ -41,9 +42,8 @@ class BoxTurno:
         (BOX_14, 'Lic. Bettina Madelaire'),
         (BOX_15, 'Dr. Arias'),
         (BOX_16, 'Dr. Giacomo Cruzants'),
+        (BOX_20, 'Dr. Alcaraz'),
         (BOX_17, 'Dra. Fernandez'),
-        (BOX_18, 'Lic. Sol Jara'),
-        (BOX_20, 'Dr. Alcaraz')
     )
 
 

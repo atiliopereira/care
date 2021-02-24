@@ -13,7 +13,7 @@ class DatoFacturacionInline(admin.TabularInline):
 @register(Cliente)
 class ClienteAdmin(admin.ModelAdmin):
     search_fields = ('nombre', )
-    list_display = ('editar', 'ver', 'nombre', 'documento', 'telefono')
+    list_display = ('editar', 'ver', 'nombre', 'documento', 'telefono', 'get_profesional_responsable')
     inlines = (DatoFacturacionInline, )
     actions = None
     fieldsets = (
