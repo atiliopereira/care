@@ -86,7 +86,7 @@ class Cliente(models.Model):
     ##APARATO DIGESTIVO
     aftas_en_la_boca = models.BooleanField(default=False)
     halitosis = models.BooleanField(default=False)
-    acides_estomacal = models.BooleanField(default=False)
+    acides_estomacal = models.BooleanField(default=False, verbose_name="acidez estomacal")
     nauseas = models.BooleanField(default=False)
     vomitos = models.BooleanField(default=False)
     dolor_abdominal = models.BooleanField(default=False)
