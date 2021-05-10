@@ -157,7 +157,8 @@
                         <td>
                             {% for turno in object_list %}
                                 {% if turno.box == "box_1" and turno.hora_inicio|hora_a_minutos == 540 and turno.hora_inicio|hora_a_minutos < 570 %}
-                                     {{ "<!--" }}
+                                    <a href="/admin/turnos/cancelar_turno/{{ turno.pk }}" class="icon-block"> <i class="fa fa-ban fa-2x" style="color:red"></i> Cancelar</a>
+                                    {{ "<!--" }}
                                 {% elif turno.box == "box_1" and turno.hora_inicio|hora_a_minutos < 540 and turno.hora_finalizacion|hora_a_minutos >= 570 %}
                                     {{ "<!--" }}
                                 {% endif %}
@@ -594,7 +595,7 @@
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
-                            {% if nro_de_dia == 5 %}
+                            {% if nro_de_dia != 3 %}
                                 <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=box_1&especialidad=M3R&repeticiones=0&hora_inicio=12:00&hora_finalizacion=12:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                                 <font style="opacity: 0">{{ "-->" }}</font>
                             {% endif %}
@@ -666,7 +667,10 @@
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
-                            <font style="opacity: 0">{{ "-->" }}</font>
+                            {% if nro_de_dia != 3 %}
+                                <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=box_1&especialidad=M3R&repeticiones=0&hora_inicio=12:30&hora_finalizacion=13:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                                <font style="opacity: 0">{{ "-->" }}</font>
+                            {% endif %}
                         </td>
                         <td>
                             {% for turno in object_list %}
@@ -1176,7 +1180,7 @@
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
-                            {% if nro_de_dia == 1 or nro_de_dia == 3 %}
+                            {% if nro_de_dia == 1 or nro_de_dia == 3 or nro_de_dia == 4 %}
                                 <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=box_1&especialidad=M3R&repeticiones=0&hora_inicio=15:30&hora_finalizacion=16:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                                 <font style="opacity: 0">{{ "-->" }}</font>
                             {% endif %}
@@ -1269,7 +1273,7 @@
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
-                            {% if nro_de_dia == 1 or nro_de_dia == 3 %}
+                            {% if nro_de_dia == 1 or nro_de_dia == 3 or nro_de_dia == 4 %}
                                 <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=box_1&especialidad=M3R&repeticiones=0&hora_inicio=16:00&hora_finalizacion=16:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                                 <font style="opacity: 0">{{ "-->" }}</font>
                             {% endif %}
@@ -1333,7 +1337,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_1" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 990 and turno.hora_inicio|hora_a_minutos < 1020 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -1342,7 +1346,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_2" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 990 and turno.hora_inicio|hora_a_minutos < 1020 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -1351,7 +1355,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_3" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 990 and turno.hora_inicio|hora_a_minutos < 1020 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -1364,22 +1368,22 @@
                         <td>16:30</td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_1" and turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
+                                {% if turno.box == "box_1" and turno.hora_inicio|hora_a_minutos >= 990 and turno.hora_inicio|hora_a_minutos < 1020 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_1" and turno.hora_inicio|hora_a_minutos < 1020 and turno.hora_finalizacion|hora_a_minutos >= 1050 %}
+                                {% elif turno.box == "box_1" and turno.hora_inicio|hora_a_minutos < 990 and turno.hora_finalizacion|hora_a_minutos >= 1020 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
-                            {% if nro_de_dia == 1 or nro_de_dia == 3 %}
+                            {% if nro_de_dia == 1 or nro_de_dia == 3 or nro_de_dia == 4 %}
                                 <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=box_1&especialidad=M3R&repeticiones=0&hora_inicio=16:30&hora_finalizacion=17:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                                 <font style="opacity: 0">{{ "-->" }}</font>
                             {% endif %}
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_2" and turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
+                                {% if turno.box == "box_2" and turno.hora_inicio|hora_a_minutos >= 990 and turno.hora_inicio|hora_a_minutos < 1020 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_2" and turno.hora_inicio|hora_a_minutos < 1020 and turno.hora_finalizacion|hora_a_minutos >= 1050 %}
+                                {% elif turno.box == "box_2" and turno.hora_inicio|hora_a_minutos < 990 and turno.hora_finalizacion|hora_a_minutos >= 1020 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -1390,9 +1394,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_3" and turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
+                                {% if turno.box == "box_3" and turno.hora_inicio|hora_a_minutos >= 990 and turno.hora_inicio|hora_a_minutos < 1020 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_3" and turno.hora_inicio|hora_a_minutos < 1020 and turno.hora_finalizacion|hora_a_minutos >= 1050 %}
+                                {% elif turno.box == "box_3" and turno.hora_inicio|hora_a_minutos < 990 and turno.hora_finalizacion|hora_a_minutos >= 1020 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -1410,7 +1414,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_1" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -1419,7 +1423,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_2" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -1428,7 +1432,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_3" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -1437,7 +1441,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_15" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -1446,7 +1450,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_16" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -1457,22 +1461,22 @@
                         <td>17:00</td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_1" and turno.hora_inicio|hora_a_minutos == 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
+                                {% if turno.box == "box_1" and turno.hora_inicio|hora_a_minutos == 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_1" and turno.hora_inicio|hora_a_minutos < 1050 and turno.hora_finalizacion|hora_a_minutos >= 1080 %}
+                                {% elif turno.box == "box_1" and turno.hora_inicio|hora_a_minutos < 1020 and turno.hora_finalizacion|hora_a_minutos >= 1050 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
-                            {% if nro_de_dia == 1 or nro_de_dia == 3 %}
+                            {% if nro_de_dia == 1 or nro_de_dia == 3 or nro_de_dia == 4 %}
                                 <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=box_1&especialidad=M3R&repeticiones=0&hora_inicio=17:00&hora_finalizacion=17:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                                 <font style="opacity: 0">{{ "-->" }}</font>
                             {% endif %}
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_2" and turno.hora_inicio|hora_a_minutos == 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
+                                {% if turno.box == "box_2" and turno.hora_inicio|hora_a_minutos == 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_2" and turno.hora_inicio|hora_a_minutos < 1050 and turno.hora_finalizacion|hora_a_minutos >= 1080 %}
+                                {% elif turno.box == "box_2" and turno.hora_inicio|hora_a_minutos < 1020 and turno.hora_finalizacion|hora_a_minutos >= 1050 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -1483,9 +1487,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_3" and turno.hora_inicio|hora_a_minutos == 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
+                                {% if turno.box == "box_3" and turno.hora_inicio|hora_a_minutos == 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_3" and turno.hora_inicio|hora_a_minutos < 1050 and turno.hora_finalizacion|hora_a_minutos >= 1080 %}
+                                {% elif turno.box == "box_3" and turno.hora_inicio|hora_a_minutos < 1020 and turno.hora_finalizacion|hora_a_minutos >= 1050 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -1496,9 +1500,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_15" and turno.hora_inicio|hora_a_minutos == 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
+                                {% if turno.box == "box_15" and turno.hora_inicio|hora_a_minutos == 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_15" and turno.hora_inicio|hora_a_minutos < 1050 and turno.hora_finalizacion|hora_a_minutos >= 1080 %}
+                                {% elif turno.box == "box_15" and turno.hora_inicio|hora_a_minutos < 1020 and turno.hora_finalizacion|hora_a_minutos >= 1050 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -1509,9 +1513,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_16" and turno.hora_inicio|hora_a_minutos == 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
+                                {% if turno.box == "box_16" and turno.hora_inicio|hora_a_minutos == 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_16" and turno.hora_inicio|hora_a_minutos < 1050 and turno.hora_finalizacion|hora_a_minutos >= 1080 %}
+                                {% elif turno.box == "box_16" and turno.hora_inicio|hora_a_minutos < 1020 and turno.hora_finalizacion|hora_a_minutos >= 1050 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -1527,7 +1531,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_1" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -1536,7 +1540,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_2" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -1545,7 +1549,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_3" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -1558,22 +1562,22 @@
                         <td>17:30</td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_1" and turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
+                                {% if turno.box == "box_1" and turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_1" and turno.hora_inicio|hora_a_minutos < 1080 and turno.hora_finalizacion|hora_a_minutos >= 1110 %}
+                                {% elif turno.box == "box_1" and turno.hora_inicio|hora_a_minutos < 1050 and turno.hora_finalizacion|hora_a_minutos >= 1080 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
-                            {% if nro_de_dia == 1 or nro_de_dia == 3 %}
+                            {% if nro_de_dia == 1 or nro_de_dia == 3 or nro_de_dia == 4 %}
                                 <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=box_1&especialidad=M3R&repeticiones=0&hora_inicio=17:30&hora_finalizacion=18:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                                 <font style="opacity: 0">{{ "-->" }}</font>
                             {% endif %}
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_2" and turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
+                                {% if turno.box == "box_2" and turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_2" and turno.hora_inicio|hora_a_minutos < 1080 and turno.hora_finalizacion|hora_a_minutos >= 1110 %}
+                                {% elif turno.box == "box_2" and turno.hora_inicio|hora_a_minutos < 1050 and turno.hora_finalizacion|hora_a_minutos >= 1080 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -1584,9 +1588,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_3" and turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
+                                {% if turno.box == "box_3" and turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_3" and turno.hora_inicio|hora_a_minutos < 1080 and turno.hora_finalizacion|hora_a_minutos >= 1110 %}
+                                {% elif turno.box == "box_3" and turno.hora_inicio|hora_a_minutos < 1050 and turno.hora_finalizacion|hora_a_minutos >= 1080 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -1604,7 +1608,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_1" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -1613,7 +1617,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_2" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -1622,7 +1626,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_3" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -1631,7 +1635,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_15" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -1640,7 +1644,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_16" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -1651,22 +1655,22 @@
                         <td>18:00</td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_1" and turno.hora_inicio|hora_a_minutos == 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
+                                {% if turno.box == "box_1" and turno.hora_inicio|hora_a_minutos == 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_1" and turno.hora_inicio|hora_a_minutos < 1110 and turno.hora_finalizacion|hora_a_minutos >= 1140 %}
+                                {% elif turno.box == "box_1" and turno.hora_inicio|hora_a_minutos < 1080 and turno.hora_finalizacion|hora_a_minutos >= 1110 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
-                            {% if nro_de_dia == 3 %}
+                            {% if nro_de_dia == 3 or nro_de_dia == 1 %}
                                 <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=box_1&especialidad=M3R&repeticiones=0&hora_inicio=18:00&hora_finalizacion=18:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                                 <font style="opacity: 0">{{ "-->" }}</font>
                             {% endif %}
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_2" and turno.hora_inicio|hora_a_minutos == 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
+                                {% if turno.box == "box_2" and turno.hora_inicio|hora_a_minutos == 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_2" and turno.hora_inicio|hora_a_minutos < 1110 and turno.hora_finalizacion|hora_a_minutos >= 1140 %}
+                                {% elif turno.box == "box_2" and turno.hora_inicio|hora_a_minutos < 1080 and turno.hora_finalizacion|hora_a_minutos >= 1110 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -1674,9 +1678,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_3" and turno.hora_inicio|hora_a_minutos == 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
+                                {% if turno.box == "box_3" and turno.hora_inicio|hora_a_minutos == 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_3" and turno.hora_inicio|hora_a_minutos < 1110 and turno.hora_finalizacion|hora_a_minutos >= 1140 %}
+                                {% elif turno.box == "box_3" and turno.hora_inicio|hora_a_minutos < 1080 and turno.hora_finalizacion|hora_a_minutos >= 1110 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -1687,9 +1691,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_15" and turno.hora_inicio|hora_a_minutos == 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
+                                {% if turno.box == "box_15" and turno.hora_inicio|hora_a_minutos == 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_15" and turno.hora_inicio|hora_a_minutos < 1110 and turno.hora_finalizacion|hora_a_minutos >= 1140 %}
+                                {% elif turno.box == "box_15" and turno.hora_inicio|hora_a_minutos < 1080 and turno.hora_finalizacion|hora_a_minutos >= 1110 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -1700,9 +1704,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_16" and turno.hora_inicio|hora_a_minutos == 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
+                                {% if turno.box == "box_16" and turno.hora_inicio|hora_a_minutos == 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_16" and turno.hora_inicio|hora_a_minutos < 1110 and turno.hora_finalizacion|hora_a_minutos >= 1140 %}
+                                {% elif turno.box == "box_16" and turno.hora_inicio|hora_a_minutos < 1080 and turno.hora_finalizacion|hora_a_minutos >= 1110 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -1718,8 +1722,8 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_1" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1140 and turno.hora_inicio|hora_a_minutos < 1170 %}
-                                        <b>{{ turno.cliente.nombre }} </b> {% else %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
+                                        <b>{{ turno.cliente.nombre }}</b> {% else %}
                                     {% endif %}
                                 {% endif %}
                             {% endfor %}
@@ -1727,7 +1731,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_2" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1140 and turno.hora_inicio|hora_a_minutos < 1170 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -1736,7 +1740,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_3" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1140 and turno.hora_inicio|hora_a_minutos < 1170 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -1749,9 +1753,22 @@
                         <td>18:30</td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_1" and turno.hora_inicio|hora_a_minutos >= 1140 and turno.hora_inicio|hora_a_minutos < 1170 %}
+                                {% if turno.box == "box_1" and turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
+                                    {{ "<!--" }}
+                                {% elif turno.box == "box_1" and turno.hora_inicio|hora_a_minutos < 1110 and turno.hora_finalizacion|hora_a_minutos >= 1140 %}
+                                    {{ "<!--" }}
+                                {% endif %}
+                            {% endfor %}
+                            {% if nro_de_dia == 3 %}
+                                <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=box_1&especialidad=M3R&repeticiones=0&hora_inicio=18:30&hora_finalizacion=19:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                                <font style="opacity: 0">{{ "-->" }}</font>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% for turno in object_list %}
+                                {% if turno.box == "box_2" and turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_1" and turno.hora_inicio|hora_a_minutos < 1140 and turno.hora_finalizacion|hora_a_minutos >= 1170 %}
+                                {% elif turno.box == "box_2" and turno.hora_inicio|hora_a_minutos < 1110 and turno.hora_finalizacion|hora_a_minutos >= 1140 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -1759,19 +1776,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_2" and turno.hora_inicio|hora_a_minutos >= 1140 and turno.hora_inicio|hora_a_minutos < 1170 %}
+                                {% if turno.box == "box_3" and turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_2" and turno.hora_inicio|hora_a_minutos < 1140 and turno.hora_finalizacion|hora_a_minutos >= 1170 %}
-                                    {{ "<!--" }}
-                                {% endif %}
-                            {% endfor %}
-                            <font style="opacity: 0">{{ "-->" }}</font>
-                        </td>
-                        <td>
-                            {% for turno in object_list %}
-                                {% if turno.box == "box_3" and turno.hora_inicio|hora_a_minutos >= 1140 and turno.hora_inicio|hora_a_minutos < 1170 %}
-                                     {{ "<!--" }}
-                                {% elif turno.box == "box_3" and turno.hora_inicio|hora_a_minutos < 1140 and turno.hora_finalizacion|hora_a_minutos >= 1170 %}
+                                {% elif turno.box == "box_3" and turno.hora_inicio|hora_a_minutos < 1110 and turno.hora_finalizacion|hora_a_minutos >= 1140 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -1781,6 +1788,7 @@
                         <td></td>
                     </tr>
                 {% endif %}
+
                 {% if 'NUT' in especialidad %}
                     <tr>
                         <td style="border-bottom: none"></td>
@@ -3059,7 +3067,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_4" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 990 and turno.hora_inicio|hora_a_minutos < 1020 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -3068,7 +3076,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_5" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 990 and turno.hora_inicio|hora_a_minutos < 1020 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -3077,7 +3085,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_6" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 990 and turno.hora_inicio|hora_a_minutos < 1020 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -3090,9 +3098,9 @@
                         <td>16:30</td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_4" and turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
+                                {% if turno.box == "box_4" and turno.hora_inicio|hora_a_minutos >= 990 and turno.hora_inicio|hora_a_minutos < 1020 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_4" and turno.hora_inicio|hora_a_minutos < 1020 and turno.hora_finalizacion|hora_a_minutos >= 1050 %}
+                                {% elif turno.box == "box_4" and turno.hora_inicio|hora_a_minutos < 990 and turno.hora_finalizacion|hora_a_minutos >= 1020 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -3100,9 +3108,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_5" and turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
+                                {% if turno.box == "box_5" and turno.hora_inicio|hora_a_minutos >= 990 and turno.hora_inicio|hora_a_minutos < 1020 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_5" and turno.hora_inicio|hora_a_minutos < 1020 and turno.hora_finalizacion|hora_a_minutos >= 1050 %}
+                                {% elif turno.box == "box_5" and turno.hora_inicio|hora_a_minutos < 990 and turno.hora_finalizacion|hora_a_minutos >= 1020 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -3110,9 +3118,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_6" and turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
+                                {% if turno.box == "box_6" and turno.hora_inicio|hora_a_minutos >= 990 and turno.hora_inicio|hora_a_minutos < 1020 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_6" and turno.hora_inicio|hora_a_minutos < 1020 and turno.hora_finalizacion|hora_a_minutos >= 1050 %}
+                                {% elif turno.box == "box_6" and turno.hora_inicio|hora_a_minutos < 990 and turno.hora_finalizacion|hora_a_minutos >= 1020 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -3127,7 +3135,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_4" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -3136,7 +3144,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_5" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -3145,7 +3153,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_6" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -3154,7 +3162,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_19" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -3166,9 +3174,9 @@
                         <td>17:00</td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_4" and turno.hora_inicio|hora_a_minutos == 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
+                                {% if turno.box == "box_4" and turno.hora_inicio|hora_a_minutos == 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_4" and turno.hora_inicio|hora_a_minutos < 1050 and turno.hora_finalizacion|hora_a_minutos >= 1080 %}
+                                {% elif turno.box == "box_4" and turno.hora_inicio|hora_a_minutos < 1020 and turno.hora_finalizacion|hora_a_minutos >= 1050 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -3179,9 +3187,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_5" and turno.hora_inicio|hora_a_minutos == 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
+                                {% if turno.box == "box_5" and turno.hora_inicio|hora_a_minutos == 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_5" and turno.hora_inicio|hora_a_minutos < 1050 and turno.hora_finalizacion|hora_a_minutos >= 1080 %}
+                                {% elif turno.box == "box_5" and turno.hora_inicio|hora_a_minutos < 1020 and turno.hora_finalizacion|hora_a_minutos >= 1050 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -3192,9 +3200,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_6" and turno.hora_inicio|hora_a_minutos == 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
+                                {% if turno.box == "box_6" and turno.hora_inicio|hora_a_minutos == 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_6" and turno.hora_inicio|hora_a_minutos < 1050 and turno.hora_finalizacion|hora_a_minutos >= 1080 %}
+                                {% elif turno.box == "box_6" and turno.hora_inicio|hora_a_minutos < 1020 and turno.hora_finalizacion|hora_a_minutos >= 1050 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -3205,9 +3213,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_19" and turno.hora_inicio|hora_a_minutos == 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
+                                {% if turno.box == "box_19" and turno.hora_inicio|hora_a_minutos == 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_19" and turno.hora_inicio|hora_a_minutos < 1050 and turno.hora_finalizacion|hora_a_minutos >= 1080 %}
+                                {% elif turno.box == "box_19" and turno.hora_inicio|hora_a_minutos < 1020 and turno.hora_finalizacion|hora_a_minutos >= 1050 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -3224,7 +3232,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_4" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -3233,7 +3241,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_5" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -3242,7 +3250,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_6" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -3255,9 +3263,9 @@
                         <td>17:30</td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_4" and turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
+                                {% if turno.box == "box_4" and turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_4" and turno.hora_inicio|hora_a_minutos < 1080 and turno.hora_finalizacion|hora_a_minutos >= 1110 %}
+                                {% elif turno.box == "box_4" and turno.hora_inicio|hora_a_minutos < 1050 and turno.hora_finalizacion|hora_a_minutos >= 1080 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -3265,9 +3273,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_5" and turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
+                                {% if turno.box == "box_5" and turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_5" and turno.hora_inicio|hora_a_minutos < 1080 and turno.hora_finalizacion|hora_a_minutos >= 1110 %}
+                                {% elif turno.box == "box_5" and turno.hora_inicio|hora_a_minutos < 1050 and turno.hora_finalizacion|hora_a_minutos >= 1080 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -3275,9 +3283,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_6" and turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
+                                {% if turno.box == "box_6" and turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_6" and turno.hora_inicio|hora_a_minutos < 1080 and turno.hora_finalizacion|hora_a_minutos >= 1110 %}
+                                {% elif turno.box == "box_6" and turno.hora_inicio|hora_a_minutos < 1050 and turno.hora_finalizacion|hora_a_minutos >= 1080 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -3292,7 +3300,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_4" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -3301,7 +3309,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_5" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -3310,7 +3318,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_6" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -3319,7 +3327,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_19" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -3331,9 +3339,9 @@
                         <td>18:00</td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_4" and turno.hora_inicio|hora_a_minutos == 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
+                                {% if turno.box == "box_4" and turno.hora_inicio|hora_a_minutos == 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_4" and turno.hora_inicio|hora_a_minutos < 1110 and turno.hora_finalizacion|hora_a_minutos >= 1140 %}
+                                {% elif turno.box == "box_4" and turno.hora_inicio|hora_a_minutos < 1080 and turno.hora_finalizacion|hora_a_minutos >= 1110 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -3344,9 +3352,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_5" and turno.hora_inicio|hora_a_minutos == 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
+                                {% if turno.box == "box_5" and turno.hora_inicio|hora_a_minutos == 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_5" and turno.hora_inicio|hora_a_minutos < 1110 and turno.hora_finalizacion|hora_a_minutos >= 1140 %}
+                                {% elif turno.box == "box_5" and turno.hora_inicio|hora_a_minutos < 1080 and turno.hora_finalizacion|hora_a_minutos >= 1110 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -3357,9 +3365,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_6" and turno.hora_inicio|hora_a_minutos == 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
+                                {% if turno.box == "box_6" and turno.hora_inicio|hora_a_minutos == 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_6" and turno.hora_inicio|hora_a_minutos < 1110 and turno.hora_finalizacion|hora_a_minutos >= 1140 %}
+                                {% elif turno.box == "box_6" and turno.hora_inicio|hora_a_minutos < 1080 and turno.hora_finalizacion|hora_a_minutos >= 1110 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -3370,9 +3378,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_19" and turno.hora_inicio|hora_a_minutos == 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
+                                {% if turno.box == "box_19" and turno.hora_inicio|hora_a_minutos == 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_19" and turno.hora_inicio|hora_a_minutos < 1110 and turno.hora_finalizacion|hora_a_minutos >= 1140 %}
+                                {% elif turno.box == "box_19" and turno.hora_inicio|hora_a_minutos < 1080 and turno.hora_finalizacion|hora_a_minutos >= 1110 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -3389,7 +3397,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_4" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1140 and turno.hora_inicio|hora_a_minutos < 1170 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -3398,7 +3406,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_5" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1140 and turno.hora_inicio|hora_a_minutos < 1170 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -3407,7 +3415,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_6" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1140 and turno.hora_inicio|hora_a_minutos < 1170 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -3420,9 +3428,9 @@
                         <td>18:30</td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_4" and turno.hora_inicio|hora_a_minutos >= 1140 and turno.hora_inicio|hora_a_minutos < 1170 %}
+                                {% if turno.box == "box_4" and turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_4" and turno.hora_inicio|hora_a_minutos < 1140 and turno.hora_finalizacion|hora_a_minutos >= 1170 %}
+                                {% elif turno.box == "box_4" and turno.hora_inicio|hora_a_minutos < 1110 and turno.hora_finalizacion|hora_a_minutos >= 1140 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -3430,9 +3438,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_5" and turno.hora_inicio|hora_a_minutos >= 1140 and turno.hora_inicio|hora_a_minutos < 1170 %}
+                                {% if turno.box == "box_5" and turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_5" and turno.hora_inicio|hora_a_minutos < 1140 and turno.hora_finalizacion|hora_a_minutos >= 1170 %}
+                                {% elif turno.box == "box_5" and turno.hora_inicio|hora_a_minutos < 1110 and turno.hora_finalizacion|hora_a_minutos >= 1140 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -3440,9 +3448,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_6" and turno.hora_inicio|hora_a_minutos >= 1140 and turno.hora_inicio|hora_a_minutos < 1170 %}
+                                {% if turno.box == "box_6" and turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_6" and turno.hora_inicio|hora_a_minutos < 1140 and turno.hora_finalizacion|hora_a_minutos >= 1170 %}
+                                {% elif turno.box == "box_6" and turno.hora_inicio|hora_a_minutos < 1110 and turno.hora_finalizacion|hora_a_minutos >= 1140 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -3452,6 +3460,7 @@
                         <td></td>
                     </tr>
                 {% endif %}
+
                 {% if 'S3R' in especialidad %}
                     <tr>
                         <td style="border-bottom: none"></td>
@@ -4145,7 +4154,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_7" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 990 and turno.hora_inicio|hora_a_minutos < 1020 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -4154,7 +4163,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_8" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 990 and turno.hora_inicio|hora_a_minutos < 1020 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -4165,9 +4174,9 @@
                         <td>16:30</td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_7" and turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
+                                {% if turno.box == "box_7" and turno.hora_inicio|hora_a_minutos >= 990 and turno.hora_inicio|hora_a_minutos < 1020 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_7" and turno.hora_inicio|hora_a_minutos < 1020 and turno.hora_finalizacion|hora_a_minutos >= 1050 %}
+                                {% elif turno.box == "box_7" and turno.hora_inicio|hora_a_minutos < 990 and turno.hora_finalizacion|hora_a_minutos >= 1020 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -4175,9 +4184,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_8" and turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
+                                {% if turno.box == "box_8" and turno.hora_inicio|hora_a_minutos >= 990 and turno.hora_inicio|hora_a_minutos < 1020 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_8" and turno.hora_inicio|hora_a_minutos < 1020 and turno.hora_finalizacion|hora_a_minutos >= 1050 %}
+                                {% elif turno.box == "box_8" and turno.hora_inicio|hora_a_minutos < 990 and turno.hora_finalizacion|hora_a_minutos >= 1020 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -4193,7 +4202,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_7" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -4202,7 +4211,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_8" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -4213,9 +4222,9 @@
                         <td>17:00</td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_7" and turno.hora_inicio|hora_a_minutos == 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
+                                {% if turno.box == "box_7" and turno.hora_inicio|hora_a_minutos == 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_7" and turno.hora_inicio|hora_a_minutos < 1050 and turno.hora_finalizacion|hora_a_minutos >= 1080 %}
+                                {% elif turno.box == "box_7" and turno.hora_inicio|hora_a_minutos < 1020 and turno.hora_finalizacion|hora_a_minutos >= 1050 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -4226,9 +4235,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_8" and turno.hora_inicio|hora_a_minutos == 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
+                                {% if turno.box == "box_8" and turno.hora_inicio|hora_a_minutos == 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_8" and turno.hora_inicio|hora_a_minutos < 1050 and turno.hora_finalizacion|hora_a_minutos >= 1080 %}
+                                {% elif turno.box == "box_8" and turno.hora_inicio|hora_a_minutos < 1020 and turno.hora_finalizacion|hora_a_minutos >= 1050 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -4241,7 +4250,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_7" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -4250,7 +4259,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_8" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -4261,9 +4270,9 @@
                         <td>17:30</td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_7" and turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
+                                {% if turno.box == "box_7" and turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_7" and turno.hora_inicio|hora_a_minutos < 1080 and turno.hora_finalizacion|hora_a_minutos >= 1110 %}
+                                {% elif turno.box == "box_7" and turno.hora_inicio|hora_a_minutos < 1050 and turno.hora_finalizacion|hora_a_minutos >= 1080 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -4271,9 +4280,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_8" and turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
+                                {% if turno.box == "box_8" and turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_8" and turno.hora_inicio|hora_a_minutos < 1080 and turno.hora_finalizacion|hora_a_minutos >= 1110 %}
+                                {% elif turno.box == "box_8" and turno.hora_inicio|hora_a_minutos < 1050 and turno.hora_finalizacion|hora_a_minutos >= 1080 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -4289,7 +4298,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_7" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -4298,7 +4307,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_8" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -4309,9 +4318,9 @@
                         <td>18:00</td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_7" and turno.hora_inicio|hora_a_minutos == 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
+                                {% if turno.box == "box_7" and turno.hora_inicio|hora_a_minutos == 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_7" and turno.hora_inicio|hora_a_minutos < 1110 and turno.hora_finalizacion|hora_a_minutos >= 1140 %}
+                                {% elif turno.box == "box_7" and turno.hora_inicio|hora_a_minutos < 1080 and turno.hora_finalizacion|hora_a_minutos >= 1110 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -4322,9 +4331,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_8" and turno.hora_inicio|hora_a_minutos == 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
+                                {% if turno.box == "box_8" and turno.hora_inicio|hora_a_minutos == 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_8" and turno.hora_inicio|hora_a_minutos < 1110 and turno.hora_finalizacion|hora_a_minutos >= 1140 %}
+                                {% elif turno.box == "box_8" and turno.hora_inicio|hora_a_minutos < 1080 and turno.hora_finalizacion|hora_a_minutos >= 1110 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -4337,7 +4346,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_7" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1140 and turno.hora_inicio|hora_a_minutos < 1170 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -4346,7 +4355,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_8" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1140 and turno.hora_inicio|hora_a_minutos < 1170 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -4357,9 +4366,9 @@
                         <td>18:30</td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_7" and turno.hora_inicio|hora_a_minutos >= 1140 and turno.hora_inicio|hora_a_minutos < 1170 %}
+                                {% if turno.box == "box_7" and turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_7" and turno.hora_inicio|hora_a_minutos < 1140 and turno.hora_finalizacion|hora_a_minutos >= 1170 %}
+                                {% elif turno.box == "box_7" and turno.hora_inicio|hora_a_minutos < 1110 and turno.hora_finalizacion|hora_a_minutos >= 1140 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -4370,9 +4379,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_8" and turno.hora_inicio|hora_a_minutos >= 1140 and turno.hora_inicio|hora_a_minutos < 1170 %}
+                                {% if turno.box == "box_8" and turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_8" and turno.hora_inicio|hora_a_minutos < 1140 and turno.hora_finalizacion|hora_a_minutos >= 1170 %}
+                                {% elif turno.box == "box_8" and turno.hora_inicio|hora_a_minutos < 1110 and turno.hora_finalizacion|hora_a_minutos >= 1140 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -4383,6 +4392,7 @@
                         </td>
                     </tr>
                 {% endif %}
+
                 {% if 'PED' in especialidad %}
                     <tr>
                         <td style="border-bottom: none"></td>
@@ -5694,7 +5704,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_9" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 990 and turno.hora_inicio|hora_a_minutos < 1020 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -5703,7 +5713,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_10" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 990 and turno.hora_inicio|hora_a_minutos < 1020 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -5712,7 +5722,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_11" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 990 and turno.hora_inicio|hora_a_minutos < 1020 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -5721,7 +5731,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_12" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 990 and turno.hora_inicio|hora_a_minutos < 1020 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -5732,9 +5742,9 @@
                         <td>16:30</td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_9" and turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
+                                {% if turno.box == "box_9" and turno.hora_inicio|hora_a_minutos >= 990 and turno.hora_inicio|hora_a_minutos < 1020 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_9" and turno.hora_inicio|hora_a_minutos < 1020 and turno.hora_finalizacion|hora_a_minutos >= 1050 %}
+                                {% elif turno.box == "box_9" and turno.hora_inicio|hora_a_minutos < 990 and turno.hora_finalizacion|hora_a_minutos >= 1020 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -5742,9 +5752,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_10" and turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
+                                {% if turno.box == "box_10" and turno.hora_inicio|hora_a_minutos >= 990 and turno.hora_inicio|hora_a_minutos < 1020 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_10" and turno.hora_inicio|hora_a_minutos < 1020 and turno.hora_finalizacion|hora_a_minutos >= 1050 %}
+                                {% elif turno.box == "box_10" and turno.hora_inicio|hora_a_minutos < 990 and turno.hora_finalizacion|hora_a_minutos >= 1020 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -5752,9 +5762,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_11" and turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
+                                {% if turno.box == "box_11" and turno.hora_inicio|hora_a_minutos >= 990 and turno.hora_inicio|hora_a_minutos < 1020 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_11" and turno.hora_inicio|hora_a_minutos < 1020 and turno.hora_finalizacion|hora_a_minutos >= 1050 %}
+                                {% elif turno.box == "box_11" and turno.hora_inicio|hora_a_minutos < 990 and turno.hora_finalizacion|hora_a_minutos >= 1020 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -5762,9 +5772,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_12" and turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
+                                {% if turno.box == "box_12" and turno.hora_inicio|hora_a_minutos >= 990 and turno.hora_inicio|hora_a_minutos < 1020 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_12" and turno.hora_inicio|hora_a_minutos < 1020 and turno.hora_finalizacion|hora_a_minutos >= 1050 %}
+                                {% elif turno.box == "box_12" and turno.hora_inicio|hora_a_minutos < 990 and turno.hora_finalizacion|hora_a_minutos >= 1020 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -5777,7 +5787,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_9" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -5786,7 +5796,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_10" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -5795,7 +5805,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_11" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -5804,7 +5814,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_12" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -5815,9 +5825,9 @@
                         <td>17:00</td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_9" and turno.hora_inicio|hora_a_minutos == 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
+                                {% if turno.box == "box_9" and turno.hora_inicio|hora_a_minutos == 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_9" and turno.hora_inicio|hora_a_minutos < 1050 and turno.hora_finalizacion|hora_a_minutos >= 1080 %}
+                                {% elif turno.box == "box_9" and turno.hora_inicio|hora_a_minutos < 1020 and turno.hora_finalizacion|hora_a_minutos >= 1050 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -5828,9 +5838,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_10" and turno.hora_inicio|hora_a_minutos == 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
+                                {% if turno.box == "box_10" and turno.hora_inicio|hora_a_minutos == 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_10" and turno.hora_inicio|hora_a_minutos < 1050 and turno.hora_finalizacion|hora_a_minutos >= 1080 %}
+                                {% elif turno.box == "box_10" and turno.hora_inicio|hora_a_minutos < 1020 and turno.hora_finalizacion|hora_a_minutos >= 1050 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -5841,9 +5851,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_11" and turno.hora_inicio|hora_a_minutos == 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
+                                {% if turno.box == "box_11" and turno.hora_inicio|hora_a_minutos == 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_11" and turno.hora_inicio|hora_a_minutos < 1050 and turno.hora_finalizacion|hora_a_minutos >= 1080 %}
+                                {% elif turno.box == "box_11" and turno.hora_inicio|hora_a_minutos < 1020 and turno.hora_finalizacion|hora_a_minutos >= 1050 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -5854,9 +5864,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_12" and turno.hora_inicio|hora_a_minutos == 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
+                                {% if turno.box == "box_12" and turno.hora_inicio|hora_a_minutos == 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_12" and turno.hora_inicio|hora_a_minutos < 1050 and turno.hora_finalizacion|hora_a_minutos >= 1080 %}
+                                {% elif turno.box == "box_12" and turno.hora_inicio|hora_a_minutos < 1020 and turno.hora_finalizacion|hora_a_minutos >= 1050 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -5872,7 +5882,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_9" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -5881,7 +5891,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_10" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -5890,7 +5900,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_11" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -5899,7 +5909,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_12" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -5910,9 +5920,9 @@
                         <td>17:30</td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_9" and turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
+                                {% if turno.box == "box_9" and turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_9" and turno.hora_inicio|hora_a_minutos < 1080 and turno.hora_finalizacion|hora_a_minutos >= 1110 %}
+                                {% elif turno.box == "box_9" and turno.hora_inicio|hora_a_minutos < 1050 and turno.hora_finalizacion|hora_a_minutos >= 1080 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -5920,9 +5930,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_10" and turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
+                                {% if turno.box == "box_10" and turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_10" and turno.hora_inicio|hora_a_minutos < 1080 and turno.hora_finalizacion|hora_a_minutos >= 1110 %}
+                                {% elif turno.box == "box_10" and turno.hora_inicio|hora_a_minutos < 1050 and turno.hora_finalizacion|hora_a_minutos >= 1080 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -5930,9 +5940,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_11" and turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
+                                {% if turno.box == "box_11" and turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_11" and turno.hora_inicio|hora_a_minutos < 1080 and turno.hora_finalizacion|hora_a_minutos >= 1110 %}
+                                {% elif turno.box == "box_11" and turno.hora_inicio|hora_a_minutos < 1050 and turno.hora_finalizacion|hora_a_minutos >= 1080 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -5940,9 +5950,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_12" and turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
+                                {% if turno.box == "box_12" and turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_12" and turno.hora_inicio|hora_a_minutos < 1080 and turno.hora_finalizacion|hora_a_minutos >= 1110 %}
+                                {% elif turno.box == "box_12" and turno.hora_inicio|hora_a_minutos < 1050 and turno.hora_finalizacion|hora_a_minutos >= 1080 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -5958,7 +5968,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_9" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -5967,7 +5977,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_10" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -5976,7 +5986,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_11" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -5985,7 +5995,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_12" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -5996,9 +6006,9 @@
                         <td>18:00</td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_9" and turno.hora_inicio|hora_a_minutos == 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
+                                {% if turno.box == "box_9" and turno.hora_inicio|hora_a_minutos == 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_9" and turno.hora_inicio|hora_a_minutos < 1110 and turno.hora_finalizacion|hora_a_minutos >= 1140 %}
+                                {% elif turno.box == "box_9" and turno.hora_inicio|hora_a_minutos < 1080 and turno.hora_finalizacion|hora_a_minutos >= 1110 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -6009,9 +6019,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_10" and turno.hora_inicio|hora_a_minutos == 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
+                                {% if turno.box == "box_10" and turno.hora_inicio|hora_a_minutos == 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_10" and turno.hora_inicio|hora_a_minutos < 1110 and turno.hora_finalizacion|hora_a_minutos >= 1140 %}
+                                {% elif turno.box == "box_10" and turno.hora_inicio|hora_a_minutos < 1080 and turno.hora_finalizacion|hora_a_minutos >= 1110 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -6022,9 +6032,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_11" and turno.hora_inicio|hora_a_minutos == 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
+                                {% if turno.box == "box_11" and turno.hora_inicio|hora_a_minutos == 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_11" and turno.hora_inicio|hora_a_minutos < 1110 and turno.hora_finalizacion|hora_a_minutos >= 1140 %}
+                                {% elif turno.box == "box_11" and turno.hora_inicio|hora_a_minutos < 1080 and turno.hora_finalizacion|hora_a_minutos >= 1110 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -6035,9 +6045,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_12" and turno.hora_inicio|hora_a_minutos == 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
+                                {% if turno.box == "box_12" and turno.hora_inicio|hora_a_minutos == 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_12" and turno.hora_inicio|hora_a_minutos < 1110 and turno.hora_finalizacion|hora_a_minutos >= 1140 %}
+                                {% elif turno.box == "box_12" and turno.hora_inicio|hora_a_minutos < 1080 and turno.hora_finalizacion|hora_a_minutos >= 1110 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -6053,7 +6063,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_9" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1140 and turno.hora_inicio|hora_a_minutos < 1170 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -6062,7 +6072,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_10" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1140 and turno.hora_inicio|hora_a_minutos < 1170 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -6071,7 +6081,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_11" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1140 and turno.hora_inicio|hora_a_minutos < 1170 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -6080,7 +6090,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_12" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1140 and turno.hora_inicio|hora_a_minutos < 1170 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -6091,9 +6101,9 @@
                         <td>18:30</td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_9" and turno.hora_inicio|hora_a_minutos >= 1140 and turno.hora_inicio|hora_a_minutos < 1170 %}
+                                {% if turno.box == "box_9" and turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_9" and turno.hora_inicio|hora_a_minutos < 1140 and turno.hora_finalizacion|hora_a_minutos >= 1170 %}
+                                {% elif turno.box == "box_9" and turno.hora_inicio|hora_a_minutos < 1110 and turno.hora_finalizacion|hora_a_minutos >= 1140 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -6101,9 +6111,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_10" and turno.hora_inicio|hora_a_minutos >= 1140 and turno.hora_inicio|hora_a_minutos < 1170 %}
+                                {% if turno.box == "box_10" and turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_10" and turno.hora_inicio|hora_a_minutos < 1140 and turno.hora_finalizacion|hora_a_minutos >= 1170 %}
+                                {% elif turno.box == "box_10" and turno.hora_inicio|hora_a_minutos < 1110 and turno.hora_finalizacion|hora_a_minutos >= 1140 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -6111,9 +6121,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_11" and turno.hora_inicio|hora_a_minutos >= 1140 and turno.hora_inicio|hora_a_minutos < 1170 %}
+                                {% if turno.box == "box_11" and turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_11" and turno.hora_inicio|hora_a_minutos < 1140 and turno.hora_finalizacion|hora_a_minutos >= 1170 %}
+                                {% elif turno.box == "box_11" and turno.hora_inicio|hora_a_minutos < 1110 and turno.hora_finalizacion|hora_a_minutos >= 1140 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -6121,9 +6131,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_12" and turno.hora_inicio|hora_a_minutos >= 1140 and turno.hora_inicio|hora_a_minutos < 1170 %}
+                                {% if turno.box == "box_12" and turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_12" and turno.hora_inicio|hora_a_minutos < 1140 and turno.hora_finalizacion|hora_a_minutos >= 1170 %}
+                                {% elif turno.box == "box_12" and turno.hora_inicio|hora_a_minutos < 1110 and turno.hora_finalizacion|hora_a_minutos >= 1140 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -6134,6 +6144,7 @@
                         </td>
                     </tr>
                 {% endif %}
+
                 {% if 'PSI' in especialidad %}
                     <tr>
                         <td style="border-bottom: none"></td>
@@ -6827,7 +6838,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_13" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 990 and turno.hora_inicio|hora_a_minutos < 1020 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -6836,7 +6847,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_14" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 990 and turno.hora_inicio|hora_a_minutos < 1020 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -6847,9 +6858,9 @@
                         <td>16:30</td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_13" and turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
+                                {% if turno.box == "box_13" and turno.hora_inicio|hora_a_minutos >= 990 and turno.hora_inicio|hora_a_minutos < 1020 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_13" and turno.hora_inicio|hora_a_minutos < 1020 and turno.hora_finalizacion|hora_a_minutos >= 1050 %}
+                                {% elif turno.box == "box_13" and turno.hora_inicio|hora_a_minutos < 990 and turno.hora_finalizacion|hora_a_minutos >= 1020 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -6857,9 +6868,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_14" and turno.hora_inicio|hora_a_minutos >= 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
+                                {% if turno.box == "box_14" and turno.hora_inicio|hora_a_minutos >= 990 and turno.hora_inicio|hora_a_minutos < 1020 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_14" and turno.hora_inicio|hora_a_minutos < 1020 and turno.hora_finalizacion|hora_a_minutos >= 1050 %}
+                                {% elif turno.box == "box_14" and turno.hora_inicio|hora_a_minutos < 990 and turno.hora_finalizacion|hora_a_minutos >= 1020 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -6872,7 +6883,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_13" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 990 and turno.hora_inicio|hora_a_minutos < 1020 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -6881,7 +6892,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_14" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 990 and turno.hora_inicio|hora_a_minutos < 1020 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -6892,9 +6903,9 @@
                         <td>17:00</td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_13" and turno.hora_inicio|hora_a_minutos == 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
+                                {% if turno.box == "box_13" and turno.hora_inicio|hora_a_minutos == 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_13" and turno.hora_inicio|hora_a_minutos < 1050 and turno.hora_finalizacion|hora_a_minutos >= 1080 %}
+                                {% elif turno.box == "box_13" and turno.hora_inicio|hora_a_minutos < 1020 and turno.hora_finalizacion|hora_a_minutos >= 1050 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -6905,9 +6916,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_14" and turno.hora_inicio|hora_a_minutos == 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
+                                {% if turno.box == "box_14" and turno.hora_inicio|hora_a_minutos == 1020 and turno.hora_inicio|hora_a_minutos < 1050 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_14" and turno.hora_inicio|hora_a_minutos < 1050 and turno.hora_finalizacion|hora_a_minutos >= 1080 %}
+                                {% elif turno.box == "box_14" and turno.hora_inicio|hora_a_minutos < 1020 and turno.hora_finalizacion|hora_a_minutos >= 1050 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -6921,7 +6932,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_13" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -6930,7 +6941,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_14" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -6941,9 +6952,9 @@
                         <td>17:30</td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_13" and turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
+                                {% if turno.box == "box_13" and turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_13" and turno.hora_inicio|hora_a_minutos < 1080 and turno.hora_finalizacion|hora_a_minutos >= 1110 %}
+                                {% elif turno.box == "box_13" and turno.hora_inicio|hora_a_minutos < 1050 and turno.hora_finalizacion|hora_a_minutos >= 1080 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -6951,9 +6962,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_14" and turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
+                                {% if turno.box == "box_14" and turno.hora_inicio|hora_a_minutos >= 1050 and turno.hora_inicio|hora_a_minutos < 1080 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_14" and turno.hora_inicio|hora_a_minutos < 1080 and turno.hora_finalizacion|hora_a_minutos >= 1110 %}
+                                {% elif turno.box == "box_14" and turno.hora_inicio|hora_a_minutos < 1050 and turno.hora_finalizacion|hora_a_minutos >= 1080 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -6966,7 +6977,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_13" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -6975,7 +6986,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_14" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -6986,9 +6997,9 @@
                         <td>18:00</td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_13" and turno.hora_inicio|hora_a_minutos == 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
+                                {% if turno.box == "box_13" and turno.hora_inicio|hora_a_minutos == 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_13" and turno.hora_inicio|hora_a_minutos < 1110 and turno.hora_finalizacion|hora_a_minutos >= 1140 %}
+                                {% elif turno.box == "box_13" and turno.hora_inicio|hora_a_minutos < 1080 and turno.hora_finalizacion|hora_a_minutos >= 1110 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -6997,9 +7008,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_14" and turno.hora_inicio|hora_a_minutos == 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
+                                {% if turno.box == "box_14" and turno.hora_inicio|hora_a_minutos == 1080 and turno.hora_inicio|hora_a_minutos < 1110 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_14" and turno.hora_inicio|hora_a_minutos < 1110 and turno.hora_finalizacion|hora_a_minutos >= 1140 %}
+                                {% elif turno.box == "box_14" and turno.hora_inicio|hora_a_minutos < 1080 and turno.hora_finalizacion|hora_a_minutos >= 1110 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -7015,7 +7026,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_13" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1140 and turno.hora_inicio|hora_a_minutos < 1170 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -7024,7 +7035,7 @@
                         <td style="border-bottom: none">
                             {% for turno in object_list %}
                                 {% if turno.box == "box_14" %}
-                                    {% if turno.hora_inicio|hora_a_minutos >= 1140 and turno.hora_inicio|hora_a_minutos < 1170 %}
+                                    {% if turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
                                         <b>{{ turno.cliente.nombre }} </b> {% else %}
                                     {% endif %}
                                 {% endif %}
@@ -7035,9 +7046,9 @@
                         <td>18:30</td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_13" and turno.hora_inicio|hora_a_minutos >= 1140 and turno.hora_inicio|hora_a_minutos < 1170 %}
+                                {% if turno.box == "box_13" and turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_13" and turno.hora_inicio|hora_a_minutos < 1140 and turno.hora_finalizacion|hora_a_minutos >= 1170 %}
+                                {% elif turno.box == "box_13" and turno.hora_inicio|hora_a_minutos < 1110 and turno.hora_finalizacion|hora_a_minutos >= 1140 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -7045,9 +7056,9 @@
                         </td>
                         <td>
                             {% for turno in object_list %}
-                                {% if turno.box == "box_14" and turno.hora_inicio|hora_a_minutos >= 1140 and turno.hora_inicio|hora_a_minutos < 1170 %}
+                                {% if turno.box == "box_14" and turno.hora_inicio|hora_a_minutos >= 1110 and turno.hora_inicio|hora_a_minutos < 1140 %}
                                      {{ "<!--" }}
-                                {% elif turno.box == "box_14" and turno.hora_inicio|hora_a_minutos < 1140 and turno.hora_finalizacion|hora_a_minutos >= 1170 %}
+                                {% elif turno.box == "box_14" and turno.hora_inicio|hora_a_minutos < 1110 and turno.hora_finalizacion|hora_a_minutos >= 1140 %}
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
@@ -7055,6 +7066,7 @@
                         </td>
                     </tr>
                 {% endif %}
+
                 {% if 'ALC' in especialidad %}
                     <tr>
                         <td style="border-bottom: none"></td>
@@ -7732,6 +7744,7 @@
                         </td>
                     </tr>
                 {% endif %}
+
                 {% if 'FER' in especialidad %}
                     <tr>
                         <td style="border-bottom: none"></td>
