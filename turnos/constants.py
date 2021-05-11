@@ -65,3 +65,13 @@ class Especialidad:
         (DR_ALCARAZ, 'Dr. Alcaraz'),
         (DRA_FERNANDEZ, 'Dra. Fernandez')
     )
+
+
+class TipoDeTurno:
+    PRIMERA_VEZ = 'pv'
+    CONTROL = 'co'
+
+    TIPOS = (
+        (PRIMERA_VEZ, 'Primera'),
+        (CONTROL, 'Control'),
+    )
