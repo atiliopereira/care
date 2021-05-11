@@ -15,9 +15,10 @@ class Turno(models.Model):
     box = models.CharField(max_length=6, choices=BoxTurno.BOXES, blank=True, null=True)
     especialidad = models.CharField(max_length=3, choices=Especialidad.ESPECIALIDADES)
     repeticiones = models.IntegerField(default=0, null=True, blank=True, verbose_name="Repeticiones semanales")
+    cancelado = models.BooleanField(default=False, editable=False)
 
     def __str__(self):
-        return str(self.fecha.strftime('%d/%m/%Y')) + ' - ' + str(self.hora_inicio.strftime('%H:%M')) + ' | ' + self.cliente.nombre
+        return f'{self.cliente.nombre} {self.fecha.strftime("%d/%m/%Y")} - {self.hora_inicio.strftime("%H:%M")} | {self.get_box_display()}'
 
 
 class DetalleTurno(models.Model):

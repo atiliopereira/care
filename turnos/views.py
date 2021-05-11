@@ -1,6 +1,7 @@
 import datetime
 
 from django.db.models import Count, Sum
+from django.shortcuts import redirect, render
 from django.views.generic import ListView
 
 from clientes.models import Cliente
@@ -12,7 +13,7 @@ class TurnosAgendaListView(ListView):
     model = Turno
     form = AgendaForm()
     template_name = "turnos_por_dia.html"
-    queryset = Turno.objects.all()
+    queryset = Turno.objects.exclude(cancelado=True)
 
     def get_queryset(self):
         turnos = self.queryset
@@ -57,6 +58,22 @@ def dia_en_letras(num):
         return f'Domingo'
     else:
         return None
+
+
+def cancelar_turno(request, pk):
+    turno = Turno.objects.get(pk=pk)
+    if request.method == 'POST':
+        turno.cancelado = True
+        turno.save()
+        fecha = turno.fecha.strftime("%d/%m/%Y")
+        especialidad = turno.especialidad
+        return redirect(
+            f'/admin/turnos/agenda/?fecha={fecha[6:10]}-{fecha[3:5]}-{fecha[0:2]}&especialidad={especialidad}')
+
+    mensaje = f'¿Confirmar cancelación de turno: {turno}?'
+    advertencia = f''
+    return render(request, 'turno_confirm.html', {'mensaje': mensaje, 'advertencia': advertencia})
+
 
 
 

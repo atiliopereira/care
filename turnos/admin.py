@@ -26,3 +26,6 @@ class TurnoAdmin(admin.ModelAdmin):
         fecha = request.POST['fecha']
         especialidad = request.POST['especialidad']
         return redirect(f'/admin/turnos/agenda/?fecha={fecha[6:10]}-{fecha[3:5]}-{fecha[0:2]}&especialidad={especialidad}')
+
+    def has_delete_permission(self, request, obj=None):
+        return False
