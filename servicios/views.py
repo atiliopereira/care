@@ -1,9 +1,11 @@
 from servicios.models import OrdenDeTrabajo
+from sistema.models import Usuario
 from turnos.models import Turno
 
 
 def get_ots_queryset(request, form):
-    qs = OrdenDeTrabajo.objects.all()
+    usuario = Usuario.objects.get(pk=request.user.id)
+    qs = OrdenDeTrabajo.objects.filter(creado_por=usuario.id)
     if form.cleaned_data.get('cliente', ''):
         qs = qs.filter(cliente__nombre__icontains=form.cleaned_data.get('cliente', ''))
     if form.cleaned_data.get('motivo', ''):

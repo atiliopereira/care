@@ -1,6 +1,6 @@
             <!-- /.row -->
             <div id="id_modulos" class="row" style="width:80%;margin-left:auto;margin-right:auto;">
-				{% if request.user.is_superuser %}
+				{% if perms.sistema %}
                     <div class="col-lg-5 col-md-6">
                         <a href="/admin/auth">
                             <div class="card card-hover">
@@ -17,16 +17,20 @@
 
                 {% if perms.turnos %}
                      <div class="col-lg-5 col-md-6">
-                        <a href="/admin/turnos/agenda/">
-                            <div class="card card-hover">
-                                <div class="box text-center" style="background-color: #AFB42B">
+                         {% if not request.user.usuario.box %}
+                            <a href="/admin/turnos/agenda/">
+                         {% else %}
+                            <a href="/admin/turnos/turno/">
+                        {% endif %}
+                                <div class="card card-hover">
                                     <div class="box text-center" style="background-color: #AFB42B">
-                                        <h1 class="font-light text-white"><i class="fa fa-calendar-check fa-4x"></i></h1>
-                                        <h4 class="text-white">TURNOS</h4>
+                                        <div class="box text-center" style="background-color: #AFB42B">
+                                            <h1 class="font-light text-white"><i class="fa fa-calendar-check fa-4x"></i></h1>
+                                            <h4 class="text-white">TURNOS</h4>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </a>
+                            </a>
                     </div>
 
                 {% endif %}
