@@ -16,7 +16,23 @@ class ClienteAdmin(admin.ModelAdmin):
     list_display = ('editar', 'ver', 'nombre', 'documento', 'telefono', 'get_profesional_responsable')
     inlines = (DatoFacturacionInline, )
     actions = None
-    fieldsets = (
+
+    def editar(self, obj):
+        html = '<a href="/admin/clientes/cliente/%s" class="icon-block"> <i class="fa fa-edit"></i></a>' % obj.pk
+        return mark_safe(html)
+
+    def ver(self, obj):
+        html = '<a href="/admin/clientes/cliente_detail/%s" class="icon-block"> <i class="fa fa-eye"></i></a>' % obj.pk
+        return mark_safe(html)
+
+    def get_fieldsets(self, request, obj=None):
+        if request.user.groups.filter(name='profesionales').exists():
+            return self.profesionales_fieldsets
+
+        else:
+            return self.default_fieldsets
+
+    profesionales_fieldsets = (
         (None, {
             'fields': [
                 'nombre',
@@ -148,10 +164,15 @@ class ClienteAdmin(admin.ModelAdmin):
         }),
     )
 
-    def editar(self, obj):
-        html = '<a href="/admin/clientes/cliente/%s" class="icon-block"> <i class="fa fa-edit"></i></a>' % obj.pk
-        return mark_safe(html)
-
-    def ver(self, obj):
-        html = '<a href="/admin/clientes/cliente_detail/%s" class="icon-block"> <i class="fa fa-eye"></i></a>' % obj.pk
-        return mark_safe(html)
+    default_fieldsets = (
+        (None, {
+            'fields': [
+                'nombre',
+                'documento',
+                'telefono',
+                'direccion',
+                'email',
+                'nacimiento',
+            ]
+        }),
+    )
