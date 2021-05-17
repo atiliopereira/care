@@ -40,9 +40,9 @@ class OrdenDeTrabajoAdmin(admin.ModelAdmin):
     formfield_overrides = {
         models.TextField: {'widget': Textarea(
             attrs={'rows': 15,
-                   'cols': 70,
+                   'cols': 50,
                    'style': 'height: 4em;'})},
-        models.CharField: {'widget': TextInput(attrs={'size': '200'})},
+        models.CharField: {'widget': TextInput(attrs={'size': '80'})},
     }
 
     def save_model(self, request, obj, form, change):

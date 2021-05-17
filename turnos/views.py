@@ -5,6 +5,7 @@ from django.shortcuts import redirect, render
 from django.views.generic import ListView
 
 from clientes.models import Cliente
+from sistema.models import Usuario
 from turnos.forms import AgendaForm
 from turnos.models import Turno, DetalleTurno
 
@@ -75,5 +76,18 @@ def cancelar_turno(request, pk):
     return render(request, 'turno_confirm.html', {'mensaje': mensaje, 'advertencia': advertencia})
 
 
-
-
+def get_turnos_queryset(request, form):
+    usuario = Usuario.objects.get(pk=request.user.id)
+    if usuario.box:
+        qs = Turno.objects.exclude(cancelado=True).filter(box=usuario.box)
+    else:
+        qs = Turno.objects.exclude(cancelado=True)
+    if form.cleaned_data.get('box', ''):
+        qs = qs.filter(box=form.cleaned_data.get('box', ''))
+    if form.cleaned_data.get('cliente', ''):
+        qs = qs.filter(cliente__nombre__icontains=form.cleaned_data.get('cliente', ''))
+    if form.cleaned_data.get('desde',''):
+        qs = qs.filter(fecha__gte=form.cleaned_data.get('desde', ''))
+    if form.cleaned_data.get('hasta', ''):
+        qs = qs.filter(fecha__lte=form.cleaned_data.get('hasta', ''))
+    return qs.order_by("fecha")

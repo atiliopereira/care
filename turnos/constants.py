@@ -75,3 +75,17 @@ class TipoDeTurno:
         (PRIMERA_VEZ, 'Primera'),
         (CONTROL, 'Control'),
     )
+
+
+class OpcionesCancelados:
+    TODOS = ''
+    CANCELADOS = 'si'
+    NO_CANCELADOS = 'no'
+
+    OPCIONES = (
+        (NO_CANCELADOS, 'No cancelados'),
+        (TODOS, 'Todos'),
+        (CANCELADOS, 'Cancelados'),
+    )
+
+

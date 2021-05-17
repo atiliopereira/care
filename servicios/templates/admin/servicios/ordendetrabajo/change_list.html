@@ -10,10 +10,15 @@
 {% block object-tools %}
     <ul class="object-tools">
         {% block object-tools-items %}
+            <li>
+                <a style="background-color: #238ae6" href="/admin/turnos/turno/">
+                Ver Turnos <i class="fa fa-calendar"></i>
+                </a>
+            </li>
             {% if has_add_permission %}
              <li>
                 <a href="/admin/servicios/ordendetrabajo/add/" class="addlink">
-                    Añadir Consulta
+                    Nueva Consulta
                 </a>
             </li>
             {% endif %}
