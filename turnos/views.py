@@ -80,15 +80,16 @@ def get_turnos_queryset(request, form):
     qs = Turno.objects.exclude(cancelado=True)
     try:
         usuario = Usuario.objects.get(usuario_id=request.user.id)
+        hoy = datetime.date.today()
         if usuario.box:
-            qs = Turno.objects.exclude(cancelado=True).filter(box=usuario.box)
+            qs = Turno.objects.exclude(cancelado=True).filter(box=usuario.box).filter(fecha__gte=hoy)
     except:
         pass
     if form.cleaned_data.get('box', ''):
         qs = qs.filter(box=form.cleaned_data.get('box', ''))
     if form.cleaned_data.get('cliente', ''):
         qs = qs.filter(cliente__nombre__icontains=form.cleaned_data.get('cliente', ''))
-    if form.cleaned_data.get('desde',''):
+    if form.cleaned_data.get('desde', ''):
         qs = qs.filter(fecha__gte=form.cleaned_data.get('desde', ''))
     if form.cleaned_data.get('hasta', ''):
         qs = qs.filter(fecha__lte=form.cleaned_data.get('hasta', ''))
