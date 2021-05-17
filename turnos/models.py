@@ -11,7 +11,7 @@ class Turno(models.Model):
     fecha = models.DateField(default=datetime.date.today)
     hora_inicio = models.TimeField(default=datetime.datetime.now)
     hora_finalizacion = models.TimeField(blank=True, null=True)
-    cliente = models.ForeignKey('clientes.Cliente', on_delete=models.CASCADE)
+    cliente = models.ForeignKey('clientes.Cliente', on_delete=models.CASCADE, verbose_name="Paciente")
     tipo = models.CharField(max_length=2, choices=TipoDeTurno.TIPOS, default=TipoDeTurno.PRIMERA_VEZ)
     box = models.CharField(max_length=6, choices=BoxTurno.BOXES, blank=True, null=True, verbose_name="Profesional")
     especialidad = models.CharField(max_length=3, choices=Especialidad.ESPECIALIDADES)

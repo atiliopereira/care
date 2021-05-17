@@ -20,7 +20,6 @@ class OrdenDeTrabajoForm(forms.ModelForm):
         self.fields['total'].widget.attrs['readonly'] = True
 
 
-
 class OrdendetrabajoSearchForm(forms.Form):
     BOXES_EMPTY = (('', '---------'),)
     cliente = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Cliente', 'style': 'width:220px;'}))

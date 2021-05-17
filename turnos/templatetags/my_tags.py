@@ -10,6 +10,7 @@ from django.views.generic.dates import timezone_today
 # Django template custom math filters
 # Ref : https://code.djangoproject.com/ticket/361
 # from postman.models import Message
+from cajas.templatetags.caja_tags import advanced_search_form
 from extra.globals import separador_de_miles
 
 register = template.Library()
@@ -44,3 +45,8 @@ def parseador_fecha(fecha):
 @register.filter
 def hora_a_minutos(time):
     return time.hour * 60 + time.minute
+
+
+@register.inclusion_tag('admin/turnos/turno/turno_search_form.html', takes_context=True)
+def turno_search_form(context, cl):
+    return advanced_search_form(context, cl)

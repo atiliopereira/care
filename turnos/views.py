@@ -75,5 +75,19 @@ def cancelar_turno(request, pk):
     return render(request, 'turno_confirm.html', {'mensaje': mensaje, 'advertencia': advertencia})
 
 
-
-
+def get_turnos_queryset(request, form):
+    qs = Turno.objects.all()
+    if form.cleaned_data.get('box', ''):
+        qs = qs.filter(box=form.cleaned_data.get('box', ''))
+    if form.cleaned_data.get('cliente', ''):
+        qs = qs.filter(cliente__nombre__icontains=form.cleaned_data.get('cliente', ''))
+    if form.cleaned_data.get('desde',''):
+        qs = qs.filter(fecha__gte=form.cleaned_data.get('desde', ''))
+    if form.cleaned_data.get('hasta', ''):
+        qs = qs.filter(fecha__lte=form.cleaned_data.get('hasta', ''))
+    if form.cleaned_data.get('cancelado', ''):
+        if 'si' == form.cleaned_data.get('cancelado', ''):
+            qs = qs.filter(cancelado=True)
+        elif 'no' == form.cleaned_data.get('cancelado', ''):
+            qs = qs.filter(cancelado=False)
+    return qs

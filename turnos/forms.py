@@ -3,6 +3,7 @@ import datetime
 from django import forms
 from django.contrib.admin.widgets import AdminDateWidget
 
+from turnos.constants import BoxTurno, OpcionesCancelados
 from turnos.models import Turno
 
 
@@ -12,12 +13,16 @@ class AgendaForm(forms.Form):
 
 
 class TurnoSearchForm(forms.Form):
-    numero = forms.CharField(required=False,
-                             widget=forms.TextInput(attrs={'placeholder': 'Numero', 'style': 'width:120px;'}))
-    cliente = forms.CharField(required=False,
-                              widget=forms.TextInput(attrs={'placeholder': 'Cliente', 'style': 'width:220px;'}))
+    BOXES_EMPTY = (('', '---------'),)
+    box = forms.ChoiceField(choices=BOXES_EMPTY + BoxTurno.BOXES, label='Profesional', required=False)
+    cliente = forms.CharField(required=False, label='Paciente',
+                              widget=forms.TextInput(attrs={'placeholder': 'Nombre y/o Apellido', 'style': 'width:220px;'}))
     desde = forms.DateField(widget=AdminDateWidget(attrs={'placeholder': 'Desde'}), required=False)
-    hasta = forms.DateField(widget=AdminDateWidget(attrs={'placeholder': 'Hasta'}), required=False)
+    hasta = forms.DateField(widget=AdminDateWidget(attrs={'placeholder': 'Hasta'}), required=False,
+                            initial=datetime.date.today())
+
+    cancelado = forms.ChoiceField(choices=OpcionesCancelados.OPCIONES, required=False,
+                                  initial=OpcionesCancelados.NO_CANCELADOS)
 
 
 class TurnoForm(forms.ModelForm):
