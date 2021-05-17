@@ -19,7 +19,7 @@ class DetalleTurnoInline(admin.TabularInline):
 @register(Turno)
 class TurnoAdmin(admin.ModelAdmin):
     search_fields = ('cliente__nombre', 'id')
-    list_display = ('id', 'fecha', 'hora_inicio', 'hora_finalizacion', 'cliente', 'box', 'cancelado')
+    list_display = ('id', 'fecha', 'hora_inicio', 'hora_finalizacion', 'cliente', 'box',)
     autocomplete_fields = ('cliente', )
     form = TurnoForm
     actions = None

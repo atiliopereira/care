@@ -21,9 +21,6 @@ class TurnoSearchForm(forms.Form):
     hasta = forms.DateField(widget=AdminDateWidget(attrs={'placeholder': 'Hasta'}), required=False,
                             initial=datetime.date.today())
 
-    cancelado = forms.ChoiceField(choices=OpcionesCancelados.OPCIONES, required=False,
-                                  initial=OpcionesCancelados.NO_CANCELADOS)
-
 
 class TurnoForm(forms.ModelForm):
     class Meta:
