@@ -36,7 +36,7 @@ class OrdenDeTrabajoAdmin(admin.ModelAdmin):
     class Media:
         js = ('orden_de_trabajo.js',)
     search_fields = ('id', 'cliente__nombre')
-    list_display = ('id', 'fecha', 'hora', 'ver_cliente', 'motivo_de_consulta', 'creado_por')
+    list_display = ('id', 'fecha', 'hora', 'paciente', 'motivo_de_consulta', 'creado_por')
     autocomplete_fields = ('cliente', )
     actions = None
 
@@ -48,7 +48,7 @@ class OrdenDeTrabajoAdmin(admin.ModelAdmin):
         models.CharField: {'widget': TextInput(attrs={'size': '80'})},
     }
 
-    def ver_cliente(self, obj):
+    def paciente(self, obj):
         html = f'<a href="/admin/clientes/cliente_detail/{obj.cliente.pk}">{obj.cliente.nombre}</a>'
         return mark_safe(html)
 
