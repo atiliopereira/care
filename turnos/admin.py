@@ -2,7 +2,6 @@ import re
 
 from django.contrib import admin
 from django.contrib.admin.decorators import register
-from daterange_filter.filter import DateRangeFilter
 from django.shortcuts import redirect
 
 from turnos.forms import TurnoForm, TurnoSearchForm
@@ -67,7 +66,6 @@ class TurnoAdmin(admin.ModelAdmin):
         return qs
 
     def changelist_view(self, request, extra_context=None, **kwargs):
-
         self.my_request_get = request.GET.copy()
         self.advanced_search_form = TurnoSearchForm(request.GET)
         self.advanced_search_form.is_valid()

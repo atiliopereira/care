@@ -4,7 +4,10 @@ from turnos.models import Turno
 
 
 def get_ots_queryset(request, form):
-    qs = OrdenDeTrabajo.objects.filter(creado_por=request.user.id)
+    if request.user.is_superuser:
+        qs = OrdenDeTrabajo.objects.all()
+    else:
+        qs = OrdenDeTrabajo.objects.filter(creado_por=request.user.id)
     if form.cleaned_data.get('cliente', ''):
         qs = qs.filter(cliente__nombre__icontains=form.cleaned_data.get('cliente', ''))
     if form.cleaned_data.get('motivo', ''):

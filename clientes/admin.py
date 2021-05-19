@@ -1,3 +1,5 @@
+import re
+
 from django.contrib import admin
 from django.contrib.admin.decorators import register
 from django.utils.safestring import mark_safe
@@ -25,10 +27,31 @@ class ClienteAdmin(admin.ModelAdmin):
         html = '<a href="/admin/clientes/cliente_detail/%s" class="icon-block"> <i class="fa fa-eye"></i></a>' % obj.pk
         return mark_safe(html)
 
+    def render_change_form(self, request, context, add=False, change=False, form_url='', obj=None):
+        context.update({
+            'show_save': True,
+            'show_save_and_continue': False,
+            'show_save_and_add_another': False,
+            'show_delete': True
+        })
+        return super().render_change_form(request, context, add, change, form_url, obj)
+
+    def add_view(self, request, form_url='', extra_context=None):
+        template_response = super(ClienteAdmin, self).add_view(
+            request, form_url=form_url, extra_context=extra_context)
+        # POST request won't have html response
+        if request.method == 'GET':
+            # removing Save and add another button: with regex
+            template_response.content = re.sub("<input.*?_addanother.*?(/>|>)", "", template_response.rendered_content)
+        return template_response
+
+    def has_delete_permission(self, request, obj=None):
+        if request.user.is_superuser:
+            return True
+
     def get_fieldsets(self, request, obj=None):
         if request.user.groups.filter(name='profesionales').exists():
             return self.profesionales_fieldsets
-
         else:
             return self.default_fieldsets
 
