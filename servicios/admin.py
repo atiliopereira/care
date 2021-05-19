@@ -1,7 +1,10 @@
+import re
+
 from django.contrib import admin
 from django.contrib.admin.decorators import register
 from django.db import models
 from django.forms import Textarea, TextInput
+from django.utils.safestring import mark_safe
 
 from servicios.forms import DetalleOrdenDeTrabajoForm, OrdendetrabajoSearchForm
 from servicios.models import Servicio, DetalleOrdenDeTrabajo, OrdenDeTrabajo
@@ -33,7 +36,7 @@ class OrdenDeTrabajoAdmin(admin.ModelAdmin):
     class Media:
         js = ('orden_de_trabajo.js',)
     search_fields = ('id', 'cliente__nombre')
-    list_display = ('id', 'fecha', 'hora', 'cliente', 'motivo_de_consulta', 'creado_por')
+    list_display = ('id', 'fecha', 'hora', 'paciente', 'motivo_de_consulta', 'creado_por')
     autocomplete_fields = ('cliente', )
     actions = None
 
@@ -45,10 +48,32 @@ class OrdenDeTrabajoAdmin(admin.ModelAdmin):
         models.CharField: {'widget': TextInput(attrs={'size': '80'})},
     }
 
+    def paciente(self, obj):
+        html = f'<a href="/admin/clientes/cliente_detail/{obj.cliente.pk}">{obj.cliente.nombre}</a>'
+        return mark_safe(html)
+
     def save_model(self, request, obj, form, change):
         if not change:
             obj.creado_por = request.user
         obj.save()
+
+    def render_change_form(self, request, context, add=False, change=False, form_url='', obj=None):
+        context.update({
+            'show_save': True,
+            'show_save_and_continue': False,
+            'show_save_and_add_another': False,
+            'show_delete': True
+        })
+        return super().render_change_form(request, context, add, change, form_url, obj)
+
+    def add_view(self, request, form_url='', extra_context=None):
+        template_response = super(OrdenDeTrabajoAdmin, self).add_view(
+            request, form_url=form_url, extra_context=extra_context)
+        # POST request won't have html response
+        if request.method == 'GET':
+            # removing Save and add another button: with regex
+            template_response.content = re.sub("<input.*?_addanother.*?(/>|>)", "", template_response.rendered_content)
+        return template_response
 
     def get_search_results(self, request, queryset, search_term):
         queryset, use_distinct = super().get_search_results(request, queryset, search_term)
