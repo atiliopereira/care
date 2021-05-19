@@ -77,14 +77,17 @@ def cancelar_turno(request, pk):
 
 
 def get_turnos_queryset(request, form):
-    qs = Turno.objects.exclude(cancelado=True)
-    try:
-        usuario = Usuario.objects.get(usuario_id=request.user.id)
-        hoy = datetime.date.today()
-        if usuario.box:
-            qs = Turno.objects.exclude(cancelado=True).filter(box=usuario.box).filter(fecha__gte=hoy)
-    except:
-        pass
+    if request.user.is_superuser:
+        qs = Turno.objects.all()
+    else:
+        qs = Turno.objects.exclude(cancelado=True)
+        try:
+            usuario = Usuario.objects.get(usuario_id=request.user.id)
+            hoy = datetime.date.today()
+            if usuario.box:
+                qs = Turno.objects.exclude(cancelado=True).filter(box=usuario.box).filter(fecha__gte=hoy)
+        except:
+            pass
     if form.cleaned_data.get('box', ''):
         qs = qs.filter(box=form.cleaned_data.get('box', ''))
     if form.cleaned_data.get('cliente', ''):
