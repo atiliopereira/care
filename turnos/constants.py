@@ -35,7 +35,7 @@ class BoxTurno:
         (BOX_7, 'Dra. Silvana Alfieri'),
         (BOX_8, 'Dra. Tatiana Roy'),
         (BOX_9, 'Dra. Andrea Ramirez'),
-        (BOX_10, 'Dra. Belen Gonzalez'),
+        (BOX_10, 'Dra. Belén Gonzalez'),
         (BOX_11, 'Dra. Belkis Vaccaro'),
         (BOX_12, 'Dr. Juan Sebastian Pereira'),
         (BOX_13, 'Lic. Alicia Yegros'),
