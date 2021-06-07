@@ -4773,10 +4773,7 @@
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
-                            {% if nro_de_dia == 3 or nro_de_dia == 5 %}
-                                <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=box_10&especialidad=PED&repeticiones=0&hora_inicio=9:00&hora_finalizacion=10:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
-                                <font style="opacity: 0">{{ "-->" }}</font>
-                            {% endif %}
+                            <font style="opacity: 0">{{ "-->" }}</font>
                         </td>
                         <td>
                             {% for turno in object_list %}
@@ -4863,7 +4860,10 @@
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
-                            <font style="opacity: 0">{{ "-->" }}</font>
+                            {% if nro_de_dia == 5 %}
+                                <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=box_10&especialidad=PED&repeticiones=0&hora_inicio=9:30&hora_finalizacion=10:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                                <font style="opacity: 0">{{ "-->" }}</font>
+                            {% endif %}
                         </td>
                         <td>
                             {% for turno in object_list %}
@@ -4954,7 +4954,7 @@
                                 {% endif %}
                             {% endfor %}
                             {% if nro_de_dia == 3 or nro_de_dia == 5 %}
-                                <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=box_10&especialidad=PED&repeticiones=0&hora_inicio=10:00&hora_finalizacion=11:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                                <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=box_10&especialidad=PED&repeticiones=0&hora_inicio=10:00&hora_finalizacion=10:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                                 <font style="opacity: 0">{{ "-->" }}</font>
                             {% endif %}
                         </td>
@@ -5043,7 +5043,10 @@
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
-                            <font style="opacity: 0">{{ "-->" }}</font>
+                            {% if nro_de_dia == 3 or nro_de_dia == 5 %}
+                                <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=box_10&especialidad=PED&repeticiones=0&hora_inicio=10:30&hora_finalizacion=11:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                                <font style="opacity: 0">{{ "-->" }}</font>
+                            {% endif %}
                         </td>
                         <td>
                             {% for turno in object_list %}
@@ -5134,7 +5137,7 @@
                                 {% endif %}
                             {% endfor %}
                             {% if nro_de_dia == 3 or nro_de_dia == 5 %}
-                                <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=box_10&especialidad=PED&repeticiones=0&hora_inicio=11:00&hora_finalizacion=12:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                                <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=box_10&especialidad=PED&repeticiones=0&hora_inicio=11:00&hora_finalizacion=11:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                                 <font style="opacity: 0">{{ "-->" }}</font>
                             {% endif %}
                         </td>
@@ -5223,7 +5226,10 @@
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
-                            <font style="opacity: 0">{{ "-->" }}</font>
+                            {% if nro_de_dia == 3 or nro_de_dia == 5 %}
+                                <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=box_10&especialidad=PED&repeticiones=0&hora_inicio=11:30&hora_finalizacion=12:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                                <font style="opacity: 0">{{ "-->" }}</font>
+                            {% endif %}
                         </td>
                         <td>
                             {% for turno in object_list %}
@@ -5314,7 +5320,7 @@
                                 {% endif %}
                             {% endfor %}
                             {% if nro_de_dia == 3 or nro_de_dia == 5 %}
-                                <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=box_10&especialidad=PED&repeticiones=0&hora_inicio=12:00&hora_finalizacion=13:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                                <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=box_10&especialidad=PED&repeticiones=0&hora_inicio=12:00&hora_finalizacion=12:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                                 <font style="opacity: 0">{{ "-->" }}</font>
                             {% endif %}
                         </td>
@@ -5406,7 +5412,10 @@
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
-                            <font style="opacity: 0">{{ "-->" }}</font>
+                            {% if nro_de_dia == 3 %}
+                                <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=box_10&especialidad=PED&repeticiones=0&hora_inicio=12:30&hora_finalizacion=13:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                                <font style="opacity: 0">{{ "-->" }}</font>
+                            {% endif %}
                         </td>
                         <td>
                             {% for turno in object_list %}
@@ -5668,7 +5677,7 @@
                                 {% endif %}
                             {% endfor %}
                             {% if nro_de_dia == 2 %}
-                                <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=box_10&especialidad=PED&repeticiones=0&hora_inicio=14:00&hora_finalizacion=15:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                                <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=box_10&especialidad=PED&repeticiones=0&hora_inicio=14:00&hora_finalizacion=14:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                                 <font style="opacity: 0">{{ "-->" }}</font>
                             {% endif %}
                         </td>
@@ -5763,7 +5772,10 @@
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
-                            <font style="opacity: 0">{{ "-->" }}</font>
+                            {% if nro_de_dia == 2 %}
+                                <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=box_10&especialidad=PED&repeticiones=0&hora_inicio=14:30&hora_finalizacion=15:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                                <font style="opacity: 0">{{ "-->" }}</font>
+                            {% endif %}
                         </td>
                         <td>
                             {% for turno in object_list %}
@@ -5854,7 +5866,7 @@
                                 {% endif %}
                             {% endfor %}
                             {% if nro_de_dia == 2 %}
-                                <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=box_10&especialidad=PED&repeticiones=0&hora_inicio=15:00&hora_finalizacion=16:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                                <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=box_10&especialidad=PED&repeticiones=0&hora_inicio=15:00&hora_finalizacion=15:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                                 <font style="opacity: 0">{{ "-->" }}</font>
                             {% endif %}
                         </td>
@@ -5946,7 +5958,10 @@
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
-                            <font style="opacity: 0">{{ "-->" }}</font>
+                            {% if nro_de_dia == 2 %}
+                                <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=box_10&especialidad=PED&repeticiones=0&hora_inicio=15:30&hora_finalizacion=16:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                                <font style="opacity: 0">{{ "-->" }}</font>
+                            {% endif %}
                         </td>
                         <td>
                             {% for turno in object_list %}
@@ -6043,7 +6058,7 @@
                                 {% endif %}
                             {% endfor %}
                             {% if nro_de_dia == 2 %}
-                                <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=box_10&especialidad=PED&repeticiones=0&hora_inicio=16:00&hora_finalizacion=17:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                                <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=box_10&especialidad=PED&repeticiones=0&hora_inicio=16:00&hora_finalizacion=16:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                                 <font style="opacity: 0">{{ "-->" }}</font>
                             {% endif %}
                         </td>
@@ -6135,7 +6150,10 @@
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
-                            <font style="opacity: 0">{{ "-->" }}</font>
+                            {% if nro_de_dia == 2 %}
+                                <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=box_10&especialidad=PED&repeticiones=0&hora_inicio=16:30&hora_finalizacion=17:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                                <font style="opacity: 0">{{ "-->" }}</font>
+                            {% endif %}
                         </td>
                         <td>
                             {% for turno in object_list %}
@@ -6226,7 +6244,7 @@
                                 {% endif %}
                             {% endfor %}
                             {% if nro_de_dia == 2 %}
-                                <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=box_10&especialidad=PED&repeticiones=0&hora_inicio=17:00&hora_finalizacion=18:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                                <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=box_10&especialidad=PED&repeticiones=0&hora_inicio=17:00&hora_finalizacion=17:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                                 <font style="opacity: 0">{{ "-->" }}</font>
                             {% endif %}
                         </td>
@@ -6321,7 +6339,10 @@
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
-                            <font style="opacity: 0">{{ "-->" }}</font>
+                            {% if nro_de_dia == 2 %}
+                                <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=box_10&especialidad=PED&repeticiones=0&hora_inicio=17:30&hora_finalizacion=18:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                                <font style="opacity: 0">{{ "-->" }}</font>
+                            {% endif %}
                         </td>
                         <td>
                             {% for turno in object_list %}
@@ -6415,7 +6436,7 @@
                                 {% endif %}
                             {% endfor %}
                             {% if nro_de_dia == 2 %}
-                                <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=box_10&especialidad=PED&repeticiones=0&hora_inicio=18:00&hora_finalizacion=19:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                                <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=box_10&especialidad=PED&repeticiones=0&hora_inicio=18:00&hora_finalizacion=18:30&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
                                 <font style="opacity: 0">{{ "-->" }}</font>
                             {% endif %}
                         </td>
@@ -6510,7 +6531,10 @@
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
-                            <font style="opacity: 0">{{ "-->" }}</font>
+                            {% if nro_de_dia == 2 %}
+                                <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=box_10&especialidad=PED&repeticiones=0&hora_inicio=18:30&hora_finalizacion=19:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                                <font style="opacity: 0">{{ "-->" }}</font>
+                            {% endif %}
                         </td>
                         <td>
                             {% for turno in object_list %}
