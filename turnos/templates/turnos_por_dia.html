@@ -2067,7 +2067,10 @@
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
-                            <font style="opacity: 0">{{ "-->" }}</font>
+                            {% if nro_de_dia == 5 %}
+                                <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=box_6&especialidad=NUT&repeticiones=0&hora_inicio=9:00&hora_finalizacion=10:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                                <font style="opacity: 0">{{ "-->" }}</font>
+                            {% endif %}
                         </td>
                         <td>
                             {% for turno in object_list %}
@@ -2284,7 +2287,10 @@
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
-                            <font style="opacity: 0">{{ "-->" }}</font>
+                            {% if nro_de_dia == 5 %}
+                                <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=box_6&especialidad=NUT&repeticiones=0&hora_inicio=10:00&hora_finalizacion=11:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                                <font style="opacity: 0">{{ "-->" }}</font>
+                            {% endif %}
                         </td>
                         <td>
                             {% for turno in object_list %}
@@ -2501,7 +2507,10 @@
                                     {{ "<!--" }}
                                 {% endif %}
                             {% endfor %}
-                            <font style="opacity: 0">{{ "-->" }}</font>
+                            {% if nro_de_dia == 5 %}
+                                <a href="/admin/turnos/turno/add/?next=/admin/turnos/turno/&box=box_6&especialidad=NUT&repeticiones=0&hora_inicio=11:00&hora_finalizacion=12:00&fecha={{ fecha|parseador_fecha }}" class="btn btn-primary" style="background-color: #1a93ca; color: white; padding: 5px; border-radius: 5px"><i class="fa fa-plus"></i></a>
+                                <font style="opacity: 0">{{ "-->" }}</font>
+                            {% endif %}
                         </td>
                         <td>
                             {% for turno in object_list %}
