@@ -22,6 +22,7 @@ class BoxTurno:
     BOX_16 = 'box_16'
     BOX_20 = 'box_20'
     BOX_17 = 'box_17'
+    BOX_21 = 'box_21'
 
     BOXES = (
         (BOX_1, 'Dr. Pablo Peña'),
@@ -35,7 +36,7 @@ class BoxTurno:
         (BOX_7, 'Dra. Silvana Alfieri'),
         (BOX_8, 'Dra. Tatiana Roy'),
         (BOX_9, 'Dra. Andrea Ramirez'),
-        (BOX_10, 'Dra. Belen Gonzalez'),
+        (BOX_10, 'Dra. Belén Gonzalez'),
         (BOX_11, 'Dra. Belkis Vaccaro'),
         (BOX_12, 'Dr. Juan Sebastian Pereira'),
         (BOX_13, 'Lic. Alicia Yegros'),
@@ -44,6 +45,7 @@ class BoxTurno:
         (BOX_16, 'Dr. Giacomo Cruzants'),
         (BOX_20, 'Dr. Alcaraz'),
         (BOX_17, 'Dra. Fernandez'),
+        (BOX_21, 'Lic. Mariela Ciccone'),
     )
 
 
