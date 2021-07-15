@@ -3,9 +3,7 @@ import datetime
 from django.contrib.auth.models import User
 from django.db import models
 
-from servicios.constants import CategoriaServicio
 from turnos.constants import BoxTurno, Especialidad, TipoDeTurno
-
 
 class Turno(models.Model):
     fecha = models.DateField(default=datetime.date.today)

@@ -12,6 +12,7 @@ from django.views.generic.dates import timezone_today
 # from postman.models import Message
 from cajas.templatetags.caja_tags import advanced_search_form
 from extra.globals import separador_de_miles
+from turnos.constants import BOXES_POR_ESPECIALIDAD
 
 register = template.Library()
 
@@ -47,6 +48,23 @@ def hora_a_minutos(time):
     return time.hour * 60 + time.minute
 
 
+@register.filter
+def horario_str_a_minutos(horario_str):
+    return int(horario_str[:2]) * 60 + int(horario_str[-2:])
+
+
+@register.filter
+def horario_str_a_minutos_mas_30(horario_str):
+    return int(horario_str[:2]) * 60 + int(horario_str[-2:]) + 30
+
+
+@register.filter
+def boxes_de_especialidad(especialidad):
+    return BOXES_POR_ESPECIALIDAD.get(especialidad, None)
+
+
 @register.inclusion_tag('admin/turnos/turno/turno_search_form.html', takes_context=True)
 def turno_search_form(context, cl):
     return advanced_search_form(context, cl)
+
+
