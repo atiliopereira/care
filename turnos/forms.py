@@ -3,7 +3,7 @@ import datetime
 from django import forms
 from django.contrib.admin.widgets import AdminDateWidget
 
-from turnos.constants import BoxTurno, OpcionesCancelados
+from turnos.constants import BoxTurno
 from turnos.models import Turno
 
 
