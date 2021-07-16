@@ -6,7 +6,7 @@ from django.views.generic import ListView
 
 from clientes.models import Cliente
 from sistema.models import Usuario
-from turnos.constants import crear_horarios
+from turnos.constants import crear_horarios, Especialidad
 from turnos.forms import AgendaForm
 from turnos.models import Turno, DetalleTurno
 
@@ -39,7 +39,7 @@ class TurnosAgendaListView(ListView):
         context['hoy'] = datetime.date.today().strftime("%d/%m/%Y")
         context['detalles'] = DetalleTurno.objects.filter(turno__fecha__gte=datetime.date.today())
         context['clientes'] = Cliente.objects.all()
-        context['especialidad'] = self.request.GET.get('especialidad', '')
+        context['especialidad'] = Especialidad.EXTRA
         context['horario_inicio'] = horario_inicio = datetime.time(8, 0, 0)
         context['horario_fin'] = horario_fin = datetime.time(20, 0, 0)
         context['horarios'] = crear_horarios(horario_inicio, horario_fin, 30)

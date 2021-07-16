@@ -5,6 +5,7 @@ from django.db import models
 
 from turnos.constants import BoxTurno, Especialidad, TipoDeTurno
 
+
 class Turno(models.Model):
     fecha = models.DateField(default=datetime.date.today)
     hora_inicio = models.TimeField(default=datetime.datetime.now)

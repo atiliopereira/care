@@ -54,11 +54,11 @@ class OrdenDeTrabajo(models.Model):
         for detalle in detalles_ot:
             if detalle.facturado:
                 detalles_facturados += 1
-        if detalles_facturados is 0:
+        if detalles_facturados == 0:
             self.estado_facturacion = EstadoFacturacion.NO_FACTURADO
         elif 0 < detalles_facturados < total_detalles:
             self.estado_facturacion = EstadoFacturacion.PARCIALMENTE
-        elif detalles_facturados is total_detalles:
+        elif detalles_facturados == total_detalles:
             self.estado_facturacion = EstadoFacturacion.FACTURADO
         self.save()
 
