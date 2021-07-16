@@ -20,13 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'xr29b#^!33_*ia68-5zwj6wy71b&uhj1)7)a!nj)@)u(nd97uz'
+SECRET_KEY = 'your_key_here'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0', 'localhost', 'ec2-18-221-85-216.us-east-2.compute.amazonaws.com',
-                 '18.221.85.216', 'masquelier.dissoi.com']
+ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0', 'localhost',]
 
 
 # Application definition
@@ -85,7 +84,7 @@ WSGI_APPLICATION = 'care.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'masquelier',
+        'NAME': 'care',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
         'HOST': '127.0.0.1',
